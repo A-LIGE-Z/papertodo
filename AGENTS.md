@@ -1,140 +1,110 @@
-# RePaperTodo Project Rules
+# PaperTodo Agent 备忘
 
-## Mission
+本文件只记录“不通读历史和全量代码很难知道”的项目约束。代码是真相；普通文件职责、字段含义、WPF/C# 常识不要写进来。
 
-RePaperTodo is a Flutter-first reimplementation of PaperTodo. The goal is to faithfully reproduce PaperTodo's product philosophy, features, and interaction details while preparing a shared Windows and Android codebase.
+## 工作方式
 
-The project has no fixed budget ceiling. Engineering decisions should optimize for correctness, feature parity, long-term maintainability, data safety, and native desktop/mobile quality rather than short-term cost reduction.
+不要用临时最简原型、止血式局部假模型或明显偏离产品形态的替代实现来交付改动。除非改动巨大到需要重新定路线，必须先向用户确认，再按真实产品结构修改。
 
-## Product Boundary
+## 产品边界
 
-RePaperTodo remains "a few sheets of paper on the desktop." It is not a task-management suite, knowledge base, calendar product, account system, analytics product, or cloud-first service.
+PaperTodo 是“桌面上的几张纸”，不是任务管理器、知识库或文档编辑器。现有的大纲显示与大纲内查找、可选同步、安卓伴侣端和到期提醒属于已授权交付范围；不继续扩展账号、分类、标签、归档、统计、日历或额外的主管理页。
 
-The original PaperTodo feature set is the baseline:
+Markdown 只做轻量显示和编辑辅助。可兼容少量单行内联 HTML 标签（`b/strong/i/em/s/del/u/code/a href`）；不扩展图片、表格、附件、嵌入内容、块级 HTML 或完整块编辑器。
 
-- Independent paper windows.
-- Todo papers.
-- Note papers.
-- Lightweight Markdown display/editing assistance.
-- Capsule mode.
-- Edge-docked/deep capsules.
-- Master capsule/collapse-all behavior.
-- Linked notes for todo items.
-- Script capsules.
-- External Markdown/file opening.
-- Tray entry and command-line friendly startup actions.
-- Themes, color schemes, typography, localization, tooltips, and settings.
-- Startup at login.
-- Data safety and recovery behavior.
-- Global hotkeys.
-- Fullscreen/topmost avoidance behavior.
+## 数据和保存
 
-Feature parity with the existing Windows exe is the first major milestone.
+- `data.json` 是用户数据协议，不是内部缓存。新增字段要兼容旧数据；删除 / 改名字段要特别谨慎。
+- 默认配色为 `siyuan`；旧的 `warm/ink/forest/rose` 配色及自定义色仍有效，不要在加载时强制改写用户已保存的配色。
+- 启动失败时不能用空状态覆盖旧文件。严格解析失败的数据不要“修好后覆盖”，否则可能破坏可恢复数据。
+- 保留 `_saveVersion`、`StateStore` 写锁和退出同步保存，避免旧异步保存覆盖新状态。
+- 删除、隐藏、折叠是三种语义：删除才从 `Papers` 移除；隐藏仍保留纸片；折叠仍是可见纸片，只是胶囊形态。
+- `paper.X/Y/Width/Height` 是普通纸片几何。胶囊尺寸和贴边半隐藏坐标不能写回普通几何。
+- 外部打开笔记的临时文件后缀只做文件名合法性校验；允许用户选择系统已关联的任意后缀。
+- 同步正文只包含 `schemaVersion/papers/syncTombstones`；连接凭据、设备设置和桌面几何不得上传。缺失字段不等于清空，未知内容字段必须往返保留。
+- 合并不能修改输入快照；应用合并结果时保留纸片、待办和代码元素的对象身份，避免窗口编辑与保存状态分离。保存边界的变更追踪必须覆盖标题、时间、分栏、撤销和删除。
+- 删除记录不按固定天数自动清理；离线端可能很久后才返回。支持 ETag 的存储使用条件写入，冲突后重新拉取、合并，不能强行覆盖。
+- 安卓主文件保存经过串行队列、跨 Flutter 引擎锁和原子替换；读取失败时保留原文件，只有验证通过的备份可以恢复，不能回退成欢迎内容覆盖数据。
+- 安卓小部件操作先写入持久队列，本地数据成功保存后才确认移除；原生缓存不是主数据，不允许直接据此覆盖 `data.json`。
+- Android 自动化验收样例只能注入显式 `.integration` 包；普通 `.dev` 试用端可能已有用户内容，不能重置或写入测试地址、Token 和样例。交付前移除自动化工具并核对真实连接配置。
 
-Runtime UI localization is intentionally limited to Chinese and English. New
-user-facing strings must include those two languages only, and unsupported
-system languages should fall back to English.
+## 单实例
 
-## Platform Priority
+只有主实例释放 Mutex。后续进程只转发启动参数并退出，不释放主实例锁。
 
-1. Windows exe first.
-2. Android app second.
-3. Cross-device sync after the local-first data model is stable.
+`exit` / `quit` 在没有主实例时也应保存并退出；不要恢复窗口，也不要因为空数据目录创建默认待办纸。无参数的后续实例按 `show` 处理。
 
-Windows must receive special attention because PaperTodo's identity depends on native desktop window behavior: tray, transparent borderless windows, independent windows, topmost control, task-switcher visibility, fullscreen avoidance, edge docking, and script launching.
+## 托盘
 
-Android support must target Android 14 through Android 17, interpreted as Android API 34 through API 37 unless the Android ecosystem changes this mapping.
+Hardcodet 托盘必须走 `TaskbarIcon.IconSource = LoadTrayIconSource()`。不要改回 `System.Drawing.Icon`；这个回归曾导致首次右键菜单位置错误、首次点击纸片被吞。
 
-## Technology Direction
+外部 `PaperTodo.ico` 是用户自定义入口，优先级高于内嵌图标。托盘菜单打开时重建，别用手动弹菜单、预热菜单、全局鼠标轮询等方式修首次菜单问题。
 
-Flutter and Dart are the primary application language and UI layer.
+## 胶囊和贴边胶囊
 
-Native platform code is allowed and expected when Flutter alone cannot provide the required behavior. Windows-specific functionality may use Win32 through FFI, platform channels, plugins, or a custom Windows runner.
+这是最高风险区，问题通常来自“窗口几何、动画状态、隐藏状态、持久化状态”混在一起。
 
-The architecture should keep domain logic in Dart where possible so Windows and Android share the same data model, merge logic, sync logic, validation, and tests.
+- 普通胶囊和贴边胶囊共用度量来源：`PaperLayoutDefaults` / `DeepCapsuleLayout`。
+- 贴边槽位不再由 `DeepCapsuleSlotWindow.cs` 维护；该文件已删除。现在由 `PaperWindow` 内部 slot host 承载。
+- 折叠胶囊、贴边胶囊、展开后的边缘激发态应复用同一套胶囊 UI。激发态只是持久外移、外描边和状态变化，不应再重绘一套 UI。
+- `ShowDeepCapsuleWhileExpanded = true`：从贴边胶囊展开纸片后，边缘胶囊仍显示并占槽位。
+- `UseCapsuleCollapseAll` 使用 slot 0 的主胶囊；真实纸片槽位从后面开始。`CapsuleCollapseAllActive` 为真时，真实胶囊收向主胶囊并隐藏可点击面。
+- `HideLinkedNotesFromCapsules` 开启时，已被待办关联的笔记不应显示为胶囊。
+- 隐藏全部、关闭胶囊模式、关闭贴边模式、从边缘展开后再隐藏，都要清理临时 slot / 激发态 / 动画状态，避免下次显示错位或残留占位。
 
-## Data And Compatibility
+## 待办和笔记
 
-The original PaperTodo `data.json` is user data, not a cache. RePaperTodo must treat it as a compatibility contract.
+- 多行粘贴待办只能形成一次撤销快照。
+- `PaperItem.LinkedNoteId` 会影响删除笔记、关闭关联功能、显示关联笔记名称、以及“已关联笔记不显示为胶囊”。
+- 笔记编辑态和浏览态共用同一个 `MarkdownTextBox`。不要拆成两套文本控件，否则滚动、换行、选区和测量容易漂。
+- `MarkdownTextBox` 长度上限是 WPF 布局 / 渲染保护，不要直接删除。
 
-Migration should preserve existing PaperTodo data wherever practical. The initial implementation should be able to read current PaperTodo data and migrate it into the RePaperTodo data model without destructive overwrite.
+## 主题、资源、提示
 
-Long-term sync must not rely on blindly overwriting one `data.json` file. Prefer a local-first model based on snapshots plus operation logs:
+用户可见文本同步四个资源文件：中文、英文、日文、韩文。`ResourceTextVersion` 只是人工检查标记，不参与运行时逻辑。
 
-- Encrypted snapshots for compact state.
-- Per-device operation logs for mergeable changes.
-- Stable IDs for papers, todo items, note elements, and devices.
-- Tombstones for deletes.
-- Conflict handling that preserves user content.
+主题变化要主动刷新动态生成控件、托盘菜单、AvalonEdit 背景 / 文本 / 光标 / 覆盖层；不要只依赖动态资源。
 
-## Sync Direction
+`EnableToolTips` 只控制普通操作提示，不应关闭设置页说明图标和扩展说明。
 
-RePaperTodo must support WebDAV sync for Windows and Android.
+## 用户态更新日志
 
-Generic WebDAV must remain supported. Provider-specific presets may be added, but the app must not be locked to one service.
+`CHANGELOG.md` 顶部按 `### 计划 / 待办`、`### 评估`、`### Unreleased` 组织。用户要求记录软件目标、修改计划或待办时写入计划；要求记录取舍、暂缓原因或实现评估时写入评估；二者都不等同于已完成改动。
 
-Recommended first preset: Jianguoyun WebDAV.
+改动完成后，如果影响用户可见行为，必须更新 `CHANGELOG.md` 的 `### Unreleased` 小节。
 
-Sync design requirements:
+发布版本小节按版本号从旧到新排列；从 `### Unreleased` 挪到具体版本号时，把新版本放到已有版本列表末尾的正确位置，不要插在 `Unreleased` 和旧版本之间。
 
-- End-to-end encrypt sync payloads before upload.
-- Use ETag or equivalent conditional writes when available.
-- Batch small changes instead of uploading after every keystroke.
-- Force sync on startup, exit, app backgrounding, and user request.
-- Merge operation logs instead of last-writer-wins whole-file replacement.
-- Keep local-first operation when the WebDAV endpoint is offline.
-- Provide clear conflict recovery without silently discarding user data.
+`### Unreleased` 尽量按可直接挪到正式版本号下的发布格式维护：参考 v2.0 正式版，必要时用 `**新功能**`、`**胶囊相关改动**`、`**bug修复和边界修正**` 等粗体小分组组织条目；每条都应是面向用户的完整发布说明，而不是临时流水账。
 
-## Windows Requirements
+明显重磅的新功能要单独成组，例如用 `**脚本胶囊**` 这类功能名作为小标题；相关设置、优化和边界说明尽量收束在该组下，避免被普通新功能或零散修复冲淡。
 
-Windows feature parity is the first implementation target.
+只写用户能感知的修复、新增和优化，不写文件名、状态机、重构方式等实现细节。尚未提交 / 发布、且用户没有感知到的内部 bug 修复不写入更新日志。
 
-Required Windows capabilities include:
+修复 `### Unreleased` 中尚未发布功能自身的问题，不要作为独立修复条目追加；直接保留最终用户能看到的功能 / 优化描述即可。
 
-- Multiple independent Flutter windows or equivalent native surfaces.
-- Tray icon and tray menu.
-- Startup commands: show, hide, toggle, new todo, new note, exit.
-- Single-instance command forwarding.
-- Global hotkeys.
-- Borderless translucent paper windows.
-- Window geometry persistence.
-- Always-on-top and fullscreen avoidance.
-- Task-switcher visibility control.
-- Capsule and edge-docked capsule behavior.
-- Startup at login.
-- External file opening.
-- Script capsule execution, with PowerShell behavior designed carefully.
+更新日志条目里只有重点内容需要加粗；非重点条目不要为了统一格式而加粗。
 
-## Android Requirements
+纯内部整理、文档、构建流程变化可不写，并在最终回复说明 ### Unreleased
 
-Android must preserve the same data model and sync behavior as Windows.
+## 构建和发布
 
-The Android app may use a mobile-appropriate interaction model, but it should still preserve PaperTodo concepts: papers, todo items, notes, Markdown assistance, linked notes, settings, and sync.
+Windows 与 Android 的产品版本保持一致，分别显式维护在 `PaperTodo.csproj` 和 `mobile/pubspec.yaml`；不要恢复自动递增产品版本号。Android 的 `+buildNumber` 是安装编号，必须单调递增，即使产品版本重新编号也不能回退，以便保留数据覆盖升级。
 
-Android 14-17 compatibility must be checked as part of release readiness.
+普通编译：
 
-## Implementation Discipline
+```powershell
+dotnet build PaperTodo.csproj -c Release
+```
 
-Do not deliver a throwaway prototype as if it were the product.
+云端 Release 发布两个 Windows x64 单文件：自包含 .NET Runtime 的压缩单文件，以及不带运行库的 no-runtime 单文件。本地打包只生成自包含压缩单文件 `self-contained-small.exe`。WPF 版本不要开启 `PublishTrimmed` 或 Native AOT。
 
-Every major feature should have:
+稳定正式版不要靠 tag push 自动发布；完成真实多屏 / 混合 DPI 等发布前手测后，用 GitHub Actions `workflow_dispatch` 并显式确认稳定版发布。`rc` / `alpha` / `beta` / `preview` 标签可以继续由 tag push 发布为预发布。
 
-- A data model.
-- A UI behavior definition.
-- Platform constraints.
-- Tests for pure Dart logic.
-- Migration or compatibility notes when user data is affected.
+所有组件通过质量检查、完成构建后才统一发布，附源提交与校验清单。Android 正式包必须使用配置的正式证书，不允许静默回退到调试签名；独立 `.dev` 测试包、显式无签名验证包和旧证书迁移包都不能作为正式包发布。更换证书前必须保留可验证的数据备份，不能自动卸载用户现有应用。
 
-Keep platform-specific code behind explicit boundaries. Do not mix Win32 behavior deeply into general UI/domain code.
+推送或移动稳定版 tag 只会把 tag/commit 送到 GitHub；Actions 是后置检查，失败不会撤回这次 push。不要把稳定版 tag push 当作发布步骤，也不要为了正式发布制造必然失败的稳定版 tag push run；正式版发布只认成功的 `workflow_dispatch` run。
 
-## Release Discipline
+## 更新本文
 
-Do not mark RePaperTodo as a replacement for PaperTodo until Windows feature parity is demonstrated.
-
-Before public stable release:
-
-- Verify migration from representative PaperTodo data files.
-- Verify Windows multi-window behavior.
-- Verify WebDAV sync with generic WebDAV and at least one domestic provider preset.
-- Verify Android 14-17 compatibility.
-- Verify conflict handling and offline behavior.
+只有产品边界、持久化兼容、保存 / 单实例 / 托盘 / 胶囊 / 发布流程发生变化时才更新本文。普通 UI 微调、文案、颜色、间距、动画参数不需要同步。

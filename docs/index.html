@@ -1,0 +1,606 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PaperTodo - Windows 桌面纸片待办与轻量笔记</title>
+  <meta name="description" content="PaperTodo 是一个 Windows 桌面纸片待办工具，把待办和轻量 Markdown 笔记放在桌面上，支持胶囊折叠、贴边隐藏、主题、自定义字体和本地数据保存。">
+  <meta name="keywords" content="PaperTodo, Windows 桌面待办, 桌面便签待办, 桌面便签软件, Markdown 笔记, sticky notes alternative, desktop todo app">
+  <meta name="author" content="snownico0722">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://a-lige-z.github.io/papertodo/">
+  <link rel="icon" href="assets/favicon.ico">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="PaperTodo">
+  <meta property="og:title" content="PaperTodo - Windows 桌面纸片待办">
+  <meta property="og:description" content="几张安静、可用、不打扰人的桌面纸片。待办、轻量 Markdown 笔记、胶囊折叠和本地保存。">
+  <meta property="og:image" content="https://a-lige-z.github.io/papertodo/assets/Home.jpg">
+  <meta property="og:url" content="https://a-lige-z.github.io/papertodo/">
+  <meta name="twitter:card" content="summary_large_image">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "PaperTodo",
+    "operatingSystem": "Windows",
+    "applicationCategory": "ProductivityApplication",
+    "description": "PaperTodo is a lightweight Windows desktop todo and Markdown note app with paper-like windows, capsule collapse, edge docking, themes, and local data storage.",
+    "softwareVersion": "0.0.2",
+    "url": "https://github.com/A-LIGE-Z/papertodo",
+    "downloadUrl": "https://github.com/A-LIGE-Z/papertodo/releases",
+    "screenshot": "https://a-lige-z.github.io/papertodo/assets/Home.jpg"
+  }
+  </script>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #fbfaf7;
+      --panel: #ffffff;
+      --ink: #202124;
+      --muted: #626a73;
+      --soft: #f1eee8;
+      --line: #ded8cc;
+      --green: #23796f;
+      --green-dark: #17564f;
+      --coral: #b95d49;
+      --blue: #315f9b;
+      --code: #f5efe5;
+      --shadow: 0 16px 38px rgba(30, 28, 24, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Microsoft YaHei UI", "Microsoft YaHei", "DengXian", "Segoe UI", Arial, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.65;
+      letter-spacing: 0;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    figure {
+      margin: 0;
+    }
+
+    code {
+      padding: 0.08rem 0.3rem;
+      border-radius: 5px;
+      background: var(--code);
+      font-family: "Cascadia Mono", Consolas, monospace;
+      font-size: 0.92em;
+    }
+
+    .page {
+      width: min(1120px, calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(251, 250, 247, 0.94);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(14px);
+    }
+
+    .topbar-inner {
+      width: min(1120px, calc(100% - 40px));
+      min-height: 62px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      font-size: 1rem;
+    }
+
+    .brand img {
+      width: 28px;
+      height: 28px;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      color: #38414a;
+      font-size: 0.94rem;
+      white-space: nowrap;
+    }
+
+    .nav a:hover {
+      color: var(--green);
+    }
+
+    .intro {
+      padding: 52px 0 30px;
+    }
+
+    .intro-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 0.95fr) minmax(360px, 1.25fr);
+      gap: 34px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      margin: 0 0 10px;
+      color: var(--green);
+      font-size: 0.95rem;
+      font-weight: 800;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 3.1rem;
+      line-height: 1.12;
+      letter-spacing: 0;
+    }
+
+    .lead {
+      margin: 18px 0 0;
+      color: #39424c;
+      font-size: 1.08rem;
+    }
+
+    .badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 18px 0 0;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 0 10px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--panel);
+      color: #4c5560;
+      font-size: 0.86rem;
+      font-weight: 700;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 24px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      padding: 0 16px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: var(--panel);
+      color: var(--ink);
+      font-weight: 800;
+    }
+
+    .button.primary {
+      border-color: var(--green);
+      background: var(--green);
+      color: #fff;
+    }
+
+    .button.primary:hover {
+      border-color: var(--green-dark);
+      background: var(--green-dark);
+    }
+
+    .button:hover {
+      border-color: #c4b9aa;
+      background: #f7f3ec;
+    }
+
+    .preview {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #151515;
+      box-shadow: var(--shadow);
+    }
+
+    .preview img {
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      object-fit: cover;
+    }
+
+    section {
+      padding: 44px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .section-title {
+      display: grid;
+      grid-template-columns: 240px minmax(0, 1fr);
+      gap: 28px;
+      align-items: start;
+      margin-bottom: 22px;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: 1.42rem;
+      line-height: 1.28;
+      letter-spacing: 0;
+    }
+
+    .section-title p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .feature-list {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .feature {
+      min-height: 134px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+    }
+
+    .feature strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 1rem;
+    }
+
+    .feature p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+
+    .manual-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .manual {
+      padding: 20px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+    }
+
+    .manual h3 {
+      margin: 0 0 10px;
+      font-size: 1.08rem;
+      letter-spacing: 0;
+    }
+
+    .manual ul {
+      display: grid;
+      gap: 8px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      color: #3c4650;
+    }
+
+    .manual li {
+      position: relative;
+      padding-left: 16px;
+    }
+
+    .manual li::before {
+      content: "";
+      position: absolute;
+      top: 0.72em;
+      left: 0;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--coral);
+    }
+
+    .screens {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .screen {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+    }
+
+    .screen img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      background: #111;
+    }
+
+    .screen figcaption {
+      padding: 12px 14px;
+      color: #4b5560;
+      font-size: 0.93rem;
+    }
+
+    .download {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
+      gap: 14px;
+    }
+
+    .download-panel {
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+    }
+
+    .download-panel h3 {
+      margin: 0 0 8px;
+      font-size: 1.08rem;
+      letter-spacing: 0;
+    }
+
+    .download-panel p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .download-panel .actions {
+      margin-top: 18px;
+    }
+
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 28px 0 34px;
+      color: #71685d;
+      font-size: 0.9rem;
+    }
+
+    .footer-inner {
+      width: min(1120px, calc(100% - 40px));
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 900px) {
+      .intro-grid,
+      .section-title,
+      .feature-list,
+      .manual-grid,
+      .screens,
+      .download {
+        grid-template-columns: 1fr;
+      }
+
+      .intro {
+        padding-top: 34px;
+      }
+
+      h1 {
+        font-size: 2.35rem;
+      }
+
+      .nav {
+        display: none;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .page,
+      .topbar-inner,
+      .footer-inner {
+        width: min(100% - 28px, 1120px);
+      }
+
+      .actions {
+        flex-direction: column;
+      }
+
+      .button {
+        width: 100%;
+      }
+
+      h1 {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="#top" aria-label="PaperTodo 首页">
+        <img src="assets/favicon.ico" alt="">
+        <span>PaperTodo</span>
+      </a>
+      <nav class="nav" aria-label="页面导航">
+        <a href="#features">功能</a>
+        <a href="#screens">截图</a>
+        <a href="#download">下载</a>
+        <a href="https://github.com/A-LIGE-Z/papertodo">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top" class="page">
+    <section class="intro" aria-label="PaperTodo 简介">
+      <div class="intro-grid">
+        <div>
+          <p class="eyebrow">Windows 桌面纸片待办与轻量笔记</p>
+          <h1>PaperTodo</h1>
+          <p class="lead">让桌面上有几张安静、可用、不打扰人的纸。无需账号，可选同步与 Android 伴侣端；待办和笔记直接放在桌面上，随时写、随时折起来。</p>
+          <div class="badges" aria-label="项目标签">
+            <span class="badge">Windows x64</span>
+            <span class="badge">WPF 原生</span>
+            <span class="badge">本地保存</span>
+            <span class="badge">v0.0.2 开发版</span>
+          </div>
+          <div class="actions">
+            <a class="button primary" href="https://github.com/A-LIGE-Z/papertodo/releases">查看发布版本</a>
+            <a class="button" href="https://github.com/A-LIGE-Z/papertodo">GitHub</a>
+            <a class="button" href="https://github.com/A-LIGE-Z/papertodo/blob/main/README.md">README</a>
+          </div>
+        </div>
+        <figure class="preview">
+          <img src="assets/Home.jpg" alt="PaperTodo 桌面纸片待办界面">
+        </figure>
+      </div>
+    </section>
+
+    <section id="features">
+      <div class="section-title">
+        <h2>它是什么</h2>
+        <p>PaperTodo 不是任务管理器，也不是知识库。它更接近桌面上的几张纸：一张写当天待办，一张写临时笔记，需要腾出空间时折成胶囊。</p>
+      </div>
+      <div class="feature-list">
+        <article class="feature">
+          <strong>独立纸片窗口</strong>
+          <p>每张纸都是独立无边框窗口，位置、尺寸、置顶和内容会自动保存。</p>
+        </article>
+        <article class="feature">
+          <strong>待办纸</strong>
+          <p>一行一个事项，支持勾选、拖动排序、拖拽删除、多行粘贴和撤销重做。</p>
+        </article>
+        <article class="feature">
+          <strong>笔记纸</strong>
+          <p>普通文本加轻量 Markdown 显示，适合短笔记、临时内容和桌面备忘。</p>
+        </article>
+        <article class="feature">
+          <strong>胶囊模式</strong>
+          <p>纸片可以折叠成小胶囊，并自动停靠到屏幕边缘，需要时点击唤回。</p>
+        </article>
+        <article class="feature">
+          <strong>本地数据</strong>
+          <p>数据保存在程序目录的 <code>data.json</code>，并保留备份文件。</p>
+        </article>
+        <article class="feature">
+          <strong>源码公开</strong>
+          <p>PaperTodo 免费提供，源码公开用于透明、审计和学习参考。</p>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-title">
+        <h2>边界</h2>
+        <p>它刻意不做大而全功能。这个项目的目标是减少桌面临时事项的摩擦，而不是把所有任务都收进一个系统。</p>
+      </div>
+      <div class="manual-grid">
+        <article class="manual">
+          <h3>适合</h3>
+          <ul>
+            <li>当天待办、临时清单、桌面备忘。</li>
+            <li>想要本地保存、无账号、无同步的小工具用户。</li>
+            <li>喜欢便签形态，但需要更顺手的待办和轻量 Markdown。</li>
+          </ul>
+        </article>
+        <article class="manual">
+          <h3>不适合</h3>
+          <ul>
+            <li>团队协作、云同步、提醒、日历和统计。</li>
+            <li>完整 Markdown 编辑器、图片、表格和附件。</li>
+            <li>分类、标签、搜索、归档和集中任务管理页。</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="screens">
+      <div class="section-title">
+        <h2>截图</h2>
+        <p>这些是 PaperTodo 的主要形态：桌面纸片、Markdown 笔记、胶囊、贴边胶囊、设置和外观自定义。</p>
+      </div>
+      <div class="screens">
+        <figure class="screen">
+          <img src="assets/Md.jpg" alt="PaperTodo Markdown 笔记界面">
+          <figcaption>笔记纸：轻量 Markdown 显示与编辑辅助。</figcaption>
+        </figure>
+        <figure class="screen">
+          <img src="assets/Settings.jpg" alt="PaperTodo 设置界面">
+          <figcaption>设置：主题、字体、胶囊、待办和笔记选项集中配置。</figcaption>
+        </figure>
+        <figure class="screen">
+          <img src="assets/Pill_Mode.gif" alt="PaperTodo 胶囊模式演示">
+          <figcaption>胶囊模式：纸片可以折叠，减少桌面占用。</figcaption>
+        </figure>
+        <figure class="screen">
+          <img src="assets/Pill_Plus.gif" alt="PaperTodo 自动贴边胶囊演示">
+          <figcaption>贴边胶囊：自动停靠到屏幕边缘，支持多屏队列。</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section id="download">
+      <div class="section-title">
+        <h2>下载</h2>
+        <p>官方版本以 GitHub Releases 为准。第三方分发版本不代表官方发布，必要时可以核对 SHA256 和签名文件。</p>
+      </div>
+      <div class="download">
+        <article class="download-panel">
+          <h3>PaperTodo v0.0.2 开发版</h3>
+          <p>当前源码版本为 0.0.2。可下载版本以 Release 页面为准；正式 Windows 发布提供自包含 .NET Runtime 与 no-runtime 两种单文件。</p>
+          <div class="actions">
+            <a class="button primary" href="https://github.com/A-LIGE-Z/papertodo/releases">打开 Release</a>
+            <a class="button" href="https://github.com/A-LIGE-Z/papertodo/releases">全部版本</a>
+          </div>
+        </article>
+        <article class="download-panel">
+          <h3>命令行入口</h3>
+          <p>可用 <code>--show</code>、<code>--hide</code>、<code>--toggle</code>、<code>--new-todo</code>、<code>--new-note</code> 等参数配合快捷键工具使用。</p>
+          <div class="actions">
+            <a class="button" href="https://github.com/A-LIGE-Z/papertodo/blob/main/README.md#%E5%90%AF%E5%8A%A8%E5%8F%82%E6%95%B0">查看参数</a>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <span>PaperTodo - Windows desktop paper todo and lightweight notes.</span>
+      <span><a href="https://github.com/A-LIGE-Z/papertodo">GitHub</a> · <a href="https://github.com/A-LIGE-Z/papertodo/releases">Releases</a></span>
+    </div>
+  </footer>
+</body>
+</html>

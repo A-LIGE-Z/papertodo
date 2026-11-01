@@ -1,0 +1,66 @@
+using System.Globalization;
+
+namespace PaperTodo;
+
+public static class PaperTitles
+{
+    // Hard storage cap. Titles are never stored longer than this regardless of the user setting.
+    public const int MaxTitleLength = 40;
+
+    // User-configurable display/edit cap (Settings → 胶囊标题最大字数).
+    public const int DefaultMaxTitleLength = 6;
+    public const int MinConfigurableTitleLength = 2;
+    public const int MaxConfigurableTitleLength = 20;
+
+    public static int NormalizeMaxTitleLength(int value)
+    {
+        if (value <= 0)
+        {
+            return DefaultMaxTitleLength;
+        }
+
+        return Math.Clamp(value, MinConfigurableTitleLength, MaxConfigurableTitleLength);
+    }
+
+    public static string DefaultTitle(string paperType, int number)
+    {
+        var prefix = paperType == PaperTypes.Note ? "笔记" : "待办";
+        return prefix + Math.Max(1, number).ToString(CultureInfo.InvariantCulture);
+    }
+
+    public static string CleanCustomTitle(string? title)
+    {
+        return CleanCustomTitle(title, MaxTitleLength);
+    }
+
+    public static string CleanCustomTitle(string? title, int maxLength)
+    {
+        var cleaned = (title ?? "").Trim();
+        cleaned = string.Join("", cleaned.Where(ch => !char.IsControl(ch)));
+        return TakeTextElements(cleaned, Math.Clamp(maxLength, 1, MaxTitleLength));
+    }
+
+    public static string EffectiveTitle(PaperData paper, int fallbackNumber)
+    {
+        var title = CleanCustomTitle(paper.Title);
+        return string.IsNullOrWhiteSpace(title)
+            ? DefaultTitle(paper.Type, fallbackNumber)
+            : title;
+    }
+
+    public static string CapsuleText(PaperData paper, int fallbackNumber)
+    {
+        return EffectiveTitle(paper, fallbackNumber);
+    }
+
+    private static string TakeTextElements(string text, int maxLength)
+    {
+        var indexes = StringInfo.ParseCombiningCharacters(text);
+        if (indexes.Length <= maxLength)
+        {
+            return text;
+        }
+
+        return text[..indexes[maxLength]];
+    }
+}

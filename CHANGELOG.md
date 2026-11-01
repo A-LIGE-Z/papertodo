@@ -1,927 +1,610 @@
-# RePaperTodo Changelog
+## 版本记录
 
-## Unreleased
+为面向有一定计算机使用基础用户的更新日志，不记录技术细节
 
-## [0.1.1+7] - 2026-08-01
+### 计划 / 待办
 
-- Matched the master capsule's hidden full-content width to PaperTodo's WPF
-  `FormattedText` measurement instead of applying one GDI correction to every
-  language and font. The native bridge now receives the selected preset/system
-  family, measures the chevron and both labels with DirectWrite, and rounds only
-  the complete source formula. Default Chinese and an explicit DengXian system
-  font both produce the source 68px reserve and 51x46 docked viewport. The
-  master label now also uses grayscale DirectWrite Natural rendering with a
-  mirrored -2px left-edge paint correction; active count text moves up one
-  raster row, and the mirrored Symbol glyph uses the same -2px correction.
-  Default idle MAE falls from 6.6202/5.3119 to 1.5332/1.6546 left/right and
-  active MAE to 1.8674/2.0250, while preserving the calibrated curves, hit
-  targets, and collapse/expand behavior.
-- Moved independent Windows paper, Markdown-editor, Todo-item and canvas-block
-  context menus onto an owner-drawn Win32 popup HWND. Long menus now cross the
-  paper-window boundary from the original secondary-click anchor instead of
-  being repositioned by Flutter's Overlay. Captured WPF widths and heights,
-  command baselines, hover surfaces and indented separator rasters are retained,
-  and a scoped CBT hook removes USER32's broad popup shadow while restoring the
-  system menu class during destruction. The Flutter menu remains the
-  widget-test and non-native fallback.
-- Replaced the owner-drawn context menu's primary GDI label path with grayscale
-  DirectWrite Natural rendering at PaperTodo's actual 12px header and 13px
-  command sizes. Each row draws in a local item clip with independent WPF
-  baseline compensation, while GDI remains the failure fallback. Same-anchor
-  rest MAE falls from 6.5703/4.6914/22.1786/4.3628 to
-  3.6238/1.6991/1.9693/0.8081 for dark Paper/Markdown/Todo/Canvas menus and
-  from 8.1421/5.6373/21.6716/5.8676 to
-  3.7817/1.1656/1.8878/0.8590 in light mode.
-- Replaced the Windows tray menu's primary GDI label path with the same
-  source-sized grayscale DirectWrite Natural pipeline, while keeping separate
-  capture-calibrated vertical origins for the 21px app header, 25px command,
-  22px paper-header and 26px paper rows. Every shared reference row now has a
-  zero-shift optimum; weighted full-crop MAE falls from 5.9556 to 0.8150 and
-  ink-only MAE from 55.7771 to 9.7840. The visible-paper check also uses an
-  antialiased Direct2D rounded surface and WPF half-pixel horizontal origin.
-  Both paths retain their prior GDI rendering as a failure fallback, and menu
-  geometry, hit targets, submenu direction and RePaperTodo's additional
-  Toggle-all/Delete-paper commands remain unchanged.
-- Restored PaperTodo's source-native text metrics across Windows paper titles,
-  toolbar actions, todo rows, due badges, settings labels, custom-theme actions,
-  and the settings footer. Removed capture-specific fractional offsets, tracking,
-  and glyph scaling that made the Flutter UI look compressed or unstable while
-  preserving the original control geometry, spacing, and interaction feedback.
-- Fixed a Windows shutdown hang: the native date and reminder-interval picker
-  modal loops pump thread-wide messages and dispatch them to the coordinator
-  window, so a `WM_QUIT` posted while a picker was open (tray "exit" or a
-  forwarded exit startup command) was consumed by `GetMessageW` and never
-  reached the outer run loop, leaving a zombie process that also held the
-  single-instance mutex. Both loops now re-post `WM_QUIT` after they exit.
-- Stopped one-shot PowerShell script capsules from orphaning their child
-  process (and leaking the temp script) when RePaperTodo exits mid-run: the
-  one-shot launch path now assigns the process to a kill-on-close job created
-  suspended and resumed, matching the persistent script capsule path.
-- Refreshed the Windows DirectWrite font collection whenever the settings page
-  enumerates installed families, and made the settings list's right scrollbar
-  explicitly visible and draggable so newly installed fonts appear without a
-  restart and long font lists remain easy to navigate.
-- Hardened the Windows pinned-paper capsule escape path: clicking a pinned
-  paper's proxy now clears desktop pinning and explicitly activates the paper
-  through the foreground input queue, so synthetic/native clicks cannot leave
-  another window in front.
-- Fixed capsule interaction state isolation: the master capsule now changes
-  only the capsule queue without hiding collapsed paper HWNDs, queue drag
-  ordering ignores expanded papers that have no deep-capsule proxy, and the
-  expanded-proxy click action respects the configured click-to-retract option.
-- Fixed paper-header collapse synchronization: collapsing or expanding a real
-  paper now reconciles its Flutter HWND and edge-capsule registry as one
-  serialized operation, so repeated paper/master capsule toggles cannot leave
-  a stale or missing capsule.
-- Isolated Windows policy-smoke data from the user's configured storage path
-  and made persistent PowerShell capsule process trees terminate immediately
-  when RePaperTodo exits.
-- Compressed only the settings author signature's paint layer horizontally by
-  99/103 with a right anchor, preserving its hit target, right edge and source
-  Segoe UI style. Its visible bounds now match `x=675..773`; the footer crop
-  falls from 8.6450 MAE to 5.2134 and the controlled Display page from 1.4087
-  to 1.3860. Letter-spacing and reset-button expansion experiments remained
-  capture-rejected and are not retained.
-- Applied the same smallest raster-effective -0.001px tracking correction to
-  the 11px Todo-spacing and Note-spacing field labels without moving either
-  help glyph or editor. Their crops fall from 3.3801/4.3172 MAE to
-  2.9437/3.4830, and the controlled Display page from 1.4177 to 1.4087. A
-  half-pixel Note-label origin experiment had no raster effect and was removed.
-- Applied the smallest raster-effective -0.001px tracking correction to the
-  Todo-size field label without moving its help glyph or four-way selector.
-  Its crop falls from 2.7842 MAE to 2.3097, the complete selector section from
-  1.2564 to 1.1987 and the controlled Display page from 1.4210 to 1.4177.
-- Applied the smallest raster-effective -0.003px tracking correction to the
-  fullscreen-handling field label without moving its help glyph or selector.
-  Its crop falls from 7.1015 MAE to 6.0720, the complete selector section from
-  2.1517 to 2.0263 and the controlled Display page from 1.4283 to 1.4210.
-- Calibrated the mixed Latin/CJK `Markdown display` field label independently
-  with -0.02px tracking and a +1px local WPF paint origin. Its help glyph and
-  selector remain fixed. The label crop falls from 7.0405 MAE to 3.6146, its
-  complete selector section from 1.8319 to 1.4071 and the controlled Display
-  page from 1.4525 to 1.4283.
-- Moved only the installed-font TextField's editable text upward through
-  `TextAlignVertical(y: -0.4)`, preserving the exact field, suffix-chevron and
-  pointer geometry. Horizontal-padding compensation was capture-rejected and
-  reverted. The text crop falls from 19.4863 MAE to 17.2571, the complete font
-  field from 2.7083 to 2.4034 and the controlled Display page from 1.4630 to
-  1.4525.
-- Applied the smallest raster-effective -0.005px WPF tracking correction to
-  the 11px system-font field label without moving its already-aligned help
-  glyph or row. Its crop falls from 4.4403 MAE to 3.1799, the complete font row
-  from 2.2005 to 2.0470 and the controlled Display page from 1.4717 to 1.4630.
-  A 12.5px secondary theme-action experiment regressed and was reverted.
-- Restored the custom-theme field label from the generic 12px Material label
-  to PaperTodo's 11px field hierarchy and applied the smallest raster-effective
-  -0.01px tracking correction. Its height now matches the reference and its
-  crop falls from 16.0691 MAE to 8.0330; the full theme-color region falls from
-  8.6146 to 6.9780 and the controlled Display page from 1.5252 to 1.4717.
-- Scaled only the custom-theme primary action label vertically by 12/11 with
-  a local -0.5px paint origin, preserving the exact 76x27 button and hit area.
-  The secondary action's scale experiment regressed and was reverted. The
-  primary-button crop falls from 10.9637 MAE to 5.9010, the theme-color region
-  from 9.3814 to 8.6146 and the controlled Display page from 1.5502 to 1.5252.
-- Shifted the settings custom-theme current-value label left 1px independently
-  from its exact swatch, buttons and row layout. The visible label now matches
-  the reference `x=248..335` bounds; its crop falls from 35.7512 MAE to
-  25.8897, the complete theme-color region from 10.6684 to 9.3814 and the
-  controlled Display page from 1.5923 to 1.5502. A heavier weight produced an
-  identical fallback-font raster, so source-semantic SemiBold is retained.
-- Split the native reminder message into clipped WPF paint layers without
-  changing its wrapping width or text. The first visual line retains its
-  already-exact origin; subsequent lines move up 1px to reproduce WPF's line
-  advance. First-line output is unchanged, second-line MAE falls from 13.5369
-  to 1.9833, the message crop from 10.2934 to 4.0482 and the complete reminder
-  dialog from 2.9293 to 2.0809.
-- Shifted only the reminder-unit label right 1px and moved that selector font
-  to WPF-like grayscale antialiasing; the due numeric controls retain their
-  separately calibrated ClearType font. The unit text crop falls from 12.2798
-  MAE to 9.0008, its complete selector from 3.4443 to 2.6616 and the reminder
-  dialog from 2.9671 to 2.9293.
-- Recalibrated only the due picker's hour/minute text boxes: their numeric
-  paint boxes move up 3px and use 1px inter-character compensation, while the
-  already-aligned reminder-unit label remains untouched. Hour-region MAE falls
-  from 7.5071 to 3.8339, minute from 5.7361 to 2.9060, the focused numeric
-  text crop from 11.0721 to 5.1642 and the complete due dialog from 2.0371 to
-  1.9023.
-- Embedded the authoritative 20x18 WPF light DatePicker calendar raster in the
-  Windows runner and scale it with the native dialog DPI. The dark picker
-  retains its palette-derived vector fallback. At 96 DPI the calendar crop is
-  pixel exact (25.4884 MAE to 0.0000), the date region falls from 5.5108 to
-  2.9215 and the complete due dialog from 2.2085 to 2.0371.
-- Replaced the native picker selectors' low outline-V chevrons with the
-  source-shaped filled 5x5 down triangles. Hour, minute and reminder-unit
-  arrows now share the reference visible bounds and vertical origin. The due
-  chevron crop falls from 8.2383 MAE to 6.1133 and its dialog from 2.2212 to
-  2.2085; reminder chevron MAE falls from 7.4306 to 5.5313 and its dialog to
-  2.9671. Larger-title experiments regressed both dialogs and were reverted.
-- Moved both native picker action-label paint boxes down one logical pixel
-  without changing their 64x26 buttons or pointer targets. This matches the
-  reference button glyph baselines in both dialogs. Due button-region MAE
-  falls from 6.1512 to 3.4323 and the whole dialog from 2.6072 to 2.2212;
-  reminder buttons fall from 8.0322 to 3.6890 and the dialog to 2.9748.
-  A character-spacing expansion was capture-rejected and fully reverted.
-- Switched only the native due/reminder action-button fonts from RGB ClearType
-  to WPF-like grayscale antialiasing. Title, body, numeric and selector fonts
-  retain their capture-proven ClearType rendering. Button-region MAE falls
-  from 6.9211 to 6.1512 in the due picker and from 9.2088 to 8.0322 in the
-  reminder picker; complete-dialog MAE reaches 2.6072 and 3.4282 respectively.
-- Replaced the native reminder value field's mismatched Win32 focus capture
-  with PaperTodo's 23px WPF raster: exact `#569DE5` perimeter, 21px backing
-  edit and a light-only `#95C1DC` full-selection painter that preserves the
-  real editable control and keyboard behavior. The focused value crop falls
-  from 13.1998 MAE to 1.2424 and the complete 326x216 dialog from 4.4226 to
-  3.5510; ordinary/partial selections and dark mode retain native painting.
-- Reproduced WPF's selected light date editor inside the native due picker
-  instead of tinting the complete 158px DatePicker surface. The local white
-  edit strip, exact `#99C9EE` selection, `#D5C8B0` frame and calibrated text
-  baseline leave the calendar-button area on the paper surface. Date-region
-  MAE falls from 15.3369 to 5.5108 and the complete 354x242 dialog from
-  3.3451 to 2.6948; dark-mode selection behavior is unchanged.
-- Recalibrated the settings top-bar-button labels without moving their marks,
-  help targets or rows. A 1px left-origin correction plus WPF-like -0.075px
-  tracking matches the reference `x=205..306` visible bounds; the focused
-  label crop falls from 20.2553 MAE to 19.1200 and the controlled Display page
-  from 1.5987 to 1.5923.
-- Calibrated the light Note status-bar separator independently from its
-  already-matched surface and mode pill. Its 25/255 tint reproduces the
-  reference `#E0CEA7` raster color, lowering the full 440x420 Note capture
-  from 3.2243 MAE to 3.2197 without changing the 26px layout or dark theme.
-- Replaced Material's undersized settings dropdown icon with a dedicated WPF
-  filled chevron painter. Its 18px layout slot and 30px suffix hit area stay
-  unchanged, while the visible triangle matches the reference 10x5 bounds
-  `x=743..752, y=282..286`. Integer-snapped top coverage lowers the arrow crop
-  from 22.3690 MAE to 1.3492 and the full font-dropdown crop from 2.6160 to
-  0.4362; compact settings dropdowns share the same source glyph.
-- Applied the same -0.5px/+0.5px WPF paint origin to settings group headings
-  and field labels while leaving help glyphs and control geometry fixed.
-  Todo/Notes settings MAE falls from 2.0991 to 2.0025, Display from 1.6510 to
-  1.6017, General from 2.7551 to 2.6297 and Capsules from 1.5705 to 1.5623.
-  Capsule glyph size/offset experiments were capture-rejected and fully
-  reverted, preserving the prior best capsule rendering.
-- Applied a shared -0.5px WPF paint origin to settings checkbox titles while
-  leaving their 16px marks, 8px gap, help icons and hit targets unchanged.
-  The separately calibrated top-bar-button labels compensate locally. Enabled
-  Todo/Notes labels now begin on the reference `x=204`; page MAE falls from
-  2.1921 to 2.0991, General from 2.8232 to 2.7551, Capsules from 1.6342 to
-  1.5705 and Display from 1.7179 to 1.6510.
-- Matched WPF's checked-settings-box background inset independently from the
-  unchanged 16x16 unchecked border and hit target. Whole-pixel snapping keeps
-  the active fill on the exact `x=182..193, y=96..107` 12x12 bounds while the
-  source check path remains untouched. Todo/Notes settings MAE falls from
-  2.2063 to 2.1921, General from 2.9321 to 2.8232 and Capsules from 1.7370 to
-  1.6342.
-- Unified the Windows settings shell's source padding to 16/14/16/16 instead
-  of splitting its right inset between the shell and content. Form geometry
-  stays fixed while the close surface returns to the WPF title grid. Local
-  title and close-glyph paint origins plus capture-calibrated title tracking
-  lower title MAE from 6.8778 to 2.2874, close-region MAE from 1.2506 to
-  0.6608 and the complete header from 1.5974 to 0.5486 without changing drag
-  or click hit targets.
-- Corrected the settings content right inset from 14px to 13px, matching the
-  source `x=762` right edge across segment selectors, fields, buttons and all
-  help glyphs while leaving the scrollbar fixed. The custom-theme label alone
-  receives a +2px WPF paint-origin correction, aligning its help glyph to
-  `x=749..758, y=163..172` without moving the already-exact swatch. Display
-  settings MAE falls from 1.9935 to 1.7179 (form crop 2.1021 to 1.8525),
-  Capsules from 1.8532 to 1.7370 and General from 3.1091 to 2.9321.
-- Aligned the settings navigation group to WPF's paint origin and restored
-  the separator's source 55%-opacity paper-border composite. The selected
-  Display item now matches `x=17..150, y=59..92`; the divider matches
-  `x=163, y=59..673`, its `#EEE1C6` color and all 615 source pixels exactly,
-  reducing the divider crop to 0.0000 MAE. The pure-English author signature
-  explicitly retains PaperTodo's Segoe UI-first family.
-- Restored PaperTodo's fixed WPF scrollbar resources globally: rest uses
-  `#B39B74` at 34% opacity, hover uses `#96784F` at 54%, and drag uses the
-  same hover color at 64%. The settings scrollbar also reproduces the source
-  9px main-axis and 3px cross-axis margins, matching the reference
-  `x=768..772, y=61..626` bounds and primary pixel count. Its crop falls from
-  15.7650 MAE to 0.0056 and the Display page reaches 1.9782 in the controlled
-  capture. Long-note scrollbar color now matches the same reference pixel
-  exactly without changing its scroll extent.
-- Restored PaperTodo's exact bilingual wording for the settings top-bar
-  controls (`Show new todo/note button` and `显示新建待办/笔记按钮`). Their
-  scroll-region text receives a local WPF paint-origin/tracking correction
-  without changing the shared checkbox style. The visible label crop falls
-  from 14.4809 MAE to 10.9107 and the full Display settings capture from
-  2.2797 to 2.2248 while the theme swatch remains pixel exact.
-- Removed anti-aliased clipping from the 58x42 settings theme swatch. Its
-  WPF square border and fill now match every pixel in the reference crop,
-  reducing that crop to 0.0000 MAE and the full Display settings capture from
-  2.4208 to 2.2797.
-- Restored the WPF-style light gradient on the native Windows due-time hour,
-  minute and reminder-unit selectors. The reminder selector now paints a
-  23px control inside a 27px cover surface, hiding the underlying Win32
-  ComboBox shadow that previously leaked below it. Due-dialog MAE falls from
-  3.4818 to 3.3451 (selector crop 6.5102 to 4.4200), while reminder-dialog MAE
-  falls from 4.8353 to 4.4226 (selector crop 10.9352 to 3.2398).
-- Calibrated fenced-code row joins separately for the opening, middle and
-  closing visual lines. Their backgrounds now accumulate WPF's fractional
-  line origins without moving the code text or changing layout height, and
-  the light border uses the capture-equivalent 69/255 tint instead of the
-  source alpha's darker Flutter composite. The focused code crop falls from
-  3.6370 MAE to 2.0563 and the full 440x420 Note capture from 3.4024 to
-  3.2243.
-- Snapped the Markdown heading underline to WPF's actual raster row without
-  moving the already-aligned heading text, fill or document flow. The default
-  440x420 heading crop falls from 13.2577 MAE to 3.9864, its underline-only
-  crop falls from 48.4015 to 0.1910, and the full capture falls from 3.8576
-  to 3.4024.
-- Extended Markdown code backgrounds independently of their already-aligned
-  text. Each fenced row now bleeds one raster pixel above and below its local
-  preview line box, matching the reference block's `y=281..331` extent while
-  preserving text origins, wrapping and scroll height. In the focused code
-  crop, MAE falls from 4.6960 to 3.6370.
-- Refined the Note status mode pill after separating text and fill error. Its
-  light fill now uses the capture-equivalent 33/255 tint (the resulting pixel
-  is `#EAE0CC` versus WPF `#E9E0CC`) and the two-character label uses 0.7px
-  Display tracking while retaining the 42px slot and exact vertical origin.
-  Status-region MAE falls again from 5.5392 to 5.5121; blank status-bar areas
-  remain effectively identical.
-- Tightened Markdown block surfaces after the text metrics pass. Heading and
-  quote fills now use 1px/8px left/right insets, quotes trim one trailing
-  raster row with a 4px radius, and code fills use 4px/11px insets so their
-  1px border no longer leaks left while the right edge remains fixed. These
-  geometry corrections lower the same Note-body MAE further from 4.5148 to
-  4.4759 and are shared by every preview palette.
-- Matched the default Note preview's WPF visual-line origins without changing
-  document flow, wrapping or scroll extent. H1 paints at -1px/+2px; quotes at
-  -1px/0; the first item in each list run at 0/-2px; code fences and code rows
-  at 0/-2px. Element-specific Display tracking is -0.09px for paragraphs,
-  +0.05px for quotes, -0.075px for lists and +0.4px for Cascadia code. The
-  same-data 440x420 capture now matches the H1, first-list and code bounds
-  exactly; quote ends within 1px and paragraph within 1px. Note-body MAE falls
-  from 6.9290 to 4.4759 while long wrapping, link hit testing and editor/preview
-  viewport behavior remain covered.
-- Calibrated the Note paper grid and status typography against the 440x420
-  v2.27 capture. The 24px grid now uses the source phase (vertical +1px,
-  horizontal -1px), a crisp one-pixel raster and WPF coverage-equivalent
-  18/255 light and 24/255 dark line alpha; visible light grid pixels differ
-  by at most one channel level. Status statistics use a +2px/-2px WPF origin
-  with 0.05px tracking, matching the reference `x=72..176, y=393..403`
-  bounds, while the zoom field moves up 1px. Status-region MAE falls from
-  7.4073 to 5.5392 without changing the 42px mode pill, 38px zoom slot or
-  narrow-width ellipsis layout.
-- Aligned the title-leading `☑` / `✎` topmost glyphs to WPF without replacing
-  their scalable font rendering. A shared +1px/+1px content-origin correction
-  makes the inactive Todo glyph occupy the exact reference
-  `x=23..32, y=23..31` bounds while preserving 0.58 rest opacity, hover,
-  active SemiBold weight and DPI scaling. Todo leading-region MAE falls from
-  6.8807 to 2.2503 light and 4.7416 to 1.3978 dark; the same correction lowers
-  the 440px Note leading region from 4.3716 to 3.2138.
-- Calibrated the remaining source Symbol actions independently instead of
-  moving their 28x24 hit slots. `＋✓` now uses a -1px/+1px paint origin and
-  -0.5px pair tracking; `＋✎` uses the same origin with -0.75px tracking; the
-  collapse `─` uses a -1px/+1px origin and now occupies the exact reference
-  eight-by-two pixel grid. Light/dark MAE falls to 3.5468/2.7212 for New Todo,
-  2.0558/1.5727 for New Note, and 0.2990/0.2501 for collapse, while button
-  geometry, hover feedback and responsive breakpoints remain unchanged.
-- Restored PaperTodo's exact standalone title-row vertical allocation and
-  desktop-pin rasterization. The header now uses the source `6,5,8,1` inset
-  distribution instead of centering its six vertical pixels, while the title
-  text compensates internally so its already matched glyph bounds do not
-  move. The unchanged source `pin.png`/`unpin.png` assets now use 15px low
-  filtering and a -2px WPF content-origin correction rather than a blurred
-  medium-quality mipmap. Their visible bounds match `x=152..162, y=18..32`;
-  pin-region MAE falls from 12.7773 to 0.1945 light and 2.7072 to 0.3662 dark.
-- Corrected the standalone Todo checkbox's WPF corner geometry. The Flutter
-  painter previously subtracted half the 1.5px stroke from the declared 4px
-  radius a second time, producing a visibly square outline. Its inset stroke
-  centerline now uses the capture-calibrated 4.75px radius while preserving
-  the source 16px extent, colors and checked/hover paths. In the 280x340 rest
-  capture, checkbox-region MAE falls from 3.2836 to 1.9979 light and from
-  2.4664 to 1.5295 dark.
-- Calibrated Todo editor content origins without changing row or wrapping
-  widths. Main columns now redistribute the source-equivalent 4px horizontal
-  and 6px vertical padding to compensate for Skia's different Segoe UI side
-  bearing/baseline; extra columns apply the same 2px/1px correction while
-  preserving their total insets. A -0.0625px WPF Display tracking correction
-  keeps Latin advances aligned without touching the separately calibrated
-  DengXian path. In fresh 280x340 captures, the Todo-row MAE falls from
-  3.5468 to 2.1121 in light mode and from 4.2212 to 2.0770 in dark mode;
-  long multi-column, due-row and all four visual-size layouts still pass.
-- Calibrated compact Windows paper titles against the same-size v2.27
-  captures instead of accepting Flutter's default font origin. Static and
-  editable title layers now share the WPF Display-style 1px horizontal/3px
-  vertical paint offset and -0.1px tracking, so switching into title editing
-  cannot jump. `Todo1` now occupies the reference `x=44..71, y=22..29` dark
-  glyph bounds; title-band MAE fell from 5.9994 to 3.4789 in dark mode and
-  from 7.5104 to 5.3681 in light mode.
-- Reproduced PaperTodo's native bottom-right resize grip pixel-for-pixel.
-  The previous six solid Flutter squares are replaced by the source Windows
-  four-row triangular grid with ten 2x2 points and its exact four-channel
-  cool gray-blue antialias palette. A fresh 280x340 dark capture now matches
-  all 40 reference grip pixels with zero channel error.
-- Rebuilt the WebDAV settings page with PaperTodo's native settings rhythm
-  instead of Material form chrome. Endpoint, remote path, credentials,
-  passphrase and timing values now use 11px label-first rows with exact 28px
-  rounded fields, no decorative prefix icons, compact 34x26 secret toggles,
-  source-like focus/error borders and the same 0.55 disabled treatment as the
-  rest of the settings window. Existing validation, password visibility,
-  preset selection and keyboard behavior are preserved.
-- Removed the last narrow-window Material form fallback from settings choice
-  controls. Theme, Markdown, reminder-unit and WebDAV provider selectors now
-  retain PaperTodo's external 11px label and 28px bordered control at compact
-  widths, without floating labels or decorative prefix icons. The custom
-  theme swatch also restores the source WPF button's square 58x42 outline.
-- Matched the native Windows due-time and reminder interval pickers to
-  PaperTodo's configured UI font chain. Chinese defaults now use Microsoft
-  YaHei UI while date and interval numerals retain Segoe UI metrics; explicit
-  system, preset and runtime fonts are forwarded consistently from Flutter.
-  Native title sizing and content origins were recalibrated against v2.27,
-  and the picker color bridge now uses WPF's separately rounded 8-bit alpha
-  premultiplication so light and dark input/button surfaces keep their source
-  pixels across all palettes.
-- Removed the Windows 11 white non-client frame around expanded papers and
-  restored PaperTodo's restrained outer depth with a dedicated non-activating,
-  click-through per-pixel-alpha shadow HWND. Expanded Flutter papers no longer
-  stack a second framework shadow, their 18px shell uses a hard outer clip, and
-  four 1px color-key guards remove the dark antialias fringe at the inner edge
-  of the 8px transparent chrome. Real desktop-composited light/dark captures
-  now match the v2.27 shadow edge within 0-2 channel levels. The shadow follows
-  move, resize, theme, visibility, capsule, desktop-pin and topmost changes and
-  is excluded from covered-window detection.
-- Hardened capsule and fullscreen window policy around the new native chrome.
-  Fullscreen detection now accepts DWM-visible or raw windows that cover the
-  monitor even when an invisible resize frame extends beyond it, and collapsed
-  papers revoke `WS_EX_TOPMOST` before policy hiding. The capsule's existing
-  26px leading drag target also exposes a native caption hit so Windows can
-  start movement without depending solely on a Flutter pointer callback.
-  Windows policy smoke now ignores shadow hosts, waits for stable 34px-or-wider
-  master capsules, preserves failure LOG/state artifacts and verifies queue
-  expansion, proxy routing, reminder hover, fullscreen restore, geometry
-  stability, cross-edge drops, tray recovery and long-running scripts.
-- Restored PaperTodo's 8px rounded pointer surface inside Windows paper,
-  Todo-item, Markdown and canvas context menus. Flutter no longer paints a
-  rectangular Material state layer behind compact commands, and mouse-down no
-  longer stacks a second tint over the existing hover color. Paired real-window
-  captures now show zero changed pixels between hover and press, matching the
-  v2.27 reference; all four palettes in light and dark are covered by widget
-  tests. A 220px Chinese Jianguoyun authentication failure also verifies that
-  long feedback and its Retry action remain inside the paper and reflow onto
-  separate rows.
-- Calibrated PaperTodo's legacy Windows font presets with real Chinese
-  reference captures. YaHei now reuses the source-identical default Windows
-  chain instead of triggering Skia's wider explicit fallback, while DengXian
-  keeps its selected glyphs with a `12.5/13` WPF Display-mode advance
-  correction and unchanged line-box height. Compact recovery rows now cap long
-  snapshot paths at three ellipsized lines, and automated focus checks cover
-  the restore-list and restore-confirmation Tab loops.
-- Corrected Markdown enhanced-preview list geometry against PaperTodo v2.27:
-  hidden `- ` markers use the source-width span, bullets are centered on the
-  first visual line after wrapping, and long list items now break at the same
-  words as the reference. Canvas overlays now honor the source 2px/1px inner
-  border origin, and code-block chrome restores PaperTodo's fixed `CODE`,
-  `层 N`, `顶层 N`, and `CODE · 层 N` labels in every locale.
-- Completed another Windows long-content parity pass. Todo papers now show the
-  same always-visible auto scrollbar when their rows overflow, with the source
-  7px end margins and edge placement; long multi-column rows vertically center
-  shorter columns, checkboxes and drag handles against the tallest wrapped
-  column, and every extra column remains transparent instead of inheriting a
-  generic text-field fill. Long Markdown preview and editor views now expose
-  the same automatic scrollbar and retain their viewport when switching modes.
-  Title editing no longer paints the static title underneath the focused text
-  field, eliminating the doubled text weight and transition flash.
-- Recalibrated Note canvas block depth against real v2.27 pixels. Resting
-  single-layer blocks no longer carry Flutter's oversized gray blur halo;
-  selected and top-layer blocks keep a restrained depth cue while edge blocks
-  remain clipped by the paper page exactly like PaperTodo.
-- Calibrated all three Windows capsule rendering paths against PaperTodo
-  v2.27 captures. Ordinary Todo/Note capsules now use source-matched title and
-  symbol baselines; expanded-paper native proxies apply the WPF/GDI advance
-  corrections and measure `102/106/100x46` for the shared `Todo1` fixture,
-  while their resting visible slices match `62/65/59x46`. Native proxy text
-  uses grayscale antialiasing and the weak-text icon color. Collapsed deep
-  capsules now animate their edge reveal over the same 220ms/180ms ease-out
-  durations as native proxies instead of jumping horizontally; real HWND
-  sampling verifies both paths reveal exactly 20px and return to the screen
-  edge with zero endpoint error.
-- Unified Flutter fallback feedback with PaperTodo's paper language. Undo,
-  sync and error snack bars now use the active paper surface, palette border,
-  body text and Active action color instead of Material's dark floating bar.
-  Confirmation and recovery dialogs now use PaperTodo's lighter 24/26px
-  floating shadow, while the fixed paper-limit dialog retains its source 18px
-  compact shadow. Windows native reminder bubbles keep their existing
-  source-matched rendering and behavior.
-- Recalibrated Windows paper, Markdown and canvas context menus against the
-  original PaperTodo pixels. Desktop command rows now use the source 21px
-  visual rhythm and 17px section headers, standalone separators use 7px, and
-  canvas menus no longer insert a separator directly below their title. Menu
-  headers blend weak text at 72% (`#AB9D88` in the warm light palette), disabled
-  commands blend body text at 72% (`#6C6357`), and pressed menu feedback stays
-  on the same 32/48-alpha hover surface as PaperTodo.
-- Reconciled the Windows tray menu with PaperTodo's native footprint. The
-  owner-drawn shell now measures 194px on a 96-DPI desktop (the source menu's
-  190px minimum plus its native shell), uses the source compact text metrics
-  and 72% disabled-header weak color, and renders paper titles without a
-  duplicated type prefix. Todo, Note and script paper rows now use the source
-  `✓`, `✎` and `⚡` symbols. GDI text now uses grayscale antialiasing instead of
-  colored ClearType fringes on the popup, checked rows use the source 0.92
-  active fill, and a menu-lifetime chrome worker applies the 10px rounded
-  region after Win32 creates each real menu/submenu window. The required
-  Toggle-all and Delete-paper commands remain available in the RePaperTodo
-  menu.
-- Replaced the remaining classic Win32 field chrome in the native Todo due
-  and reminder dialogs with PaperTodo-matched surfaces. The due picker now
-  keeps the original full-date selection, compact `15` calendar glyph and
-  WPF-like hour/minute combo appearance while retaining the system calendar
-  and drop-down lists underneath. The reminder interval editor now uses the
-  source blue focus border and matching unit selector without changing its
-  native keyboard and selection behavior.
-- Restored PaperTodo's compact due-time badge rendering on Windows. Chinese
-  relative durations now use the original day/hour/minute wording without
-  added spaces, both relative and absolute badges size to their text instead
-  of reserving a wide empty slot, the absolute badge again paints its Tint
-  surface, and its press state uses the source 0.72 whole-badge opacity.
-  Narrow Windows papers no longer hide the relative badge, and ordinary,
-  short-year and full-year dates use the source `M/d`, `yy年M/d` and
-  `yyyy年M/d` labels.
-- Matched PaperTodo's multi-column Todo row geometry in real Windows captures:
-  the active 14/14/16/19px reorder handles now sit inside the original
-  18/18/20/23px trailing grid slots, restoring the text-column width previously
-  lost by 4px. Column separators now use one non-antialiased PaperBorder pixel
-  at 0.9 opacity with exact 4px vertical insets instead of a rounded 72%-height
-  line, and the `≡` glyph uses PaperTodo's Segoe UI Symbol family.
-- Matched the Windows resize affordance to PaperTodo's system-style cool
-  blue-gray grip across light and dark paper themes, instead of tinting the
-  grip with each paper's active accent color.
-- Restored PaperTodo's source-width Todo canvas and capsule title metrics:
-  independent Todo rows and the append area now use the original compact
-  horizontal insets, while capsule icons use their rendered advance width so
-  short titles no longer ellipsize early without shrinking the drag target.
-- Restored the paper shell's full palette border color instead of applying a
-  second transparency pass that made every light and dark paper outline too
-  faint.
-- Corrected the Windows title-bar divider compositing so it matches the
-  original paper-over-tint pixel color rather than darkening twice over the
-  already tinted title background.
-- Restored PaperTodo Markdown's natural font-metric line height: note preview
-  lines now use the configured spacing as a minimum, so blank lines, quotes,
-  lists and fenced code keep the original vertical rhythm.
-- Matched the captured Note page's horizontal rhythm without narrowing its
-  text viewport: content starts two pixels farther from the binding line while
-  heading, quote and code backgrounds end eight pixels before the text edge.
-  Preview body clicks and inline links retain separate gesture handling.
-- Replaced the Windows runner's estimated capsule title width with DPI-aware
-  GDI measurement using the active PaperTodo UI font. Normal Todo, Note and
-  script capsules now match v2.27's captured `93x46`, `97x46` and `91x46`
-  geometry for the same `Todo1` title, while short titles retain the original
-  76px minimum.
-- Refined the Windows paper chrome and capsule glyph language against the
-  current PaperTodo source. Title-bar creation actions now use the original
-  compact `＋✓` / `＋✎` symbols with 32/48-alpha hover feedback instead of
-  heavier Material creation icons. Normal capsules now keep the source 12px
-  radius, 21px hide area, 0.08 shadow, `✓` / `✎` / `⚡` type glyphs and 18px
-  `×`; native deep-capsule proxies distinguish Note and script papers with the
-  same glyphs at DPI-scaled 13/15px sizes. Deep capsules now mirror the original
-  30px edge-side close area, keep close hover/press feedback independent from
-  the paper action, derive every native palette and custom accent exactly, and
-  measure the selected Windows font plus symbol glyphs through GDI before
-  applying the original 34/54px resting/hover reveal limits.
-- Restored PaperTodo's original 15px `pin.png` / `unpin.png` title-bar assets
-  and their 0.72 inactive opacity. Legacy YaHei and DengXian presets now keep
-  `Segoe UI` first and use the source-ordered CJK fallbacks, preserving the
-  original Latin label and control metrics.
-- Removed non-source hover interpolation from the Windows title host and Todo
-  rows, keeping pointer feedback immediate while retaining PaperTodo's timed
-  completion, insertion, deletion and capsule geometry transitions.
-- Replaced the remaining Material glyphs in Windows Todo append/trash and
-  compact linked-note controls with PaperTodo's original symbol-font glyphs,
-  sizing, and script-label spacing.
-- Separated PaperTodo's default note content typography from UI chrome:
-  Markdown and non-code canvas text now use the original Microsoft YaHei
-  UI-first content chain while titles, menus and controls keep UI metrics.
-- Matched Windows title-button pointer states exactly: hover now promotes weak
-  symbols to paper text, and press uses PaperTodo's 0.7 whole-button opacity
-  over the same hover tint without a Material ripple or stronger state layer.
-- Replaced the Windows Todo Material checkbox with PaperTodo's exact 16px
-  rounded checkbox, source check-path geometry, 1.5px border and independent
-  unchecked/checked hover colors.
-- Replaced Material settings checkbox tiles and the close icon with
-  PaperTodo's compact 16px source-path toggle rows, 0.55 disabled state and
-  28x24 `×` hover/Active close-button treatment.
-- Restored all 40 PaperTodo settings explanations with the original Chinese
-  and English resource text, trailing 18px `ⓘ` controls, 200ms hover delay and
-  20-second tooltip duration. Help controls remain usable for disabled options
-  and no longer share a toggle's click target.
-- Replaced the remaining desktop Material settings choices with PaperTodo's
-  28px equal-column segment selector and rebuilt the title-length stepper at
-  its exact 28px/34px metrics. Settings pages now use the source navigation and
-  group wording without page-top dividers; hotkey, line-spacing, reminder and
-  extension editors use source-sized label-first fields and separate compact
-  actions. Reminder-off and relative-date modes no longer disable settings the
-  original app leaves editable. The source `Designed by trigger` footer again
-  has its hover state, URL tooltip and platform-routed click action.
-- Matched PaperTodo's Todo append/trash transformation and row state details:
-  the footer now uses the original tint and danger alpha levels, glyph sizes,
-  margins and highlighted 1.5px border; multi-column rows no longer gain an
-  extra bottom inset; completed rows settle at 0.75 opacity with the original
-  full-column 1.35px completion rule; and due badges use the source 10-minute
-  urgency threshold, compact padding, minimum metrics and hover colors without
-  truncating the absolute date. Todo checkboxes now keep the source fixed 16px
-  size and 1.5px/4px outline, the right drag handle uses the compact 0.48/0.78
-  `≡` treatment with whole-row 0.25 drag feedback, and linked-note buttons use
-  the source checkbox-column sizing plus exact rest, hover and press states.
-  Their single/multiline title metrics now follow the rendered Todo line count,
-  including automatic wrapping, with stable hysteresis at the 44/50px boundary.
-- Restored PaperTodo Note toolbar/status density: the canvas toolbar is 31px
-  with a 28x24 `{}` action, source 13px weak-text/hover/0.7-press states and
-  one-line element counts; the 26px status bar keeps its 42px mode pill and
-  38px zoom field, with scale-down protection for narrow fonts so `100%` never
-  grows the bar.
-- Restored the current PaperTodo Windows title bar at its real default widths:
-  the leading topmost control now uses PaperTodo's exact `☑` Todo and `✎` Note
-  symbols with the original weak 0.58/hover opacity; the 38-86px title host keeps
-  its bottom divider, asymmetric padding and hover paper tint; action buttons
-  regain their one-pixel gaps and source order. The 220px Todo now retains
-  desktop pin, new Todo, new Note and collapse exactly like v2.27, while the
-  190px stress width still keeps only collapse/hide. The added sync button sits
-  to the left of the complete PaperTodo action group, so appearing at 280px does
-  not move the source controls away from the right edge. Notes use a separate
-  fit threshold: 280px preserves the full source title/actions without sync,
-  while the default 320px Note has room for the extension without truncation.
-- Replaced the generic rendered Markdown preview with PaperTodo's source-first
-  note renderer. Basic mode keeps active-color syntax markers; Enhanced preview
-  fades syntax, hides quote/list markers and redraws list bullets while keeping
-  the original source selectable. Heading typography, inline emphasis, links,
-  source-like images/tables, horizontal rules, quotes and fenced code now use
-  the current PaperTodo metrics and semantic colors. The editable source uses
-  the same syntax model, falls back to native spans during IME composition, and
-  keeps full-line quote/code backgrounds aligned while the editor scrolls.
-- Split the Flutter theme into PaperTodo's original semantic colors instead of
-  reusing Material `primary` for every accent: Active, Tint, Danger, Link,
-  CheckBox and QuoteBorder now retain their independent light/dark values and
-  custom-accent derivation. Paper headers, Todo hover/drop/append/link/due
-  surfaces, Note canvas chrome, Markdown links/quotes/code, completed Todo
-  text, reminder bubbles, settings navigation and checkbox interaction states
-  now consume the same bases and alpha levels as the current PaperTodo source.
-- Corrected Note paper chrome to the current PaperTodo source: the status bar
-  now keeps its fixed 42px mode pill and read-only 38px zoom field, non-default
-  zoom exposes a separate 10.5px/55%-opacity reset overlay, and even 72x48
-  canvas blocks retain their real editor instead of becoming a one-line
-  summary. Canvas block fonts, header/badge padding, and directional
-  light/dark layer shadows now use `NoteTypography` and
-  `AppUi.NoteCanvasElementShadow` metrics; the note page also restores the
-  source 24/12/14/12 content margins, 104/88 binding tint and separate
-  28/34 canvas-border tint without double-padding Markdown preview content.
-- Restored PaperTodo's Todo-row motion language: newly inserted rows now fade
-  and rise over 250 ms, multi-line paste rows use the original 40 ms stagger
-  with separate 200/220 ms fade/slide timing, single deletes fade and slide
-  right over 200 ms, and Clear completed uses the source 30 ms stagger with
-  180 ms departures while applying data and undo state immediately.
-- Rebuilt the Windows settings host as PaperTodo's transparent borderless
-  paper window: its 672-792 by 520-720 logical sizing now follows monitor DPI,
-  it stays out of the taskbar and window switcher, supports native edge/corner
-  resizing and title dragging, and no longer leaves an opaque system-window
-  canvas around the rounded settings sheet. The coordinator now intercepts
-  non-client layout and paint before Flutter can restore the creation-time
-  caption, clears stale native titles on every reveal, and fills the 8px
-  shadow chrome with the active paper color so the settings page is a single
-  rounded sheet rather than a sheet inside a blue system frame.
-- Restored PaperTodo's 8px transparent shadow chrome around standalone paper
-  HWNDs and 30px capsule bodies inside their 46px hosts, with native paper and
-  capsule metrics now scaled from logical pixels on the active monitor.
-- Reorganized the settings window to match PaperTodo's current Display,
-  Todo/Note, Capsule and General grouping, removed inactive/internal controls
-  from the visible UI, replaced Material sliders and selected-segment marks
-  with compact PaperTodo fields and steppers, removed decorative toggle icons,
-  and made both English and Chinese layouts fit the 560x360 minimum window.
-- Replaced every remaining default Flutter alert surface with the shared
-  rounded paper dialog shell, including cross-platform due, reminder and color
-  picker fallbacks.
-- Replaced the Windows custom-theme HSV popup with PaperTodo's native expanded
-  color chooser, rebuilt delete/recovery/canvas-geometry dialogs as rounded
-  paper surfaces, made long settings choices switch to compact selectors based
-  on their real available width, and aligned menu hover/focus feedback with the
-  original light/dark tint strengths.
-- Replaced the default rectangular Windows tray menu with a PaperTodo-style
-  owner-drawn menu: compact 24px rows, 22px headers, custom 13px visibility
-  checks and paper icons, themed hover/submenu states, high-DPI sizing, and a
-  rounded Windows 10/11 menu shell now follow the active palette and custom
-  accent.
-- Kept multi-column Todo rows readable at 220-320px paper widths by using
-  PaperTodo's narrower checkbox/drag columns, constraining the absolute due
-  badge, and revealing the separate relative-time badge only when the paper
-  has enough width for its columns.
-- Rebuilt the Windows per-item reminder interval editor as PaperTodo's
-  326x216 native rounded paper dialog, including the compact value/unit row,
-  Global/Cancel/OK actions, keyboard handling, theme colors and high-DPI
-  placement; the Flutter dialog remains available outside standalone Windows
-  paper windows.
-- Corrected the native due dialog's 12px shell radius and refined reminder
-  bubbles with PaperTodo's separate subtle icon tint, active exclamation,
-  stronger tinted border and native popup shadow.
-- Reframed Windows papers as the HWND itself instead of an inset card: the
-  paper now fills the native window, header and body share one continuous
-  surface, note editing no longer nests a second paper, and todo rows use quiet
-  ruled separation.
-- Rebuilt responsive paper chrome around actual available width, with distinct
-  always-on-top and desktop-pin affordances and only the essential trailing
-  action at minimum width.
-- Removed the legacy Flutter path that replaced a queue's first real paper with
-  the master capsule; the master is now exclusively an independent native HWND.
-- Tightened the Android product boundary by ignoring Windows collapse/pin
-  presentation and removing capsule, topmost, desktop-pin, and window-geometry
-  actions from mobile paper UI.
-- Rerouted stale Windows capsule collapse events for desktop-pinned papers to
-  the authoritative unpin-and-activate path, preventing proxy refresh races
-  from collapsing a pinned paper behind the desktop.
-- Decoupled master-capsule retraction from paper rendering, made desktop-pin
-  capsule activation restore the paper directly to the foreground, removed the
-  duplicate Windows due picker, and progressively reveal paper-header actions
-  as the paper grows.
-- Made capsule configuration Windows-local: Android no longer exposes capsule
-  controls, and WebDAV snapshots and operations no longer transfer capsule
-  layout or collapsed state while still consuming compatible historical logs;
-  capsule-only operation slots now serialize as validated empty-setting no-ops
-  so device sequences remain contiguous without leaking Windows presentation
-  state or causing false WebDAV 412 conflicts.
-- Unified Windows papers into a softer rounded paper surface and removed the
-  competing Flutter cross-fade from native paper-window transitions.
-- Matched PaperTodo's paper hierarchy more closely with a solid 18px paper
-  shell, lightly tinted title strip, compact title-edit focus treatment,
-  theme-aware scrollbars and controls, split due badges, and local-only Todo
-  hover/completion transitions.
-- Rebuilt Note papers around PaperTodo's fixed canvas toolbar and status bar,
-  gridded outer canvas, inset paper page, binding line, in-page overlay blocks,
-  compact block headers, layered shadows, and corner resize grips; Markdown
-  formatting now stays in shortcuts and the editor context menu as upstream.
-- Kept capsules visible while hovered, restored per-paper capsule click
-  behavior for pinned and unpinned papers, and ensured the master capsule only
-  collapses or expands the capsule queue without changing paper state.
-- Prevented desktop-pinned papers from flashing on ordinary clicks by keeping
-  no-activate behavior without repeatedly rewriting their Z order.
-- Matched PaperTodo's capsule queue behavior: dragging a master moves its
-  visible queue, individual capsules can be reordered, master collapse/expand
-  affects capsules only, and opening a paper keeps its edge capsule available.
-- Create the seven-day `LOG` diagnostics folder as soon as the configured data
-  directory is resolved, including before state loading completes.
-- Added a separate native Windows date/time picker window and tightened the
-  right-edge due badge so relative and absolute due information stays readable.
-- Restored normal Windows edge and corner resizing for both Todo and Note paper
-  HWNDs by starting the native resize loop immediately on pointer-down and
-  widening the visible resize target.
-- Fixed desktop-pinned papers disappearing behind the Windows 11 wallpaper by
-  keeping them as interactive top-level windows at `HWND_BOTTOM` instead of
-  reparenting them into an unreliable `WorkerW` desktop layer.
-- Locked desktop-pinned papers to the bottom layer without activation or
-  dragging, leaving only the unpin control interactive and preventing the Todo
-  header checkbox from accidentally unpinning the paper.
-- Kept paper chrome anchored during native resizing, made capsules start native
-  dragging on pointer-down, and removed the double-click and flash races when a
-  capsule restores its paper.
-- Moved Windows settings onto the hidden coordinator's dedicated window,
-  removed paper taskbar buttons, and refresh capsule fullscreen hiding every
-  250 ms for prompt restoration.
-- Added a native Windows folder picker for first-run and settings-driven data
-  directory selection with safe state relocation; Windows packaging remains the
-  conventional release directory/zip containing the EXE and Flutter runtime.
-- Added app-local MSVC and Universal CRT runtime libraries to Windows builds so
-  the packaged application starts on Windows 10 without requiring a separately
-  installed Visual C++ Redistributable.
-- Reworked the Windows ZIP so its root contains only `repapertodo.exe`; a
-  dependency-free launcher starts the Flutter executable and complete runtime
-  from the nested `runtime/` directory.
-- Fixed collapse-all queues and tray Show all by clearing stale queue state,
-  restoring every paper in one native reconciliation, and routing capsule
-  clicks by stable queue/paper identity.
-- Added redacted daily text diagnostics under the data directory's `LOG`
-  folder for settings, paper, application, and sync events, with automatic
-  seven-day retention on Windows and Android.
-- Added a manual sync action to every paper header and clarified that
-  Jianguoyun requires its generated WebDAV app password rather than the account
-  login password; authentication failures now give a provider-specific recovery
-  message.
-- Kept Todo columns in one row at compact paper widths with divider-only
-  separation, and replaced large due-date dialogs/chips with a compact
-  date-time selector and right-aligned relative/absolute due status.
+胶囊可设置为非置顶
 
-- Made Jianguoyun conditional manifest updates compatible with its unquoted
-  opaque ETags: sync still tries the standard quoted `If-Match` first, then
-  retries the provider's original conditional value only after a 412, without
-  ever falling back to an unconditional overwrite.
-- Validate Jianguoyun's 30-character sandbox-name limit directly in WebDAV
-  settings, with a focused inline recovery message instead of exposing a raw
-  provider XML error only after sync starts.
-- Reset stale durable outbox and remote device-sequence progress when the
-  WebDAV endpoint, account, encryption passphrase, or remote folder changes,
-  preventing a new sync target from entering a permanent conflict loop.
-- Reworked the Android board around one PaperTodo paper surface instead of
-  nested cards: compact 52px navigation, integrated 56px paper headers,
-  borderless todo rows, an original-style plus append surface with compact
-  undo/redo controls, a darker neutral desktop canvas, 44-48px touch targets,
-  and the same phone layout in portrait and landscape across light and dark
-  themes.
-- Restored PaperTodo's persistent settings category rail with independently
-  scrollable display, todo/note, capsule, general, and WebDAV sections; compact
-  windows retain icon-sized 48px navigation targets.
-- Removed the retired font-preset selector from settings and now expose only
-  the installed-system-font picker while preserving legacy preset data during
-  migration.
-- Replaced the raw custom-theme hex field with PaperTodo's swatch/current
-  color/choose/reset interaction and a cross-platform full-gamut HSV picker.
-- Replaced line-spacing sliders with keyboard-editable todo/note fields,
-  explicit default reset controls, and the original 0.8-5.0 bounds.
-- Made collapsed paper windows adapt to the rendered title length and matched
-  PaperTodo's title-only resting viewport plus partial hover reveal for deep
-  capsules instead of forcing every capsule to a fixed 92px width.
-- Routed Windows todo reminders to the independent paper that owns the item;
-  the hidden coordinator no longer emits invisible reminders and sibling paper
-  engines no longer duplicate the same reminder.
-- Replaced in-paper Windows reminder snackbars with compact native bubbles
-  positioned beside the owning paper or capsule; hovering pauses dismissal and
-  clicking opens the due todo paper.
-- Added native deep-capsule drop routing so capsules can be dragged between
-  monitor edges and reordered inside a queue without overwriting the paper's
-  normal saved position or size; master-capsule drags update queue start height.
-- Added lightweight native master capsules that remain in slot 0 while queues
-  are expanded or retracted, plus edge proxies for expanded papers; proxy
-  clicks activate or collapse their paper according to the PaperTodo setting,
-  and proxy drags preserve normal cross-edge queue reordering without creating
-  additional Flutter engines.
-- Made expanded-paper native proxy clicks activate their owning HWND
-  synchronously during the Windows mouse event, before the action crosses the
-  Dart platform channel, so foreground activation cannot be lost to timing.
-- Kept real deep-capsule queue offsets relative to each monitor's work area so
-  capsules remain correctly stacked on displays positioned above or below the
-  primary monitor instead of being clamped together at the screen edge.
-- Synchronized native master/proxy lifecycle after individual and bulk paper
-  show or hide actions so hidden queues cannot leave clickable capsule windows
-  behind.
-- Stacked deep capsules on PaperTodo's 46px pill plus 4px gap geometry instead
-  of reusing unrelated paper coordinates, keeping multiple papers in stable
-  per-monitor, per-edge queues.
-- Matched the original PaperTodo paper palette, transparent 8px shadow chrome,
-  compact 31px title bar, original tint strengths, 24-28px paper controls,
-  rounded shell, subtle todo rows, plus-only append area, and direct todo drag
-  handles across light and dark color schemes.
-- Restyled the settings window with the original paper shell, compact density,
-  leading checkbox toggles, a desktop-sized viewport, and a dedicated close
-  action while retaining validation and explicit save behavior.
-- Matched PaperTodo note interaction by entering edit mode from the paper
-  preview, returning to preview on focus loss, and removing the persistent
-  edit/preview/split selector; notes now render inside a bound paper page with
-  a compact canvas toolbar and status bar.
-- Rebuilt independent paper capsules as the original 92x46 transparent chrome
-  with an inset 30px pill, compact icon/title area, drag gesture, and dedicated
-  right-side hide button while preserving script click behavior.
-- Deep capsules now rest with only 54px exposed at the configured screen edge,
-  reveal the full pill on pointer hover, and retract again on pointer exit on
-  both left- and right-docked monitor queues.
-- Paper and todo context menus now use the active paper palette, compact
-  Windows 36px rows, rounded outlined surfaces, restrained shadows, and dense
-  dividers while Android retains 48px touch targets.
-- Kept independent Windows paper positions and sizes stable when titles, todo
-  items, note text, or canvas content change during or after a drag/resize;
-  child-window move events now update the coordinator's native geometry caches,
-  tray reconciliation preserves live HWND bounds, and title/topmost/desktop-pin
-  refreshes no longer call the full geometry-applying surface path. Expanding
-  a capsule or opening a reminder now also restores the saved normal paper
-  bounds instead of adopting the capsule HWND's minimum size and edge position.
-- Extended Windows Release smoke to move and resize a real independent paper,
-  type into its Flutter content field through native input, wait for the edit to
-  persist, and then require both model and HWND geometry to remain unchanged.
-- Normalized local paper IDs at the Windows platform boundary before sending
-  surface, tray, bounds, visibility, and work-area channel payloads.
-- Rejected unsafe paper IDs inside the Windows native surface registry so
-  malformed registry refreshes cannot create stale native paper targets.
-- Wired the Windows `forwardToPrimary` platform channel to the single-instance
-  named pipe and shared the startup-command canonicalizer with the process
-  entrypoint.
-- Extended Windows release smoke evidence to verify that an unknown secondary
-  startup command does not restore papers after a forwarded `--hide`.
-- Added a Dart controller one-shot exit guard so repeated tray, forwarded, or
-  session-ending exit requests cannot duplicate platform cleanup.
-- Shared duplicate UI exit requests through one save/sync-before-exit future so
-  repeated exit commands cannot upload or final-sync twice before cleanup.
-- Ignored late startup, tray open/delete, and native hidden-surface events while
-  exit save/sync is active so shutdown retries cannot mutate papers.
-- Restricted Android background WebDAV sync registration and execution to
-  absolute `data.json` state paths.
-- Clarified GitHub Release publishing authentication so `GH_TOKEN`/
-  `GITHUB_TOKEN` failures are reported separately from missing CLI login.
-- Gave release packaging a longer Windows smoke startup/exit window so slower
-  hosts can still verify secondary startup command persistence.
-- Rejected absolute Android signing `storeFile` values across the signing
-  setup script, Gradle build, release packaging, and readiness audit.
-- Required Windows manual QA release evidence to include a Windows version
-  string and exactly the expected desktop parity checklist.
-- Rejected unsafe release evidence `-ResultJson` paths before smoke scripts,
-  manual QA, or readiness audit write reusable release records.
-- Rejected unsafe external QA/smoke JSON input paths before release packaging
-  or readiness audit reads reusable evidence.
-- Allowed release packaging to consume a previously recorded Android device
-  smoke JSON result while still rejecting mixed live/result smoke sources.
-- Required passed Windows manual QA, live WebDAV smoke, and Android device
-  smoke evidence before GitHub Release publishing can run.
-- Split Windows paper-surface registry refresh onto a dedicated
-  `setPaperSurfaces` native channel instead of relying on tray-menu rebuilds.
-- Added optional Windows manual QA and live WebDAV QA result inputs to release
-  packaging metadata and generated release notes.
-- Updated the roadmap to separate completed automated coverage from the
-  Windows, live WebDAV provider, Android runtime, and release readiness checks
-  still required before claiming full PaperTodo replacement parity.
-- Added a project rule test that keeps roadmap completion-audit boundaries
-  explicit while Windows parity, live WebDAV QA, Android runtime smoke, and
-  signed release readiness remain unfinished.
-- Queued foreground/background silent WebDAV sync requests behind an active
-  sync so Android backgrounding does not drop the last opportunistic sync pass.
-- Extended Android APK smoke evidence to verify the launcher Activity contract,
-  including singleTop launch mode, empty task affinity, adjustResize, hardware
-  acceleration, and MAIN/LAUNCHER intent entries.
-- Extended Windows release smoke evidence so forwarded `--new-note` and
-  `--new-todo` commands must increase persisted note and todo paper counts, not
-  only the total paper count.
-- Added Windows note/todo startup-command counts and Android launcher Activity
-  contract details to generated GitHub Release notes.
-- Added WebDAV retry-message coverage so cleaned provider response details are
-  not shown when they duplicate the primary WebDAV failure message.
-- Added an Android WorkManager/headless Dart background sync entrypoint that
-  reloads the local StateStore and reuses the shared WebDAV sync service.
-- Extended Android APK and release metadata smoke checks to verify WorkManager
-  background sync services and network/wake/boot-reschedule permissions.
-- Added a credentialed live WebDAV smoke entrypoint for real-provider
-  Windows/Android snapshot and operation-log round-trip QA.
-- Added a structured Windows manual QA recording script for desktop parity
-  evidence that requires a real user session.
-- Retargeted legacy Windows paper-surface events to the next visible paper
-  after the active registered paper is explicitly hidden or closed from either
-  native events or Dart platform calls.
-- Retargeted legacy Windows paper-surface events when an active paper becomes
-  hidden through a surface update before native callbacks finish.
-- Retargeted Windows paper-surface legacy events after state refreshes hide the
-  previously active registered paper.
-- Counted visible non-active registered Windows paper surfaces when native
-  toggle logic asks whether any paper is still visible.
-- Strengthened Android device smoke evidence by requiring the launched APK to
-  remain the foreground package after startup.
-- Removed broad Android foreground-package fallback matching so device smoke
-  only trusts focused or resumed activity records.
-- Force-stopped the Android package from device smoke cleanup even when launch
-  validation fails.
-- Added local HTTP WebDAV protocol round-trip coverage for snapshot and
-  operation-log sync evidence.
-- Required uploaded GitHub Release assets to report an explicit `uploaded` state before publish verification can pass.
-- Rejected stale extra assets on GitHub Releases during publish verification.
-- Normalized local model IDs before generating WebDAV operation-log diffs.
-- Stripped raw control characters from stored paper, todo item, linked note, and note-canvas IDs before Windows/WebDAV persistence.
-- Verified published GitHub Release assets by downloading them and comparing SHA-256 hashes.
-- Added a project rule test that requires every UI string key to have Chinese and English entries.
-- Revalidated Android device smoke APK file names while checking release metadata.
-- Revalidated Android static smoke APK paths while checking release metadata.
-- Revalidated Windows smoke release directories while checking release metadata.
-- Revalidated WebDAV static smoke evidence paths while checking release metadata.
-- Hardened WebDAV static smoke evidence so release metadata references only real repository files.
-- Added a UTC timestamp to skipped Android device smoke metadata and release notes for release auditability.
-- Tightened Android signing setup so partially configured CI signing secrets fail before packaging.
-- Recorded the GitHub Release notes markdown file in release metadata with byte count and SHA-256 evidence.
-- Added a two-device WebDAV operation-log round-trip test for Windows/Android sync parity.
-- Added structured WebDAV static smoke metadata for release packaging.
-- Recorded structured Windows release smoke results in release metadata.
-- Verified idempotent local WebDAV operation uploads still reapply canonical state to Windows platform integrations before the next sync.
-- Added end-to-end StateStore coverage for representative PaperTodo data migration and canonical resave behavior.
-- Limited Android APK localized resources to the supported Chinese and English runtime languages.
-- Kept settings explanation help available when ordinary operation tooltips are disabled, matching PaperTodo's tooltip setting boundary.
-- Allowed file-name-safe external Markdown suffixes such as `.todo.md` instead of limiting users to common Markdown extensions.
-- Deferred silent WebDAV sync requests while settings are open and replayed them after unchanged settings close.
-- Localized generic native platform open-file and open-link errors for Chinese and English UI.
+### 评估
+
+- **Scoop / Choco 软件源**：Scoop 更适合当前绿色免安装形态，能让安装和升级更轻；Chocolatey 也可考虑，但更偏系统包管理。需要额外维护发布包地址、校验值和版本清单，并确认用户数据、自定义图标等仍保留在程序目录或约定位置，短期可先记录为发布渠道评估项。
+- 单独调整胶囊缩放
+- 单独调整整体视觉大小（和windows显示比例一个逻辑）
+- 字体大小调节
+- 在win 10多个桌面（如下图）之间的窗口管理也许可以优化？比如如果在桌面1点击胶囊，对应便签在桌面2，系统会让我切到桌面2，我需要手动把便签从桌面2移动到桌面1；我希望在桌面1点击胶囊，胶囊对应的便签直接在桌面1打开（桌面2的便签窗口可以关闭掉）
+
+### Unreleased
+
+- Windows 与 Android 的产品版本统一为 0.0.2；手机端保留递增的内部安装编号，支持保留数据覆盖升级。
+
+**界面与主题**
+
+- 新增思源风格默认配色：浅色使用白色内容区与浅灰工具区，深色使用中性深灰，搭配蓝色强调色。纸片、胶囊、大纲、设置和菜单统一配色；原有纸色与自定义颜色仍可选择。
+- 设置页采用单色图标导航和清晰分组，统一按钮、输入框与开关样式。切换页面、主题或修改选项时保留浏览位置；常用选项支持连续键盘操作，快捷键输入框可用 Tab 切换到下一项。
+- 纸片和菜单使用更小的圆角与更轻的阴影，待办去掉常驻行边框，悬停时显示背景反馈；滚动条随浅色、深色主题切换。
+- 笔记采用平整正文、浅灰代码背景和细引用线。大纲笔记切换编辑、浏览或主题时保留编辑上下文与撤销记录，支持代码块复制；大纲菜单和提示补齐中文、英文、日文、韩文。
+
+**跨端数据同步**
+
+- Windows 与 Android 可使用 WebDAV、S3 兼容存储或独立同步服务共享纸片，无需账号和 Docker。
+- 按纸片与待办条目合并离线修改，保留两端未编辑的内容字段和删除记录；同一条目发生冲突时按更新时间选择，时间相同时采用一致的选择规则。手机编辑不会清空桌面笔记的代码画布或重置待办分栏比例。
+- 同步后的纸片可继续编辑、增删待办和调整位置，后续保存与重启保持一致；标题、截止时间、提醒间隔、分栏和撤销操作也能参与同步。
+- 同步前保留本地快照；无法备份、远端格式无效或上传未获确认时停止相应操作并提示失败。自建服务的连接检查会验证实际数据接口，旧服务端的公开健康页不会再误报认证成功；Token 无效时明确提示认证失败。存储支持版本标记时，遇到并发写入会重新拉取合并。
+- 同步连接凭据、设备设置与桌面布局只保留在本机，不随纸片上传。关闭同步或更换配置时取消旧同步任务。
+
+**Android 伴侣端**
+
+- 提供书签导航与卡片列表两种浏览方式，支持待办勾选、增删、分栏内容修改和笔记编辑。
+- 优化截止时间选择：使用 24 小时时分滚轮与面板内展开的中文月历，可快速翻月、跳转年月、回到今天；今天描边与所选日期蓝底清晰区分。底部固定显示确认摘要与保存按钮，小屏和大字体下可滚动浏览；选择日期与切换回时间时保留原时分，跨月跨年的“明天”识别正确。
+- 前台定期获取更新，返回应用时刷新；后台按系统调度执行同步，省电或后台限制可能延后执行。
+- 新增桌面待办小部件，可直接勾选或取消完成；操作先保留在本地，再交给后台同步，离线时也不会丢失。
+- 到期提醒交给系统后台调度，重启、调整时间或时区后重新安排；已完成或删除的待办会清理对应提醒。测试通知会如实报告权限不足或发送失败。
+- 本地保存采用安全替换与备份。读取失败时保留原数据并提供重试，有有效备份时提示恢复，不再用欢迎内容覆盖损坏文件。
+- 设置新增纸片导出与合并导入，用于备份和安装迁移；导出不包含同步密码。
+
+**独立同步服务**
+
+- 提供无需运行库的 Windows / Linux 单文件服务端。默认仅监听本机并要求 Token，连接测试校验认证与存储目录。
+- 写入前保留独立备份，拒绝无效文档和过期版本覆盖，支持客户端在并发冲突后重新合并。
+
+### v0.1 初始构建
+
+- **全新原生框架**：基于 .NET 10 和 WPF 打造的轻量级无主窗口“纸片”待办应用，绿色免安装。
+- **无重度依赖**：不使用 WebView、Tauri、Electron 等重度渲染引擎，无 MSIX/Store/AppX 打包限制，系统资源占用极低。
+- **本地数据优先**：支持基础的待办管理与便签创建，数据采用本地 JSON 格式存储，完全离线。
+
+### v0.2 纸片生命周期
+
+- **多纸片管理**：支持创建和管理多张独立的纸片窗口，自动记录每张纸片的位置、大小、置顶状态与内容。
+- **启动智能恢复**：程序启动时自动恢复此前未删除的纸片；检测到纸片因多显示器切换等原因超出当前屏幕边界时，会自动拉回可视区域，防止窗口丢失。
+- **数据安全备份**：引入 data.backup.json 自动备份与损坏恢复机制，在主配置文件意外受损时可尝试自动恢复。
+- **生命周期规范**：关闭窗口即为隐藏，点击删除才会触发真正的确认移除。
+
+### v0.3 待办纸基础交互
+
+- **待办快捷操作**：支持通过 Enter 快速新建待办、Backspace 删除空行，勾选复选框时已完成项会自动添加删除线并淡化显示。
+- **追加与清理**：提供底部 ＋ 快速追加区，支持一键清除所有已完成事项，也可以单独删除单项。
+- **输入节奏优化**：优化空行限制规则，允许连续创建并保留多个空待办行。
+
+### v0.4 托盘与纸片入口
+
+- **托盘中心控制**：引入任务栏托盘图标，支持一键新建待办/笔记、显示/隐藏全部纸片以及快速退出。
+- **托盘纸片列表**：托盘菜单可实时列出所有活跃纸片并支持长标题自动省略，点击对应的纸片名称可快速切换显隐。
+- **预览命名与置顶**：纸片名称可根据第一行内容自动生成；纸片左上角功能图标改置顶开关。
+- **自定图标支持**：程序会自动读取同级目录下的 PaperTodo.ico 替换默认托盘图标。
+
+### v0.5 菜单与视觉整理
+
+- **右键菜单优化**：右键菜单重构为四个分类清晰的分组（事项、格式、编辑、当前纸片），移除了传统 Windows 右键菜单左侧的空白图标预留区。
+- **精致视觉风格**：重写了删除确认弹窗，采用更窄的纸张风格细滚动条，统一了窗口边框、阴影、圆角和悬停反馈，并消除了 Windows 默认控件的蓝色预选框与焦点框。
+- **手绘感复选框**：将待办默认复选框替换为更温润的暖褐色圆角边框与自绘对勾。
+
+### v0.6 待办拖动与粘贴
+
+- **平滑拖拽排序**：待办事项支持鼠标拖动排序，增加了落点指示线。拖拽时，底部追加区会自动转换为垃圾箱，支持拖放至该区域直接删除。
+- **智能多行粘贴**：从外部复制多行文本粘贴到待办纸时，能自动剥离 Markdown 复选框、数字列表和项目符号。单次粘贴限制在 200 条以内，防止界面由于超大文本发生卡顿。
+
+### v0.7 笔记纸与 Markdown
+
+- **引入“笔记纸”**：新增笔记类型纸片，支持使用原生组件渲染基础 Markdown。
+- **基础格式支持**：支持标题、引用、列表、代码块、超链接等基础排版格式，并支持在编辑与预览状态之间切换。
+- **操作回滚兼容**：修复了通过右键菜单或快捷键应用文本格式时，导致文本编辑器撤销/重做（Undo/Redo）历史错乱的问题。
+
+### v0.8 输入体验与基础稳定性
+
+- **中文输入优化**：优化了中文输入法（IME）下的 Enter 回车行为，避免在拼音输入阶段误触并新建空白待办。
+- **保存弱提示**：如果遇到本地文件写入失败，将通过系统托盘气泡进行非阻塞提示，避免弹窗打断工作。
+- **输入焦点修复**：修复了首行空待办按删除键（Backspace）后输入焦点丢失的问题，改善了多处稳定性。
+
+### v0.9 发布工程整理
+
+- **多进程冲突解决**：修复了当重复启动程序（多实例冲突）拦截退出时，非主进程退出流程不当释放全局互斥锁（Mutex）导致主程序崩溃的问题，提升了运行稳定性。
+
+### v0.10 聚焦式 Markdown 预览
+
+- **自动预览切换**：笔记纸采用“编辑/预览”智能感知逻辑：默认展示 Markdown 预览，点击正文直接进入编辑状态；点击标题栏、空白处或使文本框失焦时，会自动重新渲染并恢复为预览。去除了繁琐的手动切换快捷键。
+- **底层层级修复**：修复了在预览态下点击链接等复杂元素时，由于 WPF 树状结构层级查找导致的底层崩溃问题。
+
+### v0.11 主题与系统设置
+
+- **明暗主题切换**：托盘菜单新增“浅色、深色、跟随系统”三档切换。深色模式采用暗炭/深褐色背景配暖乳白文字，保护暗光环境下的视力。
+- **自启动管理**：在托盘设置中增加了开机自启动选项，支持安全地读写当前 Windows 用户的注册表启动项。
+- **输入光标自适应**：修复了深色模式下输入光标不可见的问题，现在光标会跟随主题改变颜色。
+
+### v0.12 托盘与菜单打磨
+
+- **分段主题选择器**：将深浅色主题选择从传统的二级垂直菜单，改为了更节省空间的横向分段选择器，并去除了默认的悬停蓝色边框。
+- **紧凑界面布局**：优化并收紧了右键菜单与托盘菜单的行高、圆角和内边距，减少屏幕空间占用。精简了右键菜单中冗余的系统默认命令。
+- **稳定性和易用性优化**：进行了3处稳定性问题修复和动画优化
+
+### v0.13 待办撤销与编辑连续性
+
+- **待办多步撤销**：待办列表引入深达 100 步的全局撤销/重做机制（Ctrl+Z / Ctrl+Y），支持对勾选、清理、新增、删除及拖拽顺序进行回滚。
+- **智能按键分流**：按 Ctrl+Z 时会优先执行当前输入框内的局部字符撤销，在文本框无可撤销内容后自动过渡到整个列表的全局撤销。
+- **右键定位焦点**：右键点击待办事项时，光标会自动移动至该行，并锁定当前行的高亮背景，保证编辑意图的一致性。
+- **稳定性和易用性优化**：进行了3处稳定性问题修复和动画优化
+
+### v0.14 性能与代码减重
+
+- **笔记渲染优化**：合并并缩短了笔记纸高频点击切换状态时的渲染路径，降低内存和 CPU 的即时开销。
+- **冗余代码清理**：移除了早期迭代中残留的静态画刷、布局辅助器和冗余样式代码，保持程序轻量。
+
+### v0.15 数据保护与保存安全
+
+- **异步快照保存**：数据写入时，先在主线程获取一份稳定快照，然后由后台线程进行串行异步 I/O 写入，避免保存时引起界面卡顿。
+- **防空白覆盖**：如果检测到本地配置与备份均已意外损坏，程序将拒绝用空白状态覆盖旧数据，最大程度留存残余文件。
+- **崩溃紧急救援**：注册了全局未处理异常崩溃兜底，在程序意外崩溃退出前，会最后尝试将内存中的数据安全写出至 data.crash_recovery.json，与主配置文件隔离，便于人工找回。
+
+### v0.16 单实例唤醒与系统隔离
+
+- **管道单例唤醒**：支持单实例模式。当程序已经在后台运行时，双击新运行的实例会通知主实例，将所有隐藏纸片唤醒、恢复置顶并获取焦点，便于外部快捷键工具或快捷方式的快速调用。
+- **稳定性和易用性优化**：进行了6处稳定性问题修复和动画优化
+
+### v1.0.0 正式版发行
+
+- **新版图标上线**：更新并合成了全新的精致应用图标 `PaperTodo.ico`，优化高低分辨率及深浅色模式下的系统托盘与任务栏图标表现。
+- **稳定性和易用性优化**：进行了3处稳定性问题修复和动画优化
+
+### v1.1 胶囊模式
+
+- **引入胶囊状态**：允许将纸片折叠为极简胶囊形态，大幅减少桌面空间占用。
+- **平滑过渡动画**：设计了双轴过渡动画，解决动画期间变形的问题。
+- **稳定性和易用性优化**：进行了7处稳定性问题修复、易用性优化和动画优化
+
+### v1.2 多语言支持
+
+- **新增多国语言**：可见文本提取至资源文件，消除了硬编码，支持中文、英文、日文、韩文四种界面语言，可根据系统语言自动适配。
+
+### v1.3 参数支持与托盘布局优化
+
+- **启动参数扩展**：新增支持命令行启动参数（--show 显全部、--hide 隐全部、--toggle 切换、--new-todo 新待办、--new-note 新笔记、--exit 退出），方便配合外部快捷键工具使用。
+- **智能启动加载**：恢复纸片时若数据未发生变化，不再无条件重写磁盘上的 data.json，减少磁盘读写。
+- **稳定性和易用性优化**：进行了6处稳定性问题修复、易用性优化和动画优化
+
+### v1.4 视觉与过渡优化
+
+- **动画打磨**：对部分基础界面切换、折叠过渡动画的响应细节进行了优化。
+
+### v1.5 笔记编辑器重构与“胶囊自动贴边”
+
+- **高性能编辑器切换**：将笔记纸的编辑与浏览态合并至同一个高性能 Markdown 文本控件中，解决了之前频繁切换导致的内容跳动与输入法焦点丢失。
+- **胶囊自动贴边**：新增“胶囊自动贴边”功能。启用后，折叠的胶囊会按顺序靠在屏幕右上角。常态下胶囊会半隐藏至屏幕边缘，鼠标悬停时自动向内侧滑出，最大化利用桌面空间。
+- **稳定性和易用性优化**：进行了2处易用性优化
+
+### v1.6 Markdown 双模式与胶囊动画优化
+
+- **Markdown 双模式**：笔记纸保留编辑态 / 浏览态双模式，编辑时专注源文本输入，浏览时按当前 MD 解析模式呈现轻量 Markdown 视觉，减少旧预览切换带来的跳动和状态同步成本。
+- **新增 MD 解析模式**：托盘新增“不启用 / 启用 / 增强”三档，默认增强；不启用时不做额外 Markdown 解析，启用时保留基础样式，增强时启用浏览态标记淡化和列表圆点覆盖。
+- **稳定性和易用性优化**：进行了6处稳定性问题修复、易用性优化和动画优化
+
+### v2.0rc 测试版
+
+**笔记与 Markdown**
+
+- **精细化的 Markdown 元素渲染**：增强显示分割线和列表标记，淡化已确认属于 Markdown 结构。
+- **部分html语法渲染**：html中和md渲染相似的简单语法支持渲染。
+- **外部 Markdown 编辑与自定义后缀**：笔记纸顶栏新增 MD 按钮，支持直接调用系统默认编辑器打开临时 Markdown 文件。默认使用的编辑器在设置中自定义。可支持html，bat等代码一键启动。
+- **外部打开按钮同步后缀**：设置中修改笔记外部打开后缀后，标题栏按钮会同步显示对应后缀；后缀超过两个字母时只显示前两个字母。
+- **正文缩放与无缝刷新**：笔记纸支持使用 Ctrl + 鼠标滚轮 按 10% 步长调整正文文字大小。非 100% 缩放状态下，右下角会以半透明形式显示当前缩放比例，点击即可一键复位。
+- **大段内容粘贴保护**：修复笔记纸粘贴超长 HTML / 代码内容时可能异常退出的问题；超出安全范围的内容会在粘贴前自动裁切。
+
+**配色与视觉**
+
+- **四套全新配色方案**：设置中新增独立「配色方案」功能，提供 **暖纸**（暖白与陶土）、**墨**（暗黑与墨蓝）、**林**（森绿）、**霞**（玫瑰）四套专属色彩风格。包含浅色和深色两份预设。
+- **配色体系底层重构**：规范了底层色表设计。每套配色方案仅定义少量基色，半透明叠加色均基于基准色派生。链接色会自动融入当前主题色彩，消除视觉上的冷色突兀感。
+- **全局文字对比度优化**：优化了已完成项、次要提示文本的弱化逻辑。通过调整明度而非偏色来降低饱和度，改善了此前在浅色背景下文字略显浑浊的问题。
+- **规范化的圆角与阴影质感**：**圆角统一**：将纸片、子控件、菜单、复选框等圆角收敛统一处理。
+
+**胶囊**
+
+- **胶囊自适应宽度**：折叠后的胶囊会根据纸片的标题长度自适应。
+- **一键收纳「主胶囊」**：新增顶部「收起全部」主胶囊。点击可一键收拢或展开当前所有的贴边胶囊。
+- **贴边胶囊拖拽重排**：支持在屏幕右侧停靠区上下拖动任意一个贴边胶囊，实时调整它们在侧边的排列顺序。
+- **展开后的前台标签占位**：从贴边状态点击展开纸片后，依旧保留边缘胶囊显示。
+
+**标题与设置**
+
+- **自定义纸片标题**：点击纸片顶部默认标题文字可进行编辑。
+- **独立分类设置**：托盘右键菜单中新增了独立的「设置」窗口。
+- **悬浮说明ⓘ**：每个设置项的末尾增加 ⓘ 提示图标。鼠标悬停即可查看该功能的具体作用、生效条件与开启效果，降低初次配置的门槛。
+- **新增「显示悬停提示」开关**：支持关闭按钮和操作区的悬浮提示，仅在设置页面的 ⓘ 图标上保留扩展说明。
+- **高度可定制的顶栏按钮**：允许用户在设置中选择单独关闭「新建待办」、「新建笔记」、「外部打开（MD）」按钮中的任意一项，精简不常用的顶栏操作区。
+- **待办与笔记的交互关联**：支持通过拖拽建立关联。将一张笔记纸拖放到待办项上，即可自动将该待办项与笔记绑定。点击可呼出关联的笔记。
+
+**其他**
+
+- **全屏避让兼容**：优化了置顶和贴边胶囊的层级规则。当检测到当前前台运行了完全全屏的窗口（如全屏游戏、视频播放或全屏演示 PPT）时，置顶纸片和侧边胶囊会自动降低层级并避让；视频或演示进入全屏后也不再需要额外点击一次画面。
+- **多维度的外部集成指令**：命令行和快捷键启动参数支持进一步扩展（支持包括 --show、--hide、--toggle、--new-todo、--new-note、--exit 等），方便使用第三方效率工具进行快捷调用。
+- **稳定性和易用性优化**：进行了31处稳定性问题修复、易用性优化和动画优化
+
+### v2.0rc2 修正版
+
+- 修复旧配置中主屏贴边胶囊可能被拆成两条队列，导致边缘胶囊和「收起全部」位置异常的问题。
+- 修复侧边胶囊右键菜单可能被侧边胶囊遮住的问题。
+- 修复上下拖拽侧边胶囊时鼠标指针显示为调整大小样式的问题。
+- 修正发布包内容，云端 Release 同时提供自包含压缩版和 no-runtime 版，本地打包保持 no-runtime 单文件。
+
+### v2.0 正式版
+
+**新功能**
+
+- **全屏置顶策略**：设置中新增「避让 / 不避让」两档，默认避让外部全屏窗口，并改善浏览器视频全屏播放时的自动识别，减少进入全屏后仍需点击画面的情况。
+- **待办视觉大小**：设置中新增小 / 中 / 大 / 特大四档待办显示大小。
+
+**胶囊相关改动**
+
+- **贴边胶囊多屏 / 左右侧（多队列）**：每条屏幕边各有一条独立的贴边胶囊队列，直接拖动**单个**贴边胶囊即可把它移到屏幕左侧 / 右侧或其他显示器——松手时自动吸附到光标所在显示器的最近边并加入那条队列。
+- **贴边胶囊起始高度与位置**：拖动「收起全部」主胶囊可在所属队列内上下滑动调整起始高度。
+- 多屏贴边显示修复：贴边胶囊改为在窗口内部裁剪尾部，避免双屏相邻边界上尾部露到另一块屏幕。
+- 贴边标签层级修复：修复贴边胶囊偶尔掉出置顶层级，被其他应用窗口遮住的问题。
+
+**bug修复和边界修正**
+
+- **设置窗口排版优化**：设置窗口改为横向分栏布局，减少选项拥挤和纵向滚动。
+- **标题编辑稳定性**：修复修改纸片标题时可能触发系统错误弹窗的问题。
+- 配置兼容性修复：修复旧版本（含早期多屏实验）写入的配置文件因含有已废弃字段导致启动崩溃的问题，现在会忽略无法识别的字段并正常加载。
+- 新建纸片位置修复：从贴边纸片中新建纸片时，新纸片会继承同一贴边队列并避开边缘胶囊栏，避免压到侧边栏。
+- 隐藏全部残留修复：修复从托盘「隐藏全部」时，处于停靠状态的折叠胶囊其边缘药丸窗口可能残留在屏幕上的问题。
+- 动画开关完善：关闭动画后，纸片与胶囊之间的折叠 / 展开过渡也会立即完成。
+- 纸片创建位置保护：新建纸片会避开任务栏工作区，避免在屏幕边缘创建后无法点击。
+- 纸片数量保护：纸片总数限制为 100 张，达到上限时使用应用内提示提醒清理。
+- 待办撤销视觉优化：撤销 / 重做后不再闪烁黄色高亮。
+- 托盘菜单滚动：纸片过多时，托盘右键菜单可滚动查看，避免退出入口被挤出屏幕。
+- 托盘菜单点击修复：修复托盘右键菜单在首次启动时偶尔第一次点击无效的问题。
+- 其他可能带来的问题的稳定性修复
+
+### v2.1rc1
+
+**重点更新**
+
+- **全面调整多语言文案**：增加可读性
+
+- **增加默认字体**：统一观感设计
+
+- **新增字体选择**
+
+  可在语言默认、雅黑和等线之间切换、
+
+  会自动加载同目录下 `papertodo.ttf` / `papertodo.otf` 自定义字体显示。
+
+  设置自定义字体后，会统一界面、托盘、胶囊、待办和笔记正文的主文字观感。
+
+  推荐中文使用MiSans
+-   新增「**从窗口切换中隐藏纸片**」设置，可让展开的纸片从 Alt+Tab 和任务视图中隐藏。
+
+**脚本胶囊**
+
+- **脚本胶囊**：笔记第一行写入 `!p` / `!power` 后，折叠胶囊会显示闪电图标，左键运行后续 PowerShell 脚本，右键可打开纸片继续编辑；粘贴带统一缩进的脚本时会自动整理缩进。
+- 「关联脚本点击运行」设置：待办项关联到脚本胶囊时，可让关联入口左键直接运行脚本，右键打开脚本胶囊编辑。
+- PowerShell 运行设置：可优先使用 PowerShell 7、隐藏运行窗口，并可开启 `!pf` / `!powerf` 复用常驻 PowerShell 进程。
+
+**笔记与 Markdown**
+
+- 笔记 Markdown 列表编辑增强：按 Enter 可延续项目符号、数字列表和任务列表，空列表项再次回车会退出列表。
+
+**优化和修复**
+
+- 新增「关联笔记显示长标题」设置；关闭时保持原有紧凑显示，开启后关联笔记标题可按内容扩展显示。
+- 优化托盘纸片列表的显示状态对齐，强化纸片类型图标显示，并让托盘脚本胶囊、待办关联脚本入口显示闪电图标。
+- 设置扩展说明换行增加可读性
+- 修复屏保或系统恢复后，非置顶纸片可能残留在实际置顶层级的问题。
+- 修复点击胶囊后，下一次托盘右键菜单可能没有响应的问题。
+- 修复退出过程中托盘图标短暂残留时，再次点击可能触发已关闭纸片窗口并导致崩溃的问题。
+- 修复窗口化全屏切换到其他窗口时纸片闪烁的问题，非置顶纸片不再参与全屏避让层级调整。
+- 修复部分状态切换后，边缘胶囊的激活描边可能残留的问题。
+- 修复设置窗口关闭按钮悬停背景没有圆角的问题。
+
+### v2.2
+
+- **待办时间节点与临期提醒**：待办项右键可设置本地时间节点，临近时间时会以轻量气泡形式从纸片或胶囊旁提醒，并可点击气泡打开对应纸片。
+
+### v2.3
+
+- **待办时间选择与相对显示**：时间节点改为日期、小时、分钟选择；设置中可切换显示距离到期时间或已过期时间。
+- **贴边胶囊全屏自动隐藏**：应用设置中新增选项，其他应用全屏时可临时隐藏贴边胶囊，退出全屏后自动恢复。
+
+### v2.4
+
+- **间隔气泡提醒**：可在设置中启用按分钟/小时重复提醒，气泡显示到期时间和精确到秒的剩余/过期时间，并可选择只提醒最近一个待办或提醒每个待办。
+- **贴边胶囊遮挡隐藏**：原“全屏隐藏”改为外部窗口遮挡贴边胶囊停靠区域时立即隐藏，区域空出后自动恢复。
+
+### v2.5
+
+- **可输入提醒间隔**：应用设置中的气泡提醒间隔改为可直接输入数值，并继续支持分钟/小时单位。
+- **单项提醒间隔**：每个待办事项可单独设置气泡提醒间隔，未设置时使用全局间隔。
+- **十六进制主题强调色**：设置中新增 hex 颜色输入与预览色块，可自定义主题强调色。
+
+### v2.6
+
+- **色块式主题选择**：十六进制主题强调色改为点击色块选择，不再要求手动输入颜色代码。
+- **气泡倒计时显示**：待办提醒气泡按天、小时、分钟、秒展示剩余或过期时长。
+- **全局气泡悬浮时长**：设置中新增秒数输入，默认 5 秒，所有待办提醒气泡统一使用。
+
+### v2.7
+
+- **全局全色域主题颜色**：设置中的主题强调色改为点击当前色块打开完整颜色选择器，选中颜色后全局应用到纸片、托盘、胶囊和提醒气泡。
+
+### v2.8
+
+- **全局调色板工具**：原“配色方案”设置项替换为颜色拾取/调色板工具；选择颜色后会生成整套应用配色，覆盖纸片、托盘、贴边胶囊、提醒气泡、正文、边框和强调色，而不再只是改变局部强调色。
+
+### v2.9
+
+- **待办纸钉在桌面**：待办纸右键可钉在桌面；钉住后纸片点击穿透、不可移动或操作，只能通过对应贴边胶囊点击解锁。
+
+### v2.10
+
+- **桌面钉住增强**：笔记纸也支持钉在桌面；待办纸和笔记纸钉住后默认沉到窗口底层，并在纸片顶部显示独立“解除钉住”按钮。
+- **钉住纸片快捷键**：设置中新增待办纸和笔记纸的自定义组合快捷键，可把对应类型的钉住纸片从底层呼出到前面。
+
+### v2.11
+
+- **待办相对时间显示**：设置时间节点后，待办正文后会先显示距离到期或已过期的相对时间，再显示具体时间节点。
+- **待办纸多列布局**：待办纸右键菜单新增增加/减少列数，单张待办纸可独立保存 1 到 4 列布局。
+- **桌面钉住图标按钮**：待办纸和笔记纸顶部新增图标式桌面钉住按钮，钉住后的顶部解锁入口也改为图标，并随 EXE 一起打包。
+
+### v2.12
+
+- **桌面钉住按钮一体化**：钉住/解除钉住按钮常驻待办纸和笔记纸顶部，并根据当前状态切换图标；取消独立解锁浮层。
+- **钉住后保留操作**：桌面钉住不再启用点击穿透，钉住状态下仍可点击纸片顶部按钮解除钉住。
+- **单条待办列数**：待办列数改为在当前待办项右键菜单中调整，单条待办可增加额外文本列，不再把整张纸拆成多列。
+
+### v2.13
+
+- **待办多列分隔**：单条待办增加额外列时，列与列之间显示更明显的竖向分隔线。
+- **时间显示增强**：待办时间节点可在设置中选择不显示年份、显示两位年份或四位年份；相对时间改为按天/小时/分钟组合显示。
+- **行距设置**：设置中新增待办和笔记行距键盘输入，并提供恢复默认按钮。
+- **设置分类页签**：设置窗口按显示、待办/笔记、胶囊、通用/高级分类，不再把所有设置堆在同一页。
+
+### v2.14
+
+- **待办行距居中修复**：调整待办行距后，同步修正文本上下内边距，让内容保持在行内居中。
+- **设置页停留当前分类**：修改任意设置项后，不再自动跳回第一个设置页签。
+- **待办列宽拖动**：当前待办增加列后，可拖动列间分隔线调整各列宽度，并随待办保存。
+- **行距范围扩大**：待办和笔记行距输入上限从 2.5 提升到 5。
+- **设置窗口尺寸优化**：设置窗口改为默认固定大小并支持用户调整，内容区域支持横向和纵向滚动。
+
+### v2.15
+
+- **设置 UI 重构**：设置窗口由顶部页签改为左侧分类导航与右侧内容区，分类入口常驻且视觉层级更清晰。
+- **设置内容区优化**：右侧设置内容保持独立滚动，窗口缩放时横向和纵向滚动行为更稳定。
+- **设置分类状态保持**：切换分类与修改设置项后继续停留在当前分类，减少反复跳转。
+
+### v2.16
+
+- **待办列操作增强**：多列待办右键当前列时，可在当前列前插入新列，也可删除当前列。
+- **桌面钉住交互锁定**：钉在桌面后，除顶部解除钉住按钮外，标题、正文、右键菜单和其他顶部按钮均不可操作。
+- **待办行距居中修复**：行距变化后同步调整待办文本框高度与内容对齐，让内容保持上下居中。
+
+### v2.17
+
+- **待办垂直居中修复**：重做待办文本框内容宿主与行距计算，行距放大后待办内容仍保持上下居中。
+- **多列完成状态同步**：当前待办拥有多列时，点击完成会让同行所有列同步显示完成划线。
+- **全局颜色设置重构**：显示设置中的全局主题色改为更明确的色块、当前颜色、选择颜色和恢复默认控制，继续通过全色域拾色器驱动整套应用调色板。
+- **系统字体选择**：显示设置新增当前 Windows 已安装字体列表，可选择系统字体并即时应用到界面、托盘、胶囊、待办和笔记正文。
+
+### v2.18
+
+- **待办内容垂直居中重构**：待办文本框改为按实际行数、行高和控件高度动态计算上下内边距，解决行距变化后内容仍偏上的问题。
+- **整体 UI 视觉令牌化**：新增统一的前端视觉令牌，集中管理圆角、阴影和间距，纸片、设置页、浮层和待办行共用同一套视觉规则。
+- **设置页 UI 重构**：优化设置页外壳阴影、圆角、内边距、左侧导航选中态和控件间距，让分类导航和内容区更稳定清晰。
+- **纸片界面统一**：纸片外壳、顶部栏、待办行、拖拽影子、提醒/时间弹窗和钉住解锁浮层改用统一阴影与圆角。
+
+### v2.19
+
+- **系统字体选择一体化**：系统字体下拉框改用应用内设置控件模板，弹出列表、选中态、悬浮态和焦点边框与设置页整体 UI 保持一致。
+- **非 1 倍行距居中修复**：待办文本居中算法改为区分可见文字高度和行距高度，避免行距放大后单行内容仍视觉偏上。
+
+### v2.20
+
+- **修复待办行距无限增大**：移除基于实际高度反推 padding 的反馈循环，待办文本框改为按固定目标高度计算垂直居中，避免软件打开后行距不断膨胀并卡死。
+- **稳定非 1 倍行距居中**：待办文本的可见行高、行距和目标高度分开计算，保留非 1 倍行距下的视觉居中。
+
+### v2.21
+
+- **系统字体选择器修复**：字体设置仅保留系统字体选择器，移除重复的旧字体预设入口。
+- **系统字体下拉一体化**：修复自定义下拉模板的点击、弹出位置和高度问题，使系统字体选择器与设置页整体 UI 保持一致。
+- **字体设置迁移**：隐藏旧字体预设后，加载配置时会回到默认字体规则，避免旧预设在后台继续影响界面字体。
+
+### v2.22
+
+- **补全用户安装字体**：系统字体选择器新增读取当前用户与系统字体注册表，能显示通过“为我安装”安装到用户目录的字体，例如 `微软雅黑.ttf`。
+- **字体列表实时刷新**：取消系统字体列表的启动期缓存，重新打开设置页时会重新读取字体列表。
+- **字体名称兼容**：保留 WPF 字体族名的同时补充注册表字体名，解决“微软雅黑”只显示为 `Microsoft YaHei` 或不显示的问题。
+
+### v2.23
+
+- **笔记纸 TimeNotes 风格优化**：笔记纸正文改为轻网格画布加内层页面的结构，增加左侧装订线和更稳定的页面内边距，让笔记阅读和编辑更接近 TimeNotes 的纸页/画布体验。
+- **笔记状态条**：笔记纸底部新增编辑/预览状态、字数、行数和缩放比例显示，缩放和内容变化会即时刷新。
+- **保留待办联动逻辑**：Markdown 编辑、预览点击进入编辑、链接打开、右键格式菜单、笔记拖拽关联待办、脚本胶囊和钉住状态路径继续沿用原逻辑。
+
+### v2.24
+
+- **笔记纸元素画布**：笔记纸新增 TimeNotes 式自由画布元素，支持添加文本、便签和代码块，并与原 Markdown 正文共存。
+- **元素操作**：画布元素支持拖动、右下角调整大小、双击/点击编辑内容、右键复制、删除、置顶和置底。
+- **状态与持久化**：每张笔记纸会保存独立元素列表，底部状态条和顶部工具条显示元素数量，切换主题和系统字体时元素同步刷新。
+- **保留待办互动**：原有笔记拖拽关联待办、Markdown 预览/编辑、脚本胶囊、外部 Markdown 打开和钉住逻辑继续保留。
+
+### v2.25
+
+- **发布体积优化**：Release 发布默认关闭 ReadyToRun 预编译，减少自包含单文件体积，同时保留单文件压缩和无调试符号输出。
+- **轻量 EXE 输出**：新增框架依赖单文件发布产物，适合已安装 .NET 10 Desktop Runtime 的电脑，EXE 体积大幅降低。
+- **启动路径精简**：`--exit` 在没有主实例时直接退出，不再初始化完整应用，方便轻量包自检和外部脚本调用。
+- **安全边界**：验证 WPF 项目不启用 trimming，避免因剪裁反射和 WPF 资源导致运行时异常。
+
+### v2.26
+
+- **笔记画布层级可视化**：文本块、便签块和代码块新增随层级变化的阴影、顶层描边和层级徽标，重叠时能更直观看出上下层关系。
+- **层级微调操作**：元素右键菜单新增上移一层、下移一层，保留置顶和置底，调整后会立即刷新画布显示。
+- **主题自适应**：层级阴影、顶层高亮和徽标继续使用全局主题派生色，明暗模式和自定义主题色下保持一致。
+
+### v2.27
+
+- **笔记画布仅保留代码块**：移除文本块和便签块的新增入口，旧笔记中的文本块/便签块会在加载时迁移为代码块，避免已有内容丢失。
+- **Markdown 显示 UI 优化**：预览态标题、引用、代码围栏和行内代码的视觉层级更清晰，阅读时更接近排版后的轻量笔记。
+- **本地发布输出收敛**：本次起本地只编译自包含压缩单文件 `self-contained-small.exe`。
+
+### v2.28
+
+- **胶囊展开卡片位置保持**：点击胶囊收起后再点击展开，对应纸片卡片严格保持在收起前的桌面原始位置，不再被吸附移动至屏幕停靠边缘。
+- **默认字体大小与排版间距优化**：调优待办正文默认字号与行高间隙，文字排版更舒展护眼；同步扩充各档视觉大小的行高呼吸感。
+- **桌面纸张光影质感优化**：重塑纸片与弹窗的桌面投影光影，由均匀弥散发光升级为具有自然正下纵深的纸张悬浮层次感。
+- **纸片标题显示宽度优化**：优化纸片顶栏标题最大显示宽度，在保留右侧操作按钮空间的前提下可多显示一个汉字。
+- **设备插拔与触控崩溃修复**：彻底规避因系统缺少原生触控驱动（PenIMC）在拔插硬件设备时可能触发的闪退异常。
+- **数据保存稳定性增强**：增加文件保存时的瞬时占用自动重试，避免与云同步盘或杀毒软件读锁冲突导致保存报警。
+
+### v2.29
+
+- **胶囊形变过渡动画重构**：重做胶囊与纸片折叠/展开过渡曲线，由机械的缓动曲线升级为现代流体减速曲线（QuarticEase），大幅消除生硬感与急停顿感。
+- **有机形态交融与光影过渡**：优化胶囊壳体与纸片内容的交叉淡入淡出时序，并在形变全周期内实现投影光影的平滑连续插值，呈现如物理卡片舒展般的灵动视觉体验。
+
+### v2.30
+
+- **胶囊动画性能硬核优化**：启用 GPU 硬件加速纹理位图缓存（BitmapCache），在折叠/展开动画全周期接管缩放与淡出，彻底消除文字矢量重排与逐帧重绘的 CPU 性能卡顿。
+- **去除多余重绘开销**：移除展开时的冗余行重构（RebuildTodoRows）及窗口反复重设尺寸造成的掉帧，将动画帧率恒定锁定在满帧流畅水平。
+
+### v2.31
+
+- **胶囊双向磁吸飞行轨迹动画**：卡片收起时由纸片缩小为胶囊后不再原地消失，而是顺畅飞向屏幕边缘贴边胶囊停靠；点击贴边胶囊时由边缘平滑飞回桌面原位后再绽放展开为完整卡片。
+- **动态着色器阴影剥离与极速渲染**：形变全周期暂时脱离高开销的动态阴影光栅化重算，完全释放 GPU 流水线，消除卡顿掉帧，动画极致丝滑。
+
+### v2.32
+
+- **修复展开内容透明与闪烁异常**：移除引起子级透明度动画失效的静态位图缓存，确保卡片由小胶囊展开时文字、复选框与行内容自然淡入展开，彻底解决展开异常。
+- **强化双向磁吸飞行轨迹**：小胶囊在收起与展开时以精准胶囊药丸外壳平滑穿梭于屏幕停靠区与桌面原位，形态过渡自然无断层。
+
+### v2.33
+
+- **修复胶囊展开内容裁切与布局重排卡顿**：修复形变过渡中内部容器对卡片内容产生双重边界裁切导致展开时画面残缺的问题，并在动画期间锁定完整卡片布局尺寸，消除逐帧重排开销。
+- **胶囊收起与展开飞行衔接优化**：将贴边胶囊的飞行位移与卡片收缩/展开形变整合为连贯的流体时序，消除分段急停感与中途窗口尺寸跳变。
+
+### v2.34
+
+- **卡片多尺寸响应式排版与显示优化**：
+  - **标题栏自适应延伸**：彻底解除顶栏标题固定 100 像素最大宽度限制。卡片拉宽时标题展示区与编辑输入框随可用宽度动态延展，避免较长标题被过早省略；窄卡片下自适应收拢并微调按钮间距，防止顶栏操作按钮挤压文字。
+  - **窄卡片与紧凑高度布局优化**：针对短小/窄卡片自适应缩减笔记与待办边缘空白冗余。在小卡片下精简笔记内衬留白、收拢工具栏与状态栏高度，将笔记实际文本阅读与编辑区域面积大幅提升；在窄卡片下优化待办行间距与截止日期气泡尺寸，防止关联笔记与日期徽章挤压待办正文输入区域。
+  - **待办截止时间智能排版**：修复无论设置与否均强制渲染双徽标的隐患，窄卡片下优先呈现紧凑日期，杜绝空间狭窄时多标签堆叠导致的文本折行挤扁。
+
+### v2.35
+
+- **重构小卡片待办时间排版**：
+  - **超紧凑时间标签**：在小卡片下自动精简时间展示格式（如今天仅显示“15:30”、明天显示“明 15:30”、年内显示“M/d”），摒弃了冗长年份（“yyyy年M/d HH:mm”）对小窗口行宽的严重占用，时间气泡宽度立减 70% 以上。
+  - **待办文本空间全面释放**：小卡片下待办输入文本宽度提升 3~5 倍，彻底消除因时间徽标过长将待办正文挤成单字竖条、完全看不清内容的严重问题。
+  - **窗口尺寸动态平滑过渡**：随窗口拖动缩放，时间标签与留白实时自适应切换完整/紧凑形态，大窗口信息详实，小窗口干净利落。
+
+### v2.36
+
+- **待办全尺寸信息无损多级排版架构**：
+  - **小卡片信息全露出（上下分层结构）**：当卡片处于小尺寸（宽度 < 360px）时，自动将截止时间、相对倒计时、关联笔记等附加信息平滑换行排列至待办正文下方（副行），勾选框与拖拽手柄自适应跨行齐头对齐。待办正文独享从勾选框到右侧手柄的全部横向宽度，彻底消除小卡片下单行挤压导致的正文竖排断裂。
+  - **所有信息完整可见无缺失**：即使在最小规格卡片下，待办正文、完整截止时间（如“今天 15:30”、“明天 15:30”、“10/24 15:30”）、倒计时与关联笔记名称全部完整外露呈现，既不压缩正文也不隐藏时间。
+  - **宽卡片自动回归经典单行**：卡片拉宽（宽度 ≥ 360px）时，时间与关联笔记标签自适应吸附回归右侧单行平铺，窗口拖动缩放无缝切换。
+
+### v2.37
+
+- **已完成待办自动沉底与动态归位**：
+  - **已完成项自动沉底**：勾选完成某项待办后，该项在播放完成划线与淡化视觉反馈后，自动平滑下移至所有未完成待办项的最下方，未完成待办自动前置保持紧凑聚焦。
+  - **反勾选恢复位置**：若取消勾选某项已完成待办，该项自动回移至未完成列表末尾，维持未完成在上、已完成在下的逻辑分层。
+  - **平滑下沉过渡动画**：重排触发时伴随轻柔的顺滑位移插值，视觉动态清晰可循，杜绝瞬间消失或闪烁瞬移。
+
+### v2.38
+
+- **新建待办自动置于已完成项上方**：
+  - **底部追加按钮（＋）行为优化**：点击底部追加待办区域时，新建的未完成待办项自动追加在现有未完成列表的末尾（即全部已完成待办上方），不再坠入已完成项下方。
+  - **回车换行与粘贴分批对齐**：在已有待办中回车新建或批量粘贴文本时，新生成的未完成项目严格约束在未完成区域，始终保持“未完成待办在上、已完成待办在下”的统一列表分区逻辑。
+
+### v2.39
+
+- **修复选中顶部待办项时无法向下滑动至底部的阻滞问题**：
+  - **屏蔽焦点自动回弹劫持**：修复 WPF 在焦点停留在顶部输入框时光标刷新或布局重排触发默认 `RequestBringIntoView` 导致滚动条被强行锁回顶部的缺陷，解除焦点对页面滚动的限制。
+  - **隧道级滚轮滚动与像素级滑动接管**：在滚动容器层直接拦截滚轮穿透，消除输入框内部自带滚动宿主对向下滚动的吞咽现象，滚动顺畅度与触底自由度完全不受输入焦点影响。
+
+### v2.40
+
+- **数据容灾保护与历史自动备份架构加固**：
+  - **闪退现场紧急快照闭环恢复**：将程序异常崩溃时保存的内存紧急快照（`data.crash_recovery.json`）正式接入启动加载恢复链。若主数据因系统异常损坏，优先无损恢复闪退瞬间的现场数据，补齐了容灾盲区。
+  - **四级递进容灾体系**：建立“主数据文件 -> 闪退现场快照 -> 实时镜像备份 -> 历史滚动归档”的四层防御。任何环节出现损坏时均能逐级平滑回退，且损坏源文件自动加盖时间戳安全封存，严禁静默覆盖。
+  - **滚动历史快照自动沉淀**：在 `backups/` 目录中建立周期性自动快照沉淀机制（自动保留近 60 个历史版本），用户在面临极端误操作或多重意外时拥有充裕的历史回滚能力。
+
+### v2.41
+
+- **设置界面高级化视觉与交互全面升级**：
+  - **现代胶囊开关（Toggle Switch）**：淘汰老式复选框样式，重构为现代流线型胶囊滑动开关，开启状态自适应主题主色并带平滑发光，点击全行均可切换，操作质感大幅提升。
+  - **卡片式分组布局（Settings Card Groups）**：设置项全面引入分组卡片容器，搭配半透明微磨砂底色、细致边框与轻柔行分割线，界面排版主次分明、规整通透。
+  - **侧边栏与头部氛围重塑**：导航栏增加彩色图形标签与悬浮胶囊指示标；头部增加精致品牌徽标与动态版本号标签，全局配备沉浸式深层环境阴影与更舒展的圆角体系。
+
+### v2.42
+
+- **新增双重页面显示模式选择（现有桌面便签 vs 思源大纲树）**：
+  - **两种主界面形态一键切换**：在设置页与大纲顶栏提供“桌面便签（保存现有）”与“思源大纲树”两种显示选择，满足用户在散落自由便签与集中文档大纲之间的不同使用偏好。
+  - **思源笔记风格全便签汇总大纲**：大纲视图采用双栏树状架构，左侧大纲树自动将全量待办便签与笔记文档按分类与层级汇总呈现，支持展开折叠、进度统计、Markdown 多级标题（H1~H6）树状结构解析与实时内容搜索。
+  - **实时双向联动与即时编辑**：在大纲右侧详情区支持直接编辑待办勾选、修改文字、增加事项或书写笔记，所有改动实时与桌面便签双向同步，并提供一键定位桌面卡片功能。
+
+### v2.43
+
+- **思源大纲模式纯粹化与桌面便签互斥隐藏**：
+  - **大纲模式自动隐去桌面便签**：切换至思源大纲模式时，桌面上散落的所有便签卡片、贴边半隐藏胶囊与集合主胶囊自动完全隐去，保持桌面整洁纯净；切换回桌面便签模式时无损恢复全部卡片布局。
+  - **剥离便签模式专属桌面逻辑**：大纲模式彻底移除“桌面定位”、“在桌面打开”、“桌面置顶”等便签卡片专属功能，专注于纯净的大纲层级管理、分类检索与直接文本交互，界面干练专注。
+
+### v2.44
+
+- **强化大纲模式与桌面便签的双向强互斥隐藏机制**：
+  - **彻底清除大纲模式下的桌面残留**：修复无论从设置还是托盘菜单唤出大纲模式时，桌面散落卡片、边缘吸附胶囊未完全隐去的漏洞。进入大纲模式后，所有纸片窗口、贴边胶囊宿主及主胶囊全部彻底隐藏，全局刷新调度与全屏置顶检测对桌面纸片暂停接管，确保桌面绝对纯净。
+  - **大纲关闭与模式回退状态无缝还原**：在大纲窗口点击关闭或切换模式时，原桌面便签与胶囊停靠位置自动原样无损唤醒。
+
+### v2.45
+
+- **修复右键托盘图标时置顶便签抢占焦点导致菜单被覆盖的问题**：
+  - **托盘菜单置顶提升（HWND_TOPMOST）**：重构托盘右键菜单唤出时的 Win32 视窗层级，将菜单宿主原生提权至顶层置顶层带（`HWND_TOPMOST`），确保其绝对处于桌面置顶卡片前方。
+  - **冻结菜单弹出期间的置顶刷新竞争**：当托盘右键菜单开启时，全局调度器与定时器自动挂起对桌面卡片的层级重排，杜绝便签卡片抢夺激活焦点并遮挡关闭右键菜单。
+
+### v2.46
+
+- **思源大纲视图深度进化：对齐全量便签能力与思源块级大纲体系**：
+  - **思源块级树状架构与标题大纲**：大纲左侧引入思源同款连续树状引导线与缩进结构，Markdown 笔记自动深度提取并呈现 H1~H6 多级层级大纲树，点击标题节点即刻平滑锚定；右侧详情区支持面包屑导航、多级标题块渲染与语法高亮。
+  - **待办全量功能对齐（增加/删减分栏与分栏拖拽）**：大纲待办直接支持 1~4 自由分栏，可在任意列通过右键菜单快捷插入/删除列，并支持鼠标拖动分栏分割线调节各列比例。
+  - **时间节点与临期/过期提醒深度融合**：每项待办支持设置截止时间节点，红标警示过期状态与剩余倒计时，支持配置定时提醒间隔与快捷清除。
+  - **已完成项自动沉底与追加防落位**：大纲模式打勾完成某项待办后自动顺畅移动到未完成项下方，新增待办自动停留在未完成区域顶部，与便签版保持绝对一致。
+
+### v2.47
+
+- **重构大纲模式为思源笔记（SiYuan）三栏式现代工作区界面**：
+  - **经典三栏式工作流布局**：彻底重构此前对话框式的悬浮框形态，全面引入思源笔记经典的“最左侧活动图标栏（Activity Bar）+ 树状大纲导航栏（Sidebar）+ 沉浸式文档工作区（Workspace）”三栏结构，支持标准窗口无边框拖拽、双击放大与最大化/还原。
+  - **块级排版与面包屑导航**：顶栏原生加入思源风格面包屑导航与文档大标题（H1），待办列表支持悬浮显现块级控制把手（`⠿`），分栏拖拽与时间节点深度融入块流。
+
+### v2.48
+
+- **接入现代 WPF-UI (Fluent Design 2) 视效体系与视窗美化升级**：
+  - **原生 Windows 11 Mica 材质与 Fluent 视窗**：引入顶级现代化 WPF 界面库 `WPF-UI`，大纲主窗口采用原生 Mica 半透明云母材质与亚克力磨砂，支持原生窗口吸附布局（Snap Layouts）、平滑动效与极简沉浸标题栏。
+  - **精工图标与块级卡片容器**：全量采用 Segoe Fluent 图标集（SymbolIcon），大纲待办事项与代码块升级为现代微浮雕圆角卡片容器（Card），配合胶囊式气泡状态指示标（InfoBadge），全面消除老式粗糙控件质感，界面美观度与现代感显著跃升。
+
+### v2.49
+
+- **构建思源笔记（SiYuan）纯正专属自洽色彩矩阵与视效归一化**：
+  - **彻底清除色调割裂与底色冲突**：重构大纲模式为思源原版专属调色盘（`SiYuanTheme`），剔除第三方控件库造成的全局样式污染与底色不一问题；活动栏、大纲侧栏、编辑器画布、卡片块、分割线与文字严格遵循专业设计的深浅双模十六进制色彩矩阵，视效浑然一体。
+  - **精修块级编辑交互与排版质感**：待办块级列表采用思源同款悬浮把手（`⠿`）与细致内描边容器，状态徽标与时间标签根据临期/逾期智能呈现自适应柔和警示色，排版规整开阔。
+
+### v2.50
+
+- **全场景右键上下文菜单（ContextMenu）重构与全大纲覆盖**：
+  - **右键菜单样式与色彩自洽**：彻底淘汰默认 WPF 原生浅灰方框菜单，定制专属思源右键菜单模板与高斯微阴影（`CreateSiYuanContextMenu`），暗色自适应纯正深灰底色，彻底解决暗色下弹出突兀白框的视效 bug。
+  - **大纲树右键能力全面补齐**：左侧大纲树上的便签父节点（支持新增事项、清理完成、删除便签）与待办子项（支持调整截止时间、定时提醒、1~4 分栏增减、删除待办）全量挂载右键上下文菜单，右侧工作区整行均支持右键呼出，操作无死角。
+
+### v2.51
+
+- **大纲笔记（Note）全功能上下文菜单补齐与排版增强**：
+  - **定制笔记专属右键菜单**：补齐此前笔记编辑区无右键菜单而退化为系统白框的漏洞，为笔记编辑器定制专属思源右键菜单，提供剪切、复制、粘贴、全选，以及加粗、斜体、删除线、各级标题、引用块、列表、代码块快捷排版。
+  - **大纲标题节点与渲染预览菜单覆盖**：左侧大纲树上的多级标题树叶支持右键复制标题与管理便签，右侧渲染预览画布支持右键一键切换回编辑模式或复制全文。
+
+### v2.52
+
+- **深度复刻思源笔记（SiYuan Note）纯正极简文档流与无框块级设计**：
+  - **沉浸式无边框文档排版**：彻底剥除破坏文档纯净感的外框卡片，回归思源原生无框列表行，悬浮柔和亮起行背景并淡入块控制把手（`⠿`）与删除键，还原真实思源编辑器书写阅读质感。
+  - **定制思源精致复选框与细发丝分栏分割线**：打造思源同款微圆角细描边 Checkbox，打勾呈现平滑蓝色填充与纤细对勾，完成待办自动附带删除线；多列分栏采用极简 1px 细发丝分割线，整窗视效回归纯正思源美学。
+
+### v2.53
+
+- **思源大纲视窗细节精工雕琢与深度体验优化**：
+  - **原生 WindowChrome 边框无缝自适应**：接入 Win32 视窗无缝 Chrome 体系，支持全部四角与四边像素级流畅拉伸，最大化/还原按钮根据窗口状态智能切换图标（`□` 与 `❐`），顶栏功能区与拖拽区域实现精准点击穿透分界。
+  - **已完成事项独立专区与微进度条**：待办文档标题下方新增 2.5px 极简完成度进度条与百分比统计；已完成事项自动归纳进思源同款“已完成 (N)”分割专区，视觉层级清晰整齐。
+  - **代码块一键复制与微动效反馈**：Markdown 渲染代码块新增右上角悬浮复制按钮，点击即刻送入系统剪贴板并带绿色“已复制 √”倒计时微动效。

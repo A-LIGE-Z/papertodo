@@ -1,0 +1,5 @@
+<resources>
+    <string name="widget_label">PaperTodo タスク</string><string name="widget_empty">PaperTodo を開いてタスクを追加・同期してください。</string>
+    <string name="widget_refresh">タスクを同期</string><string name="widget_complete">完了にする</string><string name="widget_undo">未完了にする</string>
+    <string name="reminder_channel">タスクの通知</string><string name="reminder_overdue">期限を過ぎたタスク</string><string name="reminder_upcoming">まもなく期限のタスク</string>
+</resources>

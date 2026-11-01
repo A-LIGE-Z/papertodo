@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://a-lige-z.github.io/papertodo/sitemap.xml

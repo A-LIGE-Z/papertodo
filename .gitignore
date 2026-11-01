@@ -1,35 +1,38 @@
-# Flutter/Dart
-.dart_tool/
-.tmp/
-.flutter-plugins
-.flutter-plugins-dependencies
-.packages
-build/
-dist/
-.reference/
-repapertodo-android-release.apk
-repapertodo-windows-x64.zip
-repapertodo-windows-x64/
-android/.kotlin/
-.android-home/
-.android-sdk/
-.android-avd/
-
-# IDE
-.idea/
-.vscode/
-*.iml
-
-# OS
-Thumbs.db
-.DS_Store
-
-# RePaperTodo local data
+bin/
+obj/
+TestResults/
+tests/.clean-source-*/
+输出/
+.vs/
+*.user
 data.json
-data.backup*.json
-*.papertodo-sync
-
-# Android signing secrets
-android/key.properties
+data.json.tmp
+data.backup.json
+data.crash_recovery.json
+data.*.json
+*.png
+!mobile/android/app/src/main/res/**/*.png
 *.jks
 *.keystore
+**/key.properties
+**/local.properties
+**/signing.properties
+.env
+.env.*
+!.env.example
+PaperTodo.crash.log
+对比_StickyMD/
+.codex_decompile_debug/
+extract_code.py
+rollout-*.jsonl
+
+# User Backups & Archives
+backups/
+archive/
+*.log
+*.zip
+
+# Binaries & Outputs
+dist/
+PaperTodo*.exe
+PaperTodo*.zip

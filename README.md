@@ -1,396 +1,244 @@
-# RePaperTodo
+<div align="center">
 
-RePaperTodo is a Flutter-first reimplementation of PaperTodo.
+# PaperTodo · 一张纸
 
-The goal is to reproduce PaperTodo's full feature set and product philosophy, starting with the Windows exe experience, then expanding to Android 14-17 and cross-device WebDAV sync.
+**让桌面上有几张安静、可用、不打扰人的纸。**
 
-## Direction
+一个以 Windows 桌面纸片为核心的轻量便签工具，使用 WPF 原生界面。可选大纲显示、跨端同步和 Android 伴侣端，无需注册账号。
 
-- Flutter and Dart as the primary app language.
-- Windows exe first.
-- Android app second.
-- Shared local-first data model.
-- Generic WebDAV sync for Windows and Android.
-- Domestic WebDAV presets may be added, while generic WebDAV remains mandatory.
-- Runtime UI localization is limited to Chinese and English.
-- No fixed budget ceiling for reaching feature parity and reliable sync.
+![version](https://img.shields.io/badge/version-v0.0.2--dev-3b82f6) ![platform](https://img.shields.io/badge/platform-Windows%20x64-555) ![.NET](https://img.shields.io/badge/.NET-10-512bd4) ![UI](https://img.shields.io/badge/UI-WPF-0078d4)
 
-## Current Status
+**语言：中文 | [English](README.en.md)**
 
-This repository now contains a Flutter Windows/Android codebase with the shared
-PaperTodo-compatible data model, desktop-first paper UI, local persistence,
-platform-service boundaries, startup command handling, and WebDAV snapshot plus
-operation-log sync foundations. Syncable edits are persisted with a local-only
-durable outbox, so manual, debounced, startup, and Android background sync can
-retry deterministic operation IDs after restart without losing local changes;
-the outbox clears only after snapshot sync and remote operation merge succeed.
+[GitHub 源码](https://github.com/A-LIGE-Z/papertodo) · [发布记录](https://github.com/A-LIGE-Z/papertodo/releases)
 
-See [AGENTS.md](AGENTS.md) for project rules and [docs/ROADMAP.md](docs/ROADMAP.md) for the staged implementation plan.
+</div>
 
-## Release Build
+---
 
-Use the local release script to verify, build, and package the Windows and
-Android artifacts. The script also writes release notes, including the
-user-facing `CHANGELOG.md` Unreleased entries, and a SHA-256 checksum file
-beside the artifacts in `dist/` that covers the Windows zip, Android APK,
-release metadata JSON file, and release notes markdown file.
-The script verifies that checksum file against the packaged files before upload
-and also writes release metadata JSON with the version,
-commit, Android 14-17/API 34-37 compatibility, signing mode, validation
-commands, skipped validation commands for local smoke packages, package
-resolution mode, Windows smoke result, WebDAV static smoke result, Android SDK
-tool paths, Android static smoke result, optional Windows manual QA result,
-optional generic and domestic WebDAV live smoke results, optional Android device smoke result,
-Flutter/Dart toolchain versions, runtime supported languages (`zh` and `en`),
-`pubspec.lock` hash, release notes file hash, and artifact hashes.
-Before release notes or metadata are written, the script reads
-`PaperTodoStrings.supportedLocales` and fails if the runtime language list is
-anything other than Chinese and English in that order.
-The script reads that metadata JSON back before checksumming it and verifies
-that its UTC build timestamp, dependency lock, validation lists,
-Windows smoke pass status, UTC timestamp, EXE file name, persisted paper
-counts, startup command forwarding list, WebDAV static smoke pass status,
-generic WebDAV support, Jianguoyun preset support, encrypted payload and
-operation-log evidence, local HTTP WebDAV protocol round-trip coverage,
-Windows/Android operation-log round-trip coverage, Windows manual QA skip/pass
-status, generic and domestic WebDAV live smoke skip/pass status, Android SDK/signing fields,
-Android SDK tool paths, Android static smoke pass status, UTC timestamp, SDK
-values, APK file name, runtime language fields, toolchain fields, and artifact records match the files and command path that were just validated.
-Checksum and metadata artifact file names must also stay safe single file names rather than paths,
-artifact byte counts must be positive integers, and artifact hashes must be 64-character
-lowercase SHA-256 values. The
-generated Windows zip and Android APK are also opened before
-checksumming so the packages must actually contain a non-empty
-root `repapertodo.exe` launcher as the ZIP's only top-level file, plus the
-Flutter Windows runtime files under `runtime/`
-(`repapertodo.runtime.exe`, `flutter_windows.dll`, the app-local MSVC/Universal CRT DLLs,
-`data/app.so`, `data/icudtl.dat`, and
-`data/flutter_assets/FontManifest.json`), and Android APK runtime entries:
-`AndroidManifest.xml`, `assets/flutter_assets/AssetManifest.bin`,
-`assets/flutter_assets/FontManifest.json`, `lib/*/libapp.so`, and
-`lib/*/libflutter.so`.
-The copied APK is then inspected with `apkanalyzer` so its actual manifest
-`min-sdk` and `target-sdk` values must match the Android 14-17/API 34-37
-release configuration before checksums or metadata are written. The release
-script resolves both `apkanalyzer` and `aapt2` from the Android SDK and passes
-those exact tools into Android smoke validation, keeping local and CI package
-checks on the same SDK toolchain. Android smoke
-validation also checks that the
-release APK has the expected application ID, is not debuggable, keeps the
-launcher Activity singleTop/empty-task-affinity contract, keeps INTERNET and generic HTTP WebDAV cleartext support,
-keeps WorkManager background sync services and network/wake/boot-reschedule permissions,
-avoids broad external-storage
-permissions, preserves FileProvider
-sharing, dumps the compiled
-`@xml/file_paths` resource to confirm that external sharing stays scoped to
-`RePaperTodo` directories, and declares package-visibility queries for `http`,
-`https`, `mailto`, Markdown/text files, and generic file viewers. When run
-through release packaging, the same static smoke writes structured metadata
-with the inspected APK file name, SDK values, resolved Android SDK tools,
-APK application ID, permissions, FileProvider resource, cleartext WebDAV flag, broad-storage
-permission absence, and APK localized resource configurations, which must stay
-within the runtime language set (`zh` and `en`). Release metadata revalidates
-that the static smoke APK path is the packaged Android APK in `dist/`.
-The Windows release output is smoke-tested before packaging by copying the
-built runner to a temporary directory, launching the isolated
-`repapertodo.exe`, forwarding secondary `--new-note`, `--new-todo`, and
-`--settings` startup commands, confirming the expected papers are persisted,
-opening and closing the settings coordinator without changing paper visibility,
-and enumerating the process top-level windows to prove every visible paper owns
-an independent HWND before finally forwarding `--exit`.
-The Windows smoke script writes the same evidence into structured metadata so
-release packages record and revalidate the checked build output directory, EXE
-name, initial/final paper and note/todo type counts, forwarded startup commands, timeout settings,
-settings coordinator open/close HWND counts, and UTC check time.
-The WebDAV static smoke script also runs during release packaging and records
-that generic WebDAV remains present, the Jianguoyun preset is still available,
-encrypted payloads are required for configured sync, operation logs remain
-implemented, a local HTTP WebDAV protocol round-trip covers real
-MKCOL/PUT/PROPFIND/GET traffic, a Windows/Android two-store round trip is
-covered through the shared WebDAV operation-log path, Android registers a
-WorkManager/headless Dart background sync task that reuses the shared WebDAV
-StateStore path when secure sync is configured, Android background sync rejects
-relative or non-`data.json` state-file paths before scheduling or running, and
-the shared settings UI exposes the same sync model used by Windows and Android.
-For real-provider QA, `scripts/webdav_live_smoke.ps1` reads WebDAV credentials
-from `REPAPERTODO_WEBDAV_*` environment variables and runs the same
-Windows/Android snapshot plus operation-log round trip against the configured
-endpoint, writing structured JSON when requested. Publishable live evidence
-must include positive `windows-live-smoke` and `android-live-smoke` device
-sequences so the release gate proves both sides used the shared operation-log
-path, plus UTC start/check timestamps, a relative `.../run-*` remote root, and
-a recorded remote cleanup status.
-Release packaging records skipped Windows manual QA and WebDAV live smoke
-entries by default. To include real generic WebDAV QA evidence in local release metadata and
-release notes, pass:
+## 预览
+
+| 纸片 |
+| :---: |
+| <img src="screenshots/Home.jpg" alt="桌面纸片" width="100%"> |
+
+| Markdown 浏览 |
+| :---: |
+| <img src="screenshots/Md.jpg" alt="Markdown 浏览" width="100%"> |
+
+| 胶囊模式 | 高级胶囊 |
+| :---: | :---: |
+| ![胶囊模式](screenshots/Pill_Mode.gif) | ![胶囊自动贴边](screenshots/Pill_Plus.gif) |
+| 纸片可折叠为小胶囊，减少桌面占用。 | 折叠胶囊自动贴到屏幕边缘，悬浮时滑出。 |
+
+---
+
+## 设计理念
+
+- **纸片优先** — 每张纸都是独立的无边框窗口，也可以切换到大纲显示。
+- **即时使用** — 想记就写，完成就勾掉；位置、尺寸、置顶、内容都自动保存。
+- **保持轻量** — 不做账号、分类、标签和归档系统；同步、到期提醒与大纲显示按需使用。
+- **原生实现** — 基于 WPF，不使用 WEB套壳，也不走 MSIX 复杂权限管理。
+- **交互优先** — 轻不是低占用洁癖，而是操作路径轻、认知负担轻、界面干扰少。
+
+> 拒绝长出非必要的交互层级和视觉焦点负担。
+
+---
+
+
+## 项目特色
+
+- **多张独立纸片** — 每张纸是一个独立窗口。
+- **一个应用，两种纸片**：
+  - **待办纸**：一行一个事项，可以勾选、编辑、删除、清理已完成。
+  - **笔记纸**：普通文本 + MD语法轻量高亮，支持三档 MD 伪渲染。
+- **胶囊模式**（默认启用）— 点击纸片右上角可折叠成置顶小胶囊，减少桌面占用，需要时点击唤回。
+- **胶囊自动贴边**（默认启用）— 折叠胶囊自动贴边排列；支持多屏，拖动单个胶囊就能换边或挪到别的屏幕。
+- **交互层级最优化** — 常用操作大多一两步可达，不必层层点开。
+- **脚本胶囊** — 笔记首行写入 `!p` / `!power` ，可快捷运行笔记中的脚本，充分发挥胶囊管理系统能力
+- **待办关联笔记** — 可把笔记拖到待办项上建立关联；可直接打开关联笔记。
+- **主题切换** — 支持跟随系统 / 浅色 / 深色三种模式。
+- **五套配色方案** — 默认思源配色，保留暖纸、墨、林、霞与自定义颜色。
+- **多语言界面** — 中文、英文、日文、韩文，跟随系统语言。
+- **开机自启动** — 可随 Windows 启动后台运行。
+- **自定义图标** — 程序目录存在 `PaperTodo.ico` 时优先作为托盘图标，否则用内嵌图标。
+- **数据安全** — 自动保存到程序目录 `data.json`，保留 `data.backup.json`；临时文件写入降低异常退出时的损坏风险。
+- **原生纸片体验**：使用 WPF 原生控件实现，优雅高效流畅。
+- **快捷参数启动**：通过启动参数即可显示、隐藏、切换和新建纸片，方便用快捷键工具或脚本调用。
+
+---
+
+## 纸片功能与操作手册
+
+
+## 纸片
+
+**基本操作**
+
+- **移动与缩放**
+- **置顶**：左上角的类型图标同时也是置顶开关
+- **新建**：右上角可新建待办和笔记纸
+- **外部编辑器打开**：点击 `MD` 按钮，用外部编辑器打开当前笔记（后缀可在设置中自定义）
+- **设置标题**：可自定义纸片标题
+
+**胶囊与贴边**
+
+- **折叠胶囊**：纸片可折叠为置顶小胶囊，减少桌面占用，可便捷再次打开。
+- **自动贴边**：折叠胶囊可自动停靠在屏幕边缘，悬浮时滑出。
+- **多屏队列**：可把单个贴边胶囊拖到左侧、右侧或其他显示器，松手后自动加入对应屏幕边缘队列。
+- **收起全部**：顶部主胶囊可一键收起 / 展开全部贴边胶囊，也可拖动调整所在队列的起始高度。
+
+
+---
+
+### 待办 (Todo)
+
+适合当天任务、临时事项、桌面小清单。
+
+**基本操作**
+
+- **勾选完成**
+- **新增事项**
+- **拖动排序** — 按住右侧 `≡` 手柄上下拖动
+- **拖拽删除** — 拖动事项到底部删除
+- **粘贴多行** — 自动拆成多条事项，并清洗常见列表前缀
+- **视觉大小** — 可在设置中选择小 / 中 / 大 / 特大四档显示大小
+- **撤销 / 重做** — `Ctrl+Z` / `Ctrl+Y`
+
+**关联笔记**：可把一张笔记从顶栏拖到待办项上建立关联。关联后，待办项后方会显示打开入口；开启“关联笔记显示名称”后，会显示笔记标题。
+
+---
+
+### 笔记纸 (Paper)
+
+笔记纸不是 Markdown 编辑器，只是让一张纸能写得稍微清楚一点。
+
+**格式快捷键**
+
+- `Ctrl+B` — 加粗。
+- `Ctrl+I` — 斜体。
+- `Ctrl+K` — 插入超链接。
+- `Ctrl+Z` / `Ctrl+Y` — 撤销 / 重做。
+- `Ctrl + 滚轮` — 按 10% 步进缩放正文文字（点击右下角百分比恢复 100%）。
+
+**支持的 Markdown**：标题 `#`～`######`、加粗 `**文本**`、斜体 `*文本*`、删除线 `~~文本~~`、无序列表 `-`、有序列表 `1.`、引用 `>`、分割线 `---` / `***` / `___`、行内代码 `` `code` ``、代码块 ` ``` `、超链接 `[文本](URL)`，以及少量单行内联 HTML 标签（`b/strong/i/em/s/del/u/code/a href`）。
+
+**不支持**：图片、表格、附件、嵌入内容、块级 HTML、复杂块编辑器。
+
+**外部编辑**：顶栏 `MD` 按钮可用系统默认 `.md` 编辑器打开临时文件
+
+**自定义后缀**：顶栏 `MD` 按钮可改为 `.txt`、`.html`、`.bat` 等系统已关联后缀，由 Windows 关联程序处理临时文件。
+
+**脚本胶囊**：笔记第一行写入 `!p` / `!power` 后，后续内容会作为 PowerShell 脚本运行。折叠成胶囊后显示闪电图标，左键运行，右键打开纸片继续编辑；使用 `!pf` / `!powerf` 可投递到常驻 PowerShell 进程。
+
+
+
+---
+## 设置
+
+- **外观** — 主题、配色方案、待办视觉大小、标题最大字数、普通悬浮提示和动画开关。
+- **全屏置顶策略** — 检测到外部全屏窗口时，可选择纸片和贴边胶囊临时避让，或保持在全屏画面之上。
+- **待办与笔记** — 待办关联笔记、关联笔记显示名称、已关联笔记是否显示为胶囊。
+- **顶栏按钮** — 可单独隐藏新建待办、新建笔记和外部打开按钮。
+- **外部打开** — 自定义笔记临时文件后缀，用系统默认编辑器打开当前笔记。
+- **脚本胶囊** — 优先使用 PowerShell 7、隐藏脚本运行窗口、启用常驻 PowerShell 进程。
+- **胶囊** — 胶囊模式、自动贴边、多屏左右队列、展开时保留边缘胶囊、收起全部主胶囊。
+
+---
+
+## 托盘入口
+
+PaperTodo 没有主窗口。托盘是唯一的全局入口。
+
+### 托盘操作
+
+- **双击托盘图标** — 显示并拉回全部纸片。
+- **右键托盘图标** — 打开菜单（顶部显示当前版本号）。
+- **设置** — 打开独立设置弹窗，集中主题、配色、MD 解析、自启动、顶栏按钮、待办关联笔记和胶囊选项。
+- **删除纸片** — 列表行右侧 `×` 先切换为确认态，再选择「确认 / 取消」。
+
+### 启动参数
+
+可配置到外部快捷键工具、脚本或 Windows 快捷方式：
+
+```text
+PaperTodo.exe --show       显示并拉回全部纸片
+PaperTodo.exe --hide       隐藏全部纸片（程序继续在托盘运行）
+PaperTodo.exe --toggle     有显示则隐藏全部，全部隐藏则显示
+PaperTodo.exe --new-todo   新建一张待办纸
+PaperTodo.exe --new-note   新建一张笔记纸
+PaperTodo.exe --exit       保存状态并退出
+```
+
+参数可省略 `--`，并支持少量别名（如 `open` = `show`，`quit` = `exit`）。
+
+程序已运行时再次带参数启动不会创建第二个进程，而是把命令转发给当前实例；无参数再次启动则显示并拉回全部纸片。
+
+
+
+---
+
+## 数据与文件
+
+数据保存在程序目录下：
+
+```text
+PaperTodo/
+├─ PaperTodo.exe
+├─ data.json          主数据文件
+├─ data.backup.json   保存前备份，主文件损坏时用于恢复
+└─ PaperTodo.ico      可选：存在时优先作为自定义托盘图标，否则用内嵌图标
+```
+
+> ⚠️ 不要把程序放在只读目录，否则可能无法保存数据。
+
+---
+
+## 下载与校验
+
+GitHub Actions 构建两个 Windows x64 单文件 exe，直接作为 Release 资产发布：
+
+- **`...-self-contained-small.exe`** — 自包含 .NET Desktop Runtime 的压缩单文件。
+- **`...-no-runtime.exe`** — 不含运行库，需要安装 .NET 10 Desktop Runtime。
+
+正式交付同时包含正式签名的 Android APK、可选独立服务端及 `SHA256SUMS.txt`、`build-manifest.json`。Windows EXE 附 Sigstore 签名（`.sig` / `.crt`）。各组件检查全部通过后统一发布；稳定版本需要手工验收后显式确认发布。
+
+Release 发行说明从 [`CHANGELOG.md`](CHANGELOG.md) 自动提取对应 tag 的版本小节。
+
+---
+
+## 构建与依赖
 
 ```powershell
-.\scripts\release.ps1 -AllowDirty -SkipTests -SkipBuild `
-  -WindowsManualQaResultJson dist\windows-manual-qa.json `
-  -WebDavLiveSmokeResultJson dist\webdav-live-smoke.json
+dotnet build -c Release
 ```
 
-When an Android 14-17/API 34-37 device or emulator is available,
-`scripts/android_device_smoke.ps1` can also verify the APK application ID,
-install the APK, launch `com.aligez.repapertodo`, confirm the package process
-starts, confirm the launched package remains foreground, and force-stop it
-without uninstalling existing app data, including when launch validation fails.
-This optional runtime smoke is kept out of the default release script so headless CI
-packaging remains possible. Pass `-RunAndroidDeviceSmoke` to
-`scripts/release.ps1` to include it in local release metadata, and pass
-`-AndroidDeviceSerial` when more than one adb device is online. When it runs
-through the release script, metadata records the resolved adb and apkanalyzer
-paths, device serial, API level, package name, APK application ID, APK file
-name, APK byte count, APK SHA-256, launch wait, observed process ID, and
-foreground package. Release metadata revalidates that this device-smoked APK
-file name, byte count, and SHA-256 match the packaged Android APK and that the
-foreground package matches the launched package. When it is skipped, metadata
-still records the UTC skip time and the
-`-RunAndroidDeviceSmoke` recovery hint.
+本地运行 `./scripts/build.ps1` 只生成自包含压缩单文件及校验清单，产物位于 `dist/PaperTodo-v<版本>/`。加 `-Run` 才会保存并退出当前实例、备份旧入口和数据、更新入口并启动。云端 Release 同时发布两个 Windows 包。
 
-For emulator-only background protocol QA, `tool/local_webdav_server.dart` can
-serve an authenticated WebDAV root from the repository. The API 35 release
-runtime has been verified through a real WorkManager background Dart isolate,
-including encrypted snapshot and operation-log uploads. This local endpoint is
-test evidence for the Android background path, not evidence of compatibility
-with a third-party WebDAV provider.
-Release evidence scripts that write `-ResultJson` validate the result path
-before doing the expensive or credentialed work: it must be a `.json` file path
-without wildcard or control characters, so smoke and QA evidence is captured
-before it can be reused by release packaging.
-Release packaging and readiness audit apply the same `.json` path rules when
-they read external QA or smoke evidence files.
-Readiness audit also requires the Android device smoke expected APK file name
-and path to match the current `pubspec.yaml` artifact version before the APK
-hash evidence is accepted.
-The script also rejects package entries with absolute paths, parent-directory
-segments, blank or whitespace-padded path segments, or control characters
-before checksums are written. Windows zip entries are created with normalized
-forward-slash paths, so the package layout is stable across PowerShell hosts and
-unzip tools.
-Windows packaging is staged outside the release build folder first, so
-local runtime state such as `data.json`, backup/recovery JSON files, temp files,
-and crash/fullscreen logs are excluded even if the built exe was run locally.
-Validation includes `git diff --check`, tests, analysis, Windows/APK release
-builds, and Windows/WebDAV/Android smoke scripts. Release packaging reads the Android Gradle SDK settings and stops if they drift from Android 14-17/API 34-37.
-Before artifact paths or release metadata are generated, the script validates
-the `pubspec.yaml` version as SemVer, converts it to a filename-safe artifact
-version token, rejects unsafe GitHub Release tags, and rejects release titles
-with leading/trailing whitespace or control characters.
+Windows 与 Android 当前产品版本统一为 **0.0.2**，分别在 `PaperTodo.csproj` 和 `mobile/pubspec.yaml` 中维护。Android 的 `+6` 是独立递增的安装编号，不是产品版本。
 
-The same release script is wired into GitHub Actions. Pushes and pull requests
-to `main` run the full validation, build, and package flow, then upload the
-packaged `dist/` files as workflow artifacts from a read-only `contents`
-permission job. Manual `workflow_dispatch` runs with `publishRelease: true`
-use a separate write-permission job that reruns the full validation, build,
-package, and GitHub Release publish path. Publishing also requires a
-`qaEvidenceRunId`: the run ID from `.github/workflows/qa-evidence.yml` whose
-`repapertodo-qa-evidence` artifact contains the four build-bound QA records.
-That evidence workflow runs on a self-hosted Windows x64 runner because it
-needs a real desktop session, an Android API 34-37 device or emulator, and
-generic plus Jianguoyun WebDAV credentials. It downloads the packaged
-candidate identified by `candidateRunId`, records the seven Windows manual QA
-results against the extracted exe, runs both live WebDAV checks and the Android
-device smoke, then uploads the JSON evidence consumed by the publish job.
+项目根目录保留 Windows 源码与本地运行入口；`mobile/` 为 Android，`server/` 为可选同步服务，`tests/` 为回归测试，`scripts/` 为构建与启动脚本。可分发程序集中在 `dist/`；`输出/`、`obj/`、`bin/` 和 `mobile/build/` 是可重新生成的产物。`backups/` 与 `archive/backups/` 保存用户数据备份，不能作为构建缓存清理；启动升级备份位于 `backups/updates/`。
 
-The GitHub Actions release sequence is therefore:
+历史验收见 [交付检查记录](docs/reviews/DELIVERY_REVIEW_2026-10-31.md)，原始需求见 [同步与 Android 规划](docs/plans/PROMPT_SYNC_AND_MOBILE.md)，Markdown 示例见 [显示样例](docs/examples/md-sample.md)。历史记录中的版本号保留当时的实际值。
 
-1. Run the package workflow for the intended commit and retain its run ID.
-2. Manually verify that candidate, then dispatch `Collect Release QA Evidence`
-   with the package run ID on the configured self-hosted QA runner.
-3. Dispatch `Build and Release` with `publishRelease: true` and
-   `qaEvidenceRunId` set to the completed QA evidence run ID.
+## 跨端同步与 Android
 
-```powershell
-.\scripts\release.ps1
-```
+在 Windows 和手机设置中选择同一个 WebDAV、S3 兼容存储或独立同步服务。连接凭据只留在本机，上传内容为纸片、待办与删除记录。不同条目可以合并；同一条目的冲突按更新时间与确定性规则选择，不能把同步当作无限历史版本。
 
-To also create or update the GitHub Release for the version in `pubspec.yaml`:
+同步前保留本地备份；远端格式无效、认证失败或写入未确认时不显示成功。旧版本曾上传完整设置，升级两端后会改写当前同步文件；历史远端备份中的旧凭据不会自动删除，实际使用过旧同步版本时应检查存储访问权限并更新相关凭据。
 
-```powershell
-.\scripts\release.ps1 -PublishGitHubRelease `
-  -AndroidDeviceSmokeResultJson dist\android-device-smoke.json `
-  -WindowsManualQaResultJson dist\windows-manual-qa.json `
-  -WebDavLiveSmokeResultJson dist\webdav-live-smoke.json `
-  -WebDavDomesticLiveSmokeResultJson dist\webdav-domestic-live-smoke.json
-```
+手机支持桌面小部件勾选、前台自动拉取、系统后台同步与到期提醒。后台执行与通知受 Android 省电策略约束，不承诺精确秒级时间。详情、签名迁移及测试方法见 [Android 说明](mobile/README.md)；免 Docker 部署见 [独立服务端说明](server/README.md)。
 
-Publishing checks `gh auth status` before running the expensive Flutter
-validation and build steps. It accepts `GH_TOKEN` or `GITHUB_TOKEN` when the
-environment provides one, and otherwise expects an authenticated GitHub CLI
-session, so missing or expired GitHub credentials fail early with a direct
-`gh auth refresh -h github.com` or `gh auth login -h github.com` recovery
-command.
-Publishing also fetches `origin/main` and requires the local `main` HEAD to
-match it before building, so release metadata, artifacts, and the GitHub tag
-all point at the same commit.
-New release tags are created against the validated commit SHA, not a moving
-branch name.
-GitHub Release publishing also requires the tag to match the `pubspec.yaml`
-version exactly as `v<version>`, so a package built from one version cannot be
-published under a different public tag.
-If the target tag already exists on GitHub, it must already point to the same
-commit being packaged; otherwise the script stops so a reused version cannot
-publish new artifacts under an old tag.
+- **Windows / .NET 10 / WPF** — 运行环境与 UI 框架。
+- **[AvalonEdit](https://github.com/icsharpcode/AvalonEdit)** — 笔记纸文本编辑与 Markdown 轻量高亮。
+- **[Hardcodet.NotifyIcon.Wpf](https://github.com/hardcodet/wpf-notifyicon)** — 托盘图标与菜单。
 
-When the tag already has a GitHub Release, the script updates the release title
-and notes before clobbering the Windows, Android, checksum, metadata, and
-release notes artifacts.
-After either creating or updating the GitHub Release, the script reads the
-release asset list back from GitHub and verifies that each uploaded artifact
-exists exactly once, that no stale extra assets remain on the Release, and
-that each asset is reported by GitHub as fully uploaded with the same byte count
-as the packaged local file. It
-then downloads each uploaded asset to a temporary directory and compares its
-SHA-256 hash with the packaged local artifact before the publish step can pass.
+## 其他
 
-By default the release script refuses to package a dirty git working tree so
-the artifact metadata commit matches the files being shipped. For a local-only
-smoke package from uncommitted changes, pass `-AllowDirty`. Local smoke
-packages made with `-AllowDirty` record `dirtyWorkingTreeAllowed: true` in the
-release metadata JSON, and packages made with `-SkipTests` or `-SkipBuild`
-record those skipped validation steps there as well. The metadata also records
-whether dependencies were resolved with `flutter pub get`,
-`flutter pub get --offline`, or skipped because both tests and builds were
-skipped.
-The clean-tree check also runs again immediately before packaging, so package
-resolution or generated project files cannot drift away from the metadata
-commit unnoticed.
-That packaging check compares real working-tree, staged, and untracked content
-after refreshing Git's index, so Flutter's Windows build can touch generated
-plugin files without falsely failing the release when their normalized content
-is unchanged.
+感谢 [linux.do](https://linux.do/) 社区。
 
-GitHub Release publishing always requires the full validation path. The script
-will refuse `-PublishGitHubRelease` when it is combined with `-SkipTests`,
-`-SkipBuild`, or `-AllowDirty`. It also refuses publishing unless the release
-run includes passed Windows manual QA evidence, passed generic/custom WebDAV
-live smoke evidence, passed Jianguoyun/domestic WebDAV live smoke evidence, and
-passed Android 14-17/API 34-37 device or emulator smoke evidence.
-Android runtime smoke evidence may come from `-RunAndroidDeviceSmoke` on a
-connected device/emulator or from a previously generated
-`-AndroidDeviceSmokeResultJson` record; the script rejects using both sources
-in the same release run.
-The publish workflow downloads those four JSON files from the explicitly
-selected QA evidence run and passes every path to `release.ps1`; missing or
-stale evidence therefore fails before any GitHub Release assets are replaced.
+---
 
-To inspect those publish gates without building, uploading, or touching remote
-services, run the release readiness audit:
+## Star 增长曲线
 
-```powershell
-.\scripts\release_readiness_audit.ps1 `
-  -WindowsManualQaResultJson dist\windows-manual-qa.json `
-  -ExpectedWindowsReleaseDirectory build\windows\x64\runner\Release `
-  -WebDavLiveSmokeResultJson dist\webdav-live-smoke.json `
-  -WebDavDomesticLiveSmokeResultJson dist\webdav-domestic-live-smoke.json `
-  -AndroidDeviceSmokeResultJson dist\android-device-smoke.json `
-  -ExpectedAndroidApkFileName repapertodo-android-<version>.apk `
-  -ExpectedAndroidApkPath dist\repapertodo-android-<version>.apk `
-  -ReleaseMetadataJson dist\repapertodo-<version>-release.json `
-  -ReleaseChecksumsFile dist\repapertodo-<version>-sha256.txt
-```
-
-The audit prints structured JSON with `readyForGitHubRelease`, individual
-check results, and blockers for the clean tree, Android signing, Windows manual
-QA, expected Windows exe and `data/app.so` byte/hash matching when a release
-directory is supplied, generic and domestic live WebDAV QA, Android 14-17 device
-smoke, expected APK byte/hash matching when an APK path is supplied, release
-metadata JSON/checksum file names, metadata `version`/`tagName`, and artifact
-file names matching `pubspec.yaml`, runtime/static-smoke checks, release
-metadata artifact file name, byte-count, and SHA-256 matching against the
-neighboring Windows zip and Android APK files,
-checksum-file line matching for the Windows zip, Android APK, metadata JSON, and
-release notes markdown, metadata release notes file name/byte/hash matching the
-neighboring release notes markdown, metadata Flutter/Dart toolchain fields
-matching the current `flutter --version --machine` output, metadata
-`pubspec.lock` byte/hash matching against the current dependency lock, and the
-runtime language set (`zh` and `en`). Add
-`-FailOnBlocked` when the audit should act as a CI gate.
-
-If dependencies are already cached and network access to pub.dev is unreliable,
-use offline package resolution:
-
-```powershell
-.\scripts\release.ps1 -OfflinePubGet
-```
-
-When using `-SkipBuild`, existing Windows and Android release artifacts must
-already be present under `build/`; otherwise the script stops with a direct
-message telling you to rerun without `-SkipBuild`. The Windows release folder
-must include `repapertodo.exe` plus the Flutter Windows runtime files, and the
-Android APK path must point to an APK file.
-
-### Android release signing
-
-Android APK builds keep working without secrets by falling back to the debug
-signing config. For a store-ready APK, create `android/key.properties` locally
-and keep the keystore out of git:
-
-```properties
-storeFile=repapertodo-release.jks
-storePassword=your-store-password
-keyAlias=repapertodo
-keyPassword=your-key-password
-```
-
-Generate a local keystore when needed:
-
-```powershell
-keytool -genkeypair -v -keystore android\repapertodo-release.jks -storetype JKS -keyalg RSA -keysize 2048 -validity 10000 -alias repapertodo
-```
-
-The release script prints whether the APK used `android/key.properties` or the
-debug fallback and records that mode in GitHub Release notes. Those notes also
-include whether a dirty working tree was allowed, which package resolution mode
-was used, user-facing `CHANGELOG.md` Unreleased entries, the runtime UI
-language set (`zh` and `en`), the Flutter and Dart toolchain versions, and
-which validation commands were executed or skipped. They also include a
-verification summary with the Windows smoke result, WebDAV static smoke result,
-Android APK application ID and SDK values, Windows note/todo startup-command
-counts, Android launcher Activity contract, and optional Android device smoke
-status.
-Windows desktop parity that requires observation in a real user session can be
-recorded with `scripts/windows_manual_qa.ps1`. That script requires explicit
-pass/fail/skip results for transparent borderless feel, task-switcher
-visibility, multi-monitor edge docking, fullscreen avoidance, tray recovery
-after Explorer restarts, long-running script capsules, and independent paper
-surfaces; skipped items fail unless `-AllowSkipped` is used for exploratory
-records. Passed records also include the byte counts and SHA-256 hashes for
-`repapertodo.exe` and `data/app.so`, the source release directory, plus a non-empty tester name,
-the Windows version string, and exactly the expected seven checked parity items;
-release packaging verifies those values against the current Windows release build
-before using the manual QA evidence.
-The script treats
-the release signing config as present only when all four properties are filled
-and `storeFile` points to an existing keystore file. Signing property values
-must not contain control characters, and `storeFile` must not contain wildcard
-characters, absolute paths, or dot-segments such as `.` or `..`. The same validation also runs
-inside the Android Gradle build, and Gradle uses the same trimmed signing
-values that the release script validates, so direct APK builds cannot use
-weaker signing rules than the release script. Local smoke packages may use the
-debug fallback, but
-`-PublishGitHubRelease` refuses to publish unless Android release signing comes
-from `android/key.properties`.
-
-GitHub Actions can create `android/key.properties` during a manual publish run
-when these repository secrets are configured. The workflow validates the
-keystore base64, password, and alias secrets before writing
-`android/key.properties` by calling `scripts/configure_android_signing.ps1`,
-then clears those signing secret environment variables from the step in a
-`finally` block, so CI fails with a clear signing-secret error instead of
-producing a malformed properties file or leaving secrets in the process
-environment. If any Android signing secret is present, all four secrets must be
-present; otherwise the signing configuration step fails instead of silently
-falling back to debug signing.
-The signing configuration script also rejects unsafe `storeFile` override
-values with control characters, wildcard characters, absolute paths, or
-dot-segments before it writes `android/key.properties` or the keystore.
-
-The required secrets are:
-
-- `ANDROID_KEYSTORE_BASE64`: base64-encoded contents of
-  `android/repapertodo-release.jks`
-- `ANDROID_STORE_PASSWORD`
-- `ANDROID_KEY_ALIAS`
-- `ANDROID_KEY_PASSWORD`
+[![PaperTodo Star 增长曲线](https://api.star-history.com/svg?repos=snownico0722/PaperTodo&type=Date)](https://star-history.com/#snownico0722/PaperTodo&Date)

@@ -1,0 +1,6 @@
+# Copy to key.properties (ignored by Git), or configure PAPERTODO_* environment variables.
+# Use the existing production certificate. Never commit passwords or the keystore.
+storeFile=C:/secure/papertodo-release.jks
+keyAlias=papertodo
+storePassword=
+keyPassword=

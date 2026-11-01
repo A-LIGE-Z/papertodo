@@ -1,0 +1,5 @@
+<resources>
+    <string name="widget_label">PaperTodo tasks</string><string name="widget_empty">Open PaperTodo to add or sync tasks.</string>
+    <string name="widget_refresh">Sync tasks</string><string name="widget_complete">Mark complete</string><string name="widget_undo">Mark incomplete</string>
+    <string name="reminder_channel">Task reminders</string><string name="reminder_overdue">Task overdue</string><string name="reminder_upcoming">Task due soon</string>
+</resources>

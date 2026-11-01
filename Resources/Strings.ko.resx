@@ -1,0 +1,806 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AppStartupFailureMessage" xml:space="preserve">
+    <value>시작에 실패했습니다: 데이터 파일을 불러올 수 없습니다. 파일이 사용 중이거나 손상되었을 수 있습니다.&#x0A;기존 데이터가 덮어써지지 않도록 앱 시작을 중지했습니다.&#x0A;&#x0A;오류: {0}</value>
+  </data>
+  <data name="ResourceTextVersion" xml:space="preserve">
+    <value>2.0</value>
+  </data>
+  <data name="AppStartupFailureTitle" xml:space="preserve">
+    <value>PaperTodo - 시작 실패</value>
+  </data>
+  <data name="AppUnhandledExceptionMessage" xml:space="preserve">
+    <value>처리되지 않은 오류가 발생했습니다. 현재 데이터는 data.crash_recovery.json에 저장되었습니다.&#x0A;&#x0A;앱을 다시 시작해 주세요. 문제가 계속되면 이 파일로 복원을 시도할 수 있습니다.&#x0A;&#x0A;오류: {0}</value>
+  </data>
+  <data name="AppUnhandledExceptionTitle" xml:space="preserve">
+    <value>PaperTodo - 비정상 종료</value>
+  </data>
+  <data name="AppendAreaToolTip" xml:space="preserve">
+    <value>클릭해 내용을 추가하고, 여기로 끌어 삭제</value>
+  </data>
+  <data name="CapsuleNote" xml:space="preserve">
+    <value>메모</value>
+  </data>
+  <data name="CapsuleTodo" xml:space="preserve">
+    <value>할 일</value>
+  </data>
+  <data name="CapsuleTodoCount" xml:space="preserve">
+    <value>{0}개</value>
+  </data>
+  <data name="CommonCancel" xml:space="preserve">
+    <value>취소</value>
+  </data>
+  <data name="CommonOk" xml:space="preserve">
+    <value>확인</value>
+  </data>
+  <data name="DeletePaperBody" xml:space="preserve">
+    <value>삭제하면 영구적으로 제거되며 트레이에서 복원할 수 없습니다.</value>
+  </data>
+  <data name="DeletePaperQuestion" xml:space="preserve">
+    <value>이 종이를 삭제할까요?</value>
+  </data>
+  <data name="DeletePaperTitle" xml:space="preserve">
+    <value>종이 삭제</value>
+  </data>
+  <data name="DragSortToolTip" xml:space="preserve">
+    <value>끌어서 정렬</value>
+  </data>
+  <data name="EmptyNotePaper" xml:space="preserve">
+    <value>빈 메모 종이</value>
+  </data>
+  <data name="EmptyTodoPaper" xml:space="preserve">
+    <value>빈 할 일 종이</value>
+  </data>
+  <data name="MarkdownDefaultLinkLabel" xml:space="preserve">
+    <value>링크</value>
+  </data>
+  <data name="ToolTipDragNoteToTodo" xml:space="preserve">
+    <value>할 일 항목 위로 끌어 메모 연결</value>
+  </data>
+  <data name="ToolTipOpenLinkedNote" xml:space="preserve">
+    <value>연결된 메모 열기: {0}</value>
+  </data>
+  <data name="ToolTipRunLinkedScriptCapsule" xml:space="preserve">
+    <value>연결된 스크립트 실행: {0}</value>
+  </data>
+  <data name="MarkdownRenderBasic" xml:space="preserve">
+    <value>기본</value>
+  </data>
+  <data name="MarkdownRenderEnhanced" xml:space="preserve">
+    <value>강화</value>
+  </data>
+  <data name="MarkdownRenderOff" xml:space="preserve">
+    <value>끄기</value>
+  </data>
+  <data name="FullscreenTopmostModeAvoid" xml:space="preserve">
+    <value>피하기</value>
+  </data>
+  <data name="FullscreenTopmostModeStayOnTop" xml:space="preserve">
+    <value>위에 유지</value>
+  </data>
+  <data name="MarkdownPreviewFailure" xml:space="preserve">
+    <value>*미리 보기에 실패했습니다. 원문은 유지되었습니다. 오류: {0}*</value>
+  </data>
+  <data name="OpenMarkdownFailureMessage" xml:space="preserve">
+    <value>기본 {0} 편집기를 열 수 없습니다:&#x0A;{1}</value>
+  </data>
+  <data name="OpenMarkdownFailureTitle" xml:space="preserve">
+    <value>외부 열기 실패</value>
+  </data>
+  <data name="ScriptCapsuleEmptyMessage" xml:space="preserve">
+    <value>이 스크립트 캡슐에는 실행할 내용이 없습니다.</value>
+  </data>
+  <data name="ScriptCapsuleEditMenu" xml:space="preserve">
+    <value>스크립트 캡슐 편집</value>
+  </data>
+  <data name="ScriptCapsuleExitFailureMessage" xml:space="preserve">
+    <value>스크립트가 종료 코드 {0}로 실패했습니다.&#x0A;{1}</value>
+  </data>
+  <data name="ScriptCapsuleFailureTitle" xml:space="preserve">
+    <value>스크립트 실행 실패</value>
+  </data>
+  <data name="ScriptCapsuleNoOutput" xml:space="preserve">
+    <value>출력이 없습니다.</value>
+  </data>
+  <data name="ScriptCapsuleStartFailureMessage" xml:space="preserve">
+    <value>PowerShell을 시작할 수 없습니다.</value>
+  </data>
+  <data name="ScriptCapsulePowerShell7NotFound" xml:space="preserve">
+    <value>PowerShell 7(pwsh.exe)을 찾을 수 없습니다.</value>
+  </data>
+  <data name="MenuBold" xml:space="preserve">
+    <value>굵게</value>
+  </data>
+  <data name="MenuClearDone" xml:space="preserve">
+    <value>완료 항목 정리</value>
+  </data>
+  <data name="MenuCodeBlock" xml:space="preserve">
+    <value>코드 블록</value>
+  </data>
+  <data name="MenuCollapseToCapsule" xml:space="preserve">
+    <value>캡슐로 접기</value>
+  </data>
+  <data name="MenuDelete" xml:space="preserve">
+    <value>삭제</value>
+  </data>
+  <data name="MenuDeleteItem" xml:space="preserve">
+    <value>이 항목 삭제</value>
+  </data>
+  <data name="MenuFormat" xml:space="preserve">
+    <value>서식</value>
+  </data>
+  <data name="MenuHeading" xml:space="preserve">
+    <value>제목</value>
+  </data>
+  <data name="MenuHide" xml:space="preserve">
+    <value>숨기기</value>
+  </data>
+  <data name="MenuInsertLink" xml:space="preserve">
+    <value>링크 삽입</value>
+  </data>
+  <data name="MenuOpenLinkedNote" xml:space="preserve">
+    <value>연결된 메모 열기: {0}</value>
+  </data>
+  <data name="MenuEditLinkedScriptCapsule" xml:space="preserve">
+    <value>연결된 스크립트 편집: {0}</value>
+  </data>
+  <data name="MenuUnlinkNote" xml:space="preserve">
+    <value>메모 연결 해제</value>
+  </data>
+  <data name="MenuItalic" xml:space="preserve">
+    <value>기울임</value>
+  </data>
+  <data name="MenuList" xml:space="preserve">
+    <value>목록</value>
+  </data>
+  <data name="MenuNew" xml:space="preserve">
+    <value>새로 만들기</value>
+  </data>
+  <data name="MenuNewNotePaper" xml:space="preserve">
+    <value>＋ 메모 종이</value>
+  </data>
+  <data name="MenuNewTodoPaper" xml:space="preserve">
+    <value>＋ 할 일 종이</value>
+  </data>
+  <data name="MenuQuote" xml:space="preserve">
+    <value>인용</value>
+  </data>
+  <data name="MenuRenameTitle" xml:space="preserve">
+    <value>제목 이름 바꾸기</value>
+  </data>
+  <data name="MenuRestoreWindow" xml:space="preserve">
+    <value>창 복원</value>
+  </data>
+  <data name="MenuStrikethrough" xml:space="preserve">
+    <value>취소선</value>
+  </data>
+  <data name="MenuCopy" xml:space="preserve">
+    <value>복사</value>
+  </data>
+  <data name="MenuPaste" xml:space="preserve">
+    <value>붙여넣기</value>
+  </data>
+  <data name="MenuSelectAll" xml:space="preserve">
+    <value>모두 선택</value>
+  </data>
+  <data name="MenuText" xml:space="preserve">
+    <value>텍스트</value>
+  </data>
+  <data name="MenuThisPaper" xml:space="preserve">
+    <value>이 종이</value>
+  </data>
+  <data name="MenuTodo" xml:space="preserve">
+    <value>할 일</value>
+  </data>
+  <data name="MenuTodoItem" xml:space="preserve">
+    <value>항목</value>
+  </data>
+  <data name="PaperKindNote" xml:space="preserve">
+    <value>메모</value>
+  </data>
+  <data name="PaperKindTodo" xml:space="preserve">
+    <value>할 일</value>
+  </data>
+  <data name="PaperLabelFormat" xml:space="preserve">
+    <value>{0} {1} · {2}</value>
+  </data>
+  <data name="PaperLimitMessage" xml:space="preserve">
+    <value>종이 수가 최대 100장에 도달했습니다.&#x0A;더 이상 필요 없는 종이를 삭제한 뒤 새로 만들어 주세요.</value>
+  </data>
+  <data name="PaperLimitTitle" xml:space="preserve">
+    <value>종이 수가 가득 찼습니다</value>
+  </data>
+  <data name="Pin" xml:space="preserve">
+    <value>항상 위에 고정</value>
+  </data>
+  <data name="SaveFailureIgnore" xml:space="preserve">
+    <value>이번에는 무시</value>
+  </data>
+  <data name="SaveFailureMessage" xml:space="preserve">
+    <value>데이터 저장에 실패했습니다:&#x0A;{0}&#x0A;디스크 공간 또는 권한을 확인해 주세요.</value>
+  </data>
+  <data name="SaveFailureTitle" xml:space="preserve">
+    <value>저장 실패</value>
+  </data>
+  <data name="StateLoadFailed" xml:space="preserve">
+    <value>데이터를 불러오지 못했습니다. 파일이 사용 중이거나 손상되었을 수 있습니다.</value>
+  </data>
+  <data name="StartupFailureMessage" xml:space="preserve">
+    <value>자동 시작 설정에 실패했습니다. 권한이 부족하거나 보안 소프트웨어가 차단 중일 수 있습니다.</value>
+  </data>
+  <data name="StartupFailureTitle" xml:space="preserve">
+    <value>자동 시작 설정 실패</value>
+  </data>
+  <data name="ThemeDark" xml:space="preserve">
+    <value>어두운 모드</value>
+  </data>
+  <data name="SettingsColorScheme" xml:space="preserve">
+    <value>색상 테마</value>
+  </data>
+  <data name="SettingsUiFont" xml:space="preserve">
+    <value>글꼴</value>
+  </data>
+  <data name="UiFontDefault" xml:space="preserve">
+    <value>언어 기본값</value>
+  </data>
+  <data name="UiFontYaHei" xml:space="preserve">
+    <value>YaHei</value>
+  </data>
+  <data name="UiFontDengXian" xml:space="preserve">
+    <value>DengXian</value>
+  </data>
+  <data name="ColorSchemeSiYuan" xml:space="preserve">
+    <value>SiYuan</value>
+  </data>
+  <data name="ColorSchemeWarm" xml:space="preserve">
+    <value>종이</value>
+  </data>
+  <data name="ColorSchemeInk" xml:space="preserve">
+    <value>먹</value>
+  </data>
+  <data name="ColorSchemeForest" xml:space="preserve">
+    <value>숲</value>
+  </data>
+  <data name="ColorSchemeRose" xml:space="preserve">
+    <value>노을</value>
+  </data>
+  <data name="ThemeLight" xml:space="preserve">
+    <value>밝은 모드</value>
+  </data>
+  <data name="ThemeSystem" xml:space="preserve">
+    <value>시스템 따름</value>
+  </data>
+  <data name="ToolTipCollapseToCapsule" xml:space="preserve">
+    <value>캡슐로 접기</value>
+  </data>
+  <data name="ToolTipHideThisPaper" xml:space="preserve">
+    <value>이 종이 숨기기</value>
+  </data>
+  <data name="ToolTipEditTitle" xml:space="preserve">
+    <value>클릭하여 제목 편집</value>
+  </data>
+  <data name="ToolTipOpenMarkdownEditor" xml:space="preserve">
+    <value>기본 {0} 편집기로 열기</value>
+  </data>
+  <data name="ToolTipResetTextZoom" xml:space="preserve">
+    <value>클릭하여 100%로 복원</value>
+  </data>
+  <data name="ToolTipNewNotePaper" xml:space="preserve">
+    <value>새 메모 종이</value>
+  </data>
+  <data name="ToolTipNewTodoPaper" xml:space="preserve">
+    <value>새 할 일 종이</value>
+  </data>
+  <data name="TrayCapsuleMode" xml:space="preserve">
+    <value>캡슐 모드</value>
+  </data>
+  <data name="TrayDeepCapsuleMode" xml:space="preserve">
+    <value>캡슐 가장자리 모드</value>
+  </data>
+  <data name="SettingsDecreaseTitleLength" xml:space="preserve">
+    <value>제목 글자 수 제한 줄이기</value>
+  </data>
+  <data name="SettingsIncreaseTitleLength" xml:space="preserve">
+    <value>제목 글자 수 제한 늘리기</value>
+  </data>
+  <data name="SettingsMaxTitleLength" xml:space="preserve">
+    <value>제목 글자 수 제한</value>
+  </data>
+  <data name="SettingsCapsuleCollapseAll" xml:space="preserve">
+    <value>메인 캡슐 표시</value>
+  </data>
+  <data name="SettingsShowDeepCapsuleWhileExpanded" xml:space="preserve">
+    <value>펼친 동안 가장자리 캡슐 유지</value>
+  </data>
+  <data name="SettingsCollapseExpandedDeepCapsuleOnClick" xml:space="preserve">
+    <value>가장자리 캡슐을 다시 클릭해 종이 접기</value>
+  </data>
+  <data name="CapsuleCollapseAllLabel" xml:space="preserve">
+    <value>접기</value>
+  </data>
+  <data name="CapsuleCollapseAllExpandedTip" xml:space="preserve">
+    <value>현재 캡슐 줄 접기</value>
+  </data>
+  <data name="CapsuleCollapseAllCollapsedTip" xml:space="preserve">
+    <value>현재 캡슐 줄 펼치기</value>
+  </data>
+  <data name="CapsuleCollapseAllCountFormat" xml:space="preserve">
+    <value>{0}개</value>
+  </data>
+  <data name="TrayExit" xml:space="preserve">
+    <value>종료</value>
+  </data>
+  <data name="TrayHideAll" xml:space="preserve">
+    <value>모든 종이 숨기기</value>
+  </data>
+  <data name="TrayMarkdownRenderMode" xml:space="preserve">
+    <value>Markdown 표시</value>
+  </data>
+  <data name="SettingsFullscreenTopmostMode" xml:space="preserve">
+    <value>전체 화면 창 처리</value>
+  </data>
+  <data name="SettingsTodoVisualSize" xml:space="preserve">
+    <value>할 일 크기</value>
+  </data>
+  <data name="TodoVisualSizeSmall" xml:space="preserve">
+    <value>작게</value>
+  </data>
+  <data name="TodoVisualSizeMedium" xml:space="preserve">
+    <value>중간</value>
+  </data>
+  <data name="TodoVisualSizeLarge" xml:space="preserve">
+    <value>크게</value>
+  </data>
+  <data name="TodoVisualSizeExtraLarge" xml:space="preserve">
+    <value>특대</value>
+  </data>
+  <data name="TrayInlineConfirmDelete" xml:space="preserve">
+    <value>⚠ 삭제</value>
+  </data>
+  <data name="TrayInlineConfirmAction" xml:space="preserve">
+    <value>확인</value>
+  </data>
+  <data name="TrayNewNote" xml:space="preserve">
+    <value>＋ 메모 종이 만들기</value>
+  </data>
+  <data name="TrayNewTodo" xml:space="preserve">
+    <value>＋ 할 일 종이 만들기</value>
+  </data>
+  <data name="TrayPapers" xml:space="preserve">
+    <value>종이</value>
+  </data>
+  <data name="TrayShowAll" xml:space="preserve">
+    <value>모든 종이 보이기</value>
+  </data>
+  <data name="TraySettings" xml:space="preserve">
+    <value>설정</value>
+  </data>
+  <data name="SettingsExternalMarkdownExtension" xml:space="preserve">
+    <value>외부 열기 파일 형식</value>
+  </data>
+  <data name="SettingsQuickActions" xml:space="preserve">
+    <value>빠른 작업</value>
+  </data>
+  <data name="SettingsDisplay" xml:space="preserve">
+    <value>표시</value>
+  </data>
+  <data name="SettingsExternalOpen" xml:space="preserve">
+    <value>외부 열기</value>
+  </data>
+  <data name="SettingsScriptCapsule" xml:space="preserve">
+    <value>스크립트 캡슐</value>
+  </data>
+  <data name="SettingsTopBarButtons" xml:space="preserve">
+    <value>상단 바 버튼</value>
+  </data>
+  <data name="SettingsBehavior" xml:space="preserve">
+    <value>동작</value>
+  </data>
+  <data name="SettingsCapsule" xml:space="preserve">
+    <value>캡슐</value>
+  </data>
+  <data name="SettingsTodoNote" xml:space="preserve">
+    <value>할 일 및 메모</value>
+  </data>
+  <data name="SettingsRunLinkedScriptCapsulesOnClick" xml:space="preserve">
+    <value>연결 스크립트 바로 실행</value>
+  </data>
+  <data name="SettingsGeneral" xml:space="preserve">
+    <value>일반</value>
+  </data>
+  <data name="TipThemeMode" xml:space="preserve">
+    <value>라이트, 다크 또는 Windows 시스템 테마 따르기를 선택합니다.</value>
+  </data>
+  <data name="TipColorScheme" xml:space="preserve">
+    <value>SiYuan 기본 색상 또는 다른 종이 색상을 선택합니다. 라이트 모드와 다크 모드에 맞게 적용됩니다. 기본 색상을 선택하면 사용자 지정 색상이 해제됩니다.</value>
+  </data>
+  <data name="TipUiFont" xml:space="preserve">
+    <value>언어 기본값은 UI와 본문에 각각 알맞은 시스템 글꼴을 사용합니다.
+YaHei 또는 DengXian을 선택하면 UI, 트레이, 캡슐, 할 일, 노트 본문이 선택한 글꼴로 통일됩니다.
+앱 폴더에 papertodo.ttf 또는 papertodo.otf가 있으면 해당 사용자 지정 글꼴을 우선 사용합니다.</value>
+  </data>
+  <data name="TipMarkdownRender" xml:space="preserve">
+    <value>기본은 가벼운 강조만 적용하고, 확장은 제목, 목록, 강조까지 더 다듬어 표시합니다.</value>
+  </data>
+  <data name="TipFullscreenTopmostMode" xml:space="preserve">
+    <value>동영상, 게임 등 전체 화면 창이 감지되면 종이와 가장자리 캡슐을 잠시 피하게 할 수 있습니다. 위에 유지는 항상 보이게 합니다.</value>
+  </data>
+  <data name="TipTodoVisualSize" xml:space="preserve">
+    <value>할 일 항목의 글자, 행 높이, 간격을 조정합니다.</value>
+  </data>
+  <data name="TipEnableTodoNoteLinks" xml:space="preserve">
+    <value>메모를 할 일 항목으로 드래그해 연결하고, 이후 해당 항목에서 바로 메모를 열 수 있습니다.</value>
+  </data>
+  <data name="TipShowLinkedNoteName" xml:space="preserve">
+    <value>할 일 항목 뒤에 연결된 메모 제목을 표시합니다.</value>
+  </data>
+  <data name="TipAllowLongLinkedNoteTitles" xml:space="preserve">
+    <value>끄면 간결한 표시를 유지합니다. 켜면 연결된 메모 제목이 내용에 맞게 넓어지며, 한 줄에서는 전각 약 5자, 여러 줄에서는 전각 약 10자까지 표시합니다.</value>
+  </data>
+  <data name="TipHideLinkedNotesFromCapsules" xml:space="preserve">
+    <value>할 일 항목에 연결된 메모는 캡슐 목록에 표시하지 않아 중복 진입점을 피합니다.</value>
+  </data>
+  <data name="TipRunLinkedScriptCapsulesOnClick" xml:space="preserve">
+    <value>연결 항목이 스크립트 캡슐이면 왼쪽 클릭으로 실행하고 오른쪽 클릭으로 편집을 엽니다. 실수 실행을 피하도록 기본값은 꺼짐입니다.</value>
+  </data>
+  <data name="TipNewTodoButton" xml:space="preserve">
+    <value>종이 상단 바에 새 할 일 버튼을 표시합니다.</value>
+  </data>
+  <data name="TipNewNoteButton" xml:space="preserve">
+    <value>종이 상단 바에 새 메모 버튼을 표시합니다.</value>
+  </data>
+  <data name="TipExternalOpenButton" xml:space="preserve">
+    <value>상단 바에 외부 열기 버튼을 표시하고, 현재 메모를 임시 파일로 써서 기본 앱에 넘깁니다.</value>
+  </data>
+  <data name="TipExternalExtension" xml:space="preserve">
+    <value>외부 앱에 넘길 때 사용할 파일 형식을 선택합니다. 예: .md, .txt.</value>
+  </data>
+  <data name="TipCapsuleMode" xml:space="preserve">
+    <value>종이를 작은 캡슐로 접어 데스크톱 공간을 줄입니다. 캡슐 가장자리 기능은 먼저 이 항목을 켜야 합니다.</value>
+  </data>
+  <data name="TipDeepCapsuleMode" xml:space="preserve">
+    <value>캡슐을 화면 가장자리에 붙여 줄로 배치하고, 마우스를 올리면 슬라이드되어 나타납니다.</value>
+  </data>
+  <data name="TipShowDeepCapsuleWhileExpanded" xml:space="preserve">
+    <value>가장자리 캡슐에서 종이를 연 뒤에도 가장자리에 해당 입구를 남깁니다. 끄면 열려 있는 동안 그 입구를 잠시 숨깁니다.</value>
+  </data>
+  <data name="TipCollapseExpandedDeepCapsuleOnClick" xml:space="preserve">
+    <value>가장자리 캡슐에서 열린 종이에 대해 같은 캡슐을 다시 클릭하면 종이를 접습니다.</value>
+  </data>
+  <data name="TipCapsuleCollapseAll" xml:space="preserve">
+    <value>캡슐 줄 위에 메인 캡슐을 표시해 현재 줄을 한 번에 접거나 펼칩니다.</value>
+  </data>
+  <data name="TipMaxTitleLength" xml:space="preserve">
+    <value>종이 제목과 캡슐에 표시되는 최대 글자 수입니다.</value>
+  </data>
+  <data name="TipStartup" xml:space="preserve">
+    <value>Windows 시작 시 PaperTodo를 자동으로 실행합니다.</value>
+  </data>
+  <data name="SettingsEnableToolTips" xml:space="preserve">
+    <value>호버 도움말 표시</value>
+  </data>
+  <data name="SettingsHidePapersFromWindowSwitcher" xml:space="preserve">
+    <value>창 전환에서 종이 숨기기</value>
+  </data>
+  <data name="TipHidePapersFromWindowSwitcher" xml:space="preserve">
+    <value>켜면 펼쳐진 종이가 Alt+Tab과 작업 보기에서 숨겨집니다. 트레이, 데스크톱의 종이, 캡슐에서는 계속 열 수 있습니다.</value>
+  </data>
+  <data name="TipEnableToolTips" xml:space="preserve">
+    <value>버튼이나 조작 가능한 영역에 포인터를 올렸을 때 짧은 설명을 표시합니다. 설정 설명 아이콘은 항상 사용할 수 있습니다.</value>
+  </data>
+  <data name="SettingsEnableAnimations" xml:space="preserve">
+    <value>애니메이션 효과 사용</value>
+  </data>
+  <data name="TipEnableAnimations" xml:space="preserve">
+    <value>일반적인 작업에 전환 애니메이션을 적용합니다. 끄면 반응이 더 직접적입니다.</value>
+  </data>
+  <data name="TipPersistentPowerShellProcess" xml:space="preserve">
+    <value>!pf / !powerf는 상주 프로세스를 재사용해 더 빠르게 시작하지만, 변수와 상태가 스크립트 사이에 남을 수 있습니다. 끄면 해당 프로세스를 종료합니다.</value>
+  </data>
+  <data name="TipPreferPowerShell7" xml:space="preserve">
+    <value>PowerShell 7(pwsh.exe)을 우선 사용하고, 없으면 Windows PowerShell로 돌아갑니다. 스크립트에서 !pwsh / !ps5로도 지정할 수 있습니다.</value>
+  </data>
+  <data name="TipHideScriptRunWindow" xml:space="preserve">
+    <value>스크립트 실행 창을 숨깁니다. 일반 !p / !power는 종료를 기다리고 오류를 캡처하며, !pf / !powerf는 상주 프로세스에 전달만 합니다.</value>
+  </data>
+  <data name="SettingsEnableTodoNoteLinks" xml:space="preserve">
+    <value>할 일-메모 연결 사용</value>
+  </data>
+  <data name="SettingsPersistentPowerShellProcess" xml:space="preserve">
+    <value>PowerShell 프로세스 상주</value>
+  </data>
+  <data name="SettingsPreferPowerShell7" xml:space="preserve">
+    <value>PowerShell 7 우선 사용</value>
+  </data>
+  <data name="SettingsHideScriptRunWindow" xml:space="preserve">
+    <value>스크립트 창 숨기기</value>
+  </data>
+  <data name="SettingsShowTopBarNewTodoButton" xml:space="preserve">
+    <value>새 할 일 버튼 표시</value>
+  </data>
+  <data name="SettingsShowTopBarNewNoteButton" xml:space="preserve">
+    <value>새 메모 버튼 표시</value>
+  </data>
+  <data name="SettingsShowTopBarExternalOpenButton" xml:space="preserve">
+    <value>외부 열기 버튼 표시</value>
+  </data>
+  <data name="SettingsShowLinkedNoteName" xml:space="preserve">
+    <value>연결된 메모 제목 표시</value>
+  </data>
+  <data name="SettingsAllowLongLinkedNoteTitles" xml:space="preserve">
+    <value>연결 제목 길게 표시</value>
+  </data>
+  <data name="SettingsHideLinkedNotesFromCapsules" xml:space="preserve">
+    <value>연결된 메모를 캡슐로 표시하지 않음</value>
+  </data>
+  <data name="SettingsResetNoteZoom" xml:space="preserve">
+    <value>노트 확대/축소 복원</value>
+  </data>
+  <data name="SettingsRestoreAllCapsules" xml:space="preserve">
+    <value>모든 캡슐 펼치기</value>
+  </data>
+  <data name="TrayStartup" xml:space="preserve">
+    <value>Windows 시작 시 자동 실행</value>
+  </data>
+  <data name="TrayThemeMode" xml:space="preserve">
+    <value>테마 모드</value>
+  </data>
+  <data name="Unpin" xml:space="preserve">
+    <value>고정 해제</value>
+  </data>
+  <data name="SyncTitle" xml:space="preserve">
+    <value>데이터 동기화</value>
+  </data>
+  <data name="SyncEnabled" xml:space="preserve">
+    <value>클라우드 동기화 활성화</value>
+  </data>
+  <data name="SyncProvider" xml:space="preserve">
+    <value>동기화 프로토콜</value>
+  </data>
+  <data name="SyncWebDavUrl" xml:space="preserve">
+    <value>서버 URL</value>
+  </data>
+  <data name="SyncWebDavUsername" xml:space="preserve">
+    <value>사용자 이름</value>
+  </data>
+  <data name="SyncWebDavPassword" xml:space="preserve">
+    <value>비밀번호</value>
+  </data>
+  <data name="SyncWebDavRemotePath" xml:space="preserve">
+    <value>원격 경로 (기본값: /papertodo/data.json)</value>
+  </data>
+  <data name="SyncS3Endpoint" xml:space="preserve">
+    <value>S3 엔드포인트</value>
+  </data>
+  <data name="SyncS3Bucket" xml:space="preserve">
+    <value>버킷 이름</value>
+  </data>
+  <data name="SyncS3AccessKey" xml:space="preserve">
+    <value>액세스 키</value>
+  </data>
+  <data name="SyncS3SecretKey" xml:space="preserve">
+    <value>비밀 키</value>
+  </data>
+  <data name="SyncS3Region" xml:space="preserve">
+    <value>리전</value>
+  </data>
+  <data name="SyncCustomServerUrl" xml:space="preserve">
+    <value>서버 URL</value>
+  </data>
+  <data name="SyncCustomToken" xml:space="preserve">
+    <value>액세스 토큰</value>
+  </data>
+  <data name="SyncTestButton" xml:space="preserve">
+    <value>연결 테스트</value>
+  </data>
+  <data name="SyncNowButton" xml:space="preserve">
+    <value>지금 동기화</value>
+  </data>
+  <data name="SyncStatus" xml:space="preserve">
+    <value>동기화 상태</value>
+  </data>
+  <data name="SyncLastTime" xml:space="preserve">
+    <value>마지막 동기화</value>
+  </data>
+  <data name="SyncNever" xml:space="preserve">
+    <value>없음</value>
+  </data>
+  <data name="SyncUrlEmpty" xml:space="preserve">
+    <value>서버 URL을 입력하세요</value>
+  </data>
+  <data name="SyncConnectSuccess" xml:space="preserve">
+    <value>연결에 성공했습니다</value>
+  </data>
+  <data name="SyncConnectSuccessNewFile" xml:space="preserve">
+    <value>연결 성공 (첫 동기화 시 생성됩니다)</value>
+  </data>
+  <data name="SyncAuthFailed" xml:space="preserve">
+    <value>인증 실패. 자격 증명을 확인하세요.</value>
+  </data>
+  <data name="SyncS3ConfigIncomplete" xml:space="preserve">
+    <value>S3 설정이 완료되지 않았습니다</value>
+  </data>
+  <data name="SyncSuccess" xml:space="preserve">
+    <value>동기화 성공</value>
+  </data>
+  <data name="SyncFailed" xml:space="preserve">
+    <value>동기화 실패: {0}</value>
+  </data>
+  <data name="SyncInProgress" xml:space="preserve">
+    <value>동기화 중...</value>
+  </data>
+  <data name="SyncConflictRetry" xml:space="preserve"><value>클라우드 데이터가 변경되었습니다. 다시 병합한 후 동기화하세요.</value></data>
+  <data name="SyncCancelled" xml:space="preserve"><value>동기화가 취소되었습니다.</value></data>
+  <data name="OutlineWindowTitle" xml:space="preserve"><value>PaperTodo - 개요</value></data>
+  <data name="OutlineAllPapers" xml:space="preserve"><value>모든 메모</value></data>
+  <data name="OutlineTreeView" xml:space="preserve"><value>개요 보기</value></data>
+  <data name="OutlinePaperList" xml:space="preserve"><value>모든 메모</value></data>
+  <data name="OutlineSettings" xml:space="preserve"><value>설정</value></data>
+  <data name="OutlineBackToDesktop" xml:space="preserve"><value>바탕 화면 메모로 돌아가기</value></data>
+  <data name="OutlinePaperDocuments" xml:space="preserve"><value>모든 메모</value></data>
+  <data name="OutlineStructure" xml:space="preserve"><value>개요 및 구조</value></data>
+  <data name="OutlineNewTodoPaper" xml:space="preserve"><value>할 일 메모 만들기</value></data>
+  <data name="OutlineNewNotePaper" xml:space="preserve"><value>노트 만들기</value></data>
+  <data name="OutlineToggleAll" xml:space="preserve"><value>모두 펼치기 / 접기</value></data>
+  <data name="OutlineSearch" xml:space="preserve"><value>항목 및 제목 찾기…</value></data>
+  <data name="OutlineNoResults" xml:space="preserve"><value>일치하는 내용 없음</value></data>
+  <data name="OutlineTodoPapers" xml:space="preserve"><value>할 일 메모</value></data>
+  <data name="OutlineNotes" xml:space="preserve"><value>노트</value></data>
+  <data name="OutlineAddItem" xml:space="preserve"><value>할 일 추가</value></data>
+  <data name="OutlineClearDone" xml:space="preserve"><value>완료된 항목 지우기</value></data>
+  <data name="OutlineDeletePaper" xml:space="preserve"><value>이 메모 삭제</value></data>
+  <data name="OutlineDeleteTitle" xml:space="preserve"><value>삭제 확인</value></data>
+  <data name="OutlineEmptyTodo" xml:space="preserve"><value>(빈 할 일)</value></data>
+  <data name="OutlineCopyTitle" xml:space="preserve"><value>제목 복사</value></data>
+  <data name="OutlineSelectPaper" xml:space="preserve"><value>왼쪽에서 메모를 선택하세요</value></data>
+  <data name="OutlineTodoPaper" xml:space="preserve"><value>할 일 메모</value></data>
+  <data name="OutlineNotePaper" xml:space="preserve"><value>노트</value></data>
+  <data name="OutlineClearDoneShort" xml:space="preserve"><value>완료 항목 지우기</value></data>
+  <data name="OutlineEditMode" xml:space="preserve"><value>편집</value></data>
+  <data name="OutlinePreviewMode" xml:space="preserve"><value>미리 보기</value></data>
+  <data name="OutlineDelete" xml:space="preserve"><value>삭제</value></data>
+  <data name="OutlineAddPlaceholder" xml:space="preserve"><value>＋ 할 일 추가…</value></data>
+  <data name="OutlineDeleteItem" xml:space="preserve"><value>항목 삭제</value></data>
+  <data name="OutlineInsertColumn" xml:space="preserve"><value>왼쪽에 열 삽입</value></data>
+  <data name="OutlineDeleteColumn" xml:space="preserve"><value>현재 열 삭제</value></data>
+  <data name="OutlineAddColumn" xml:space="preserve"><value>열 추가</value></data>
+  <data name="OutlineRemoveColumn" xml:space="preserve"><value>열 줄이기</value></data>
+  <data name="OutlineSetDue" xml:space="preserve"><value>마감 시간 설정…</value></data>
+  <data name="OutlineEditDue" xml:space="preserve"><value>마감 시간 변경…</value></data>
+  <data name="OutlineClearDue" xml:space="preserve"><value>마감 시간 지우기</value></data>
+  <data name="OutlineEditReminder" xml:space="preserve"><value>알림 간격 변경…</value></data>
+  <data name="OutlineSetReminder" xml:space="preserve"><value>알림 간격 설정…</value></data>
+  <data name="OutlineClearReminder" xml:space="preserve"><value>알림 간격 지우기</value></data>
+  <data name="OutlineDeleteTodo" xml:space="preserve"><value>이 할 일 삭제</value></data>
+  <data name="OutlineDueHint" xml:space="preserve"><value>마감 시간 설정</value></data>
+  <data name="OutlineToday" xml:space="preserve"><value>오늘 </value></data>
+  <data name="OutlineTomorrow" xml:space="preserve"><value>내일 </value></data>
+  <data name="OutlineCut" xml:space="preserve"><value>잘라내기</value></data>
+  <data name="OutlineCopy" xml:space="preserve"><value>복사</value></data>
+  <data name="OutlinePaste" xml:space="preserve"><value>붙여넣기</value></data>
+  <data name="OutlineSelectAll" xml:space="preserve"><value>모두 선택</value></data>
+  <data name="OutlineBold" xml:space="preserve"><value>굵게</value></data>
+  <data name="OutlineItalic" xml:space="preserve"><value>기울임</value></data>
+  <data name="OutlineStrikethrough" xml:space="preserve"><value>취소선</value></data>
+  <data name="OutlineHeading1" xml:space="preserve"><value>제목 1</value></data>
+  <data name="OutlineHeading2" xml:space="preserve"><value>제목 2</value></data>
+  <data name="OutlineQuote" xml:space="preserve"><value>인용</value></data>
+  <data name="OutlineList" xml:space="preserve"><value>글머리 기호 목록</value></data>
+  <data name="OutlineCodeBlock" xml:space="preserve"><value>코드 블록 삽입</value></data>
+  <data name="OutlineSwitchPreview" xml:space="preserve"><value>미리 보기로 전환</value></data>
+  <data name="OutlineInsertTime" xml:space="preserve"><value>현재 시간 삽입</value></data>
+  <data name="OutlineSwitchEdit" xml:space="preserve"><value>편집으로 전환</value></data>
+  <data name="OutlineCopyAll" xml:space="preserve"><value>전체 내용 복사</value></data>
+  <data name="OutlineCopied" xml:space="preserve"><value>복사됨</value></data>
+  <data name="OutlineDeleteConfirm" xml:space="preserve"><value>“{0}” 메모를 삭제할까요?</value></data>
+  <data name="OutlineNoteCount" xml:space="preserve"><value>노트 {0}개</value></data>
+  <data name="OutlineCharCount" xml:space="preserve"><value>{0}자</value></data>
+  <data name="OutlineTodoProgress" xml:space="preserve"><value>전체 {0}개 · 완료 {1}개 ({2}%)</value></data>
+  <data name="OutlineNoteMetrics" xml:space="preserve"><value>{0}자 · {1}줄</value></data>
+  <data name="OutlineCompletedGroup" xml:space="preserve"><value>완료 ({0})</value></data>
+  <data name="OutlineReminderEvery" xml:space="preserve"><value>({0} {1}마다)</value></data>
+  <data name="DesktopPinUnlockButton" xml:space="preserve"><value>고정 해제</value></data>
+  <data name="DisplayModeCards" xml:space="preserve"><value>바탕 화면 메모</value></data>
+  <data name="DisplayModeOutline" xml:space="preserve"><value>SiYuan 스타일 개요</value></data>
+  <data name="MenuChangeTodoDue" xml:space="preserve"><value>마감 시간 변경</value></data>
+  <data name="MenuChangeTodoReminderInterval" xml:space="preserve"><value>알림 간격 변경</value></data>
+  <data name="MenuClearTodoDue" xml:space="preserve"><value>마감 시간 지우기</value></data>
+  <data name="MenuClearTodoReminderInterval" xml:space="preserve"><value>전체 알림 간격 사용</value></data>
+  <data name="MenuDecreaseTodoColumns" xml:space="preserve"><value>현재 할 일의 열 줄이기</value></data>
+  <data name="MenuDeleteTodoColumn" xml:space="preserve"><value>현재 열 삭제</value></data>
+  <data name="MenuDesktopPin" xml:space="preserve"><value>바탕 화면 고정</value></data>
+  <data name="MenuIncreaseTodoColumns" xml:space="preserve"><value>현재 할 일의 열 늘리기</value></data>
+  <data name="MenuInsertTodoColumnBefore" xml:space="preserve"><value>현재 열 앞에 열 삽입</value></data>
+  <data name="MenuPinPaperToDesktop" xml:space="preserve"><value>바탕 화면에 고정</value></data>
+  <data name="MenuSetTodoDue" xml:space="preserve"><value>마감 시간 설정</value></data>
+  <data name="MenuSetTodoReminderInterval" xml:space="preserve"><value>알림 간격 설정</value></data>
+  <data name="MenuUnlockPinnedPaper" xml:space="preserve"><value>바탕 화면 고정 해제</value></data>
+  <data name="SettingsCustomThemeColor" xml:space="preserve"><value>전체 테마 색상</value></data>
+  <data name="SettingsCustomThemeColorClear" xml:space="preserve"><value>기본 색상</value></data>
+  <data name="SettingsCustomThemeColorDefault" xml:space="preserve"><value>기본 색상표 사용</value></data>
+  <data name="SettingsCustomThemeColorPick" xml:space="preserve"><value>색상 선택</value></data>
+  <data name="SettingsHideDeepCapsulesWhenCovered" xml:space="preserve"><value>다른 창에 가려지면 가장자리 캡슐 숨기기</value></data>
+  <data name="SettingsHideDeepCapsulesWhenFullscreen" xml:space="preserve"><value>다른 앱이 전체 화면이면 가장자리 캡슐 숨기기</value></data>
+  <data name="SettingsHotKeyClear" xml:space="preserve"><value>지우기</value></data>
+  <data name="SettingsLineSpacingReset" xml:space="preserve"><value>기본값</value></data>
+  <data name="SettingsNoteLineSpacing" xml:space="preserve"><value>노트 줄 간격</value></data>
+  <data name="SettingsPinnedNoteHotKey" xml:space="preserve"><value>고정 노트를 앞으로 가져오는 단축키</value></data>
+  <data name="SettingsPinnedTodoHotKey" xml:space="preserve"><value>고정 할 일을 앞으로 가져오는 단축키</value></data>
+  <data name="SettingsShowTodoDueRelativeTime" xml:space="preserve"><value>마감까지의 상대 시간 표시</value></data>
+  <data name="SettingsSystemFont" xml:space="preserve"><value>시스템 글꼴</value></data>
+  <data name="SettingsTabCapsule" xml:space="preserve"><value>캡슐</value></data>
+  <data name="SettingsTabDisplay" xml:space="preserve"><value>표시</value></data>
+  <data name="SettingsTabGeneral" xml:space="preserve"><value>일반 / 고급</value></data>
+  <data name="SettingsTabTodoNote" xml:space="preserve"><value>할 일 / 노트</value></data>
+  <data name="SettingsTodoDueYearDisplay" xml:space="preserve"><value>마감 날짜의 연도 표시</value></data>
+  <data name="SettingsTodoLineSpacing" xml:space="preserve"><value>할 일 줄 간격</value></data>
+  <data name="SettingsTodoReminderBubbleDuration" xml:space="preserve"><value>알림 말풍선 표시 시간(초)</value></data>
+  <data name="SettingsTodoReminderInterval" xml:space="preserve"><value>알림 간격</value></data>
+  <data name="SettingsTodoReminderIntervalUnit" xml:space="preserve"><value>간격 단위</value></data>
+  <data name="SettingsTodoReminderScope" xml:space="preserve"><value>알림 대상</value></data>
+  <data name="SettingsUseTodoReminderInterval" xml:space="preserve"><value>일정 간격으로 알림 말풍선 표시</value></data>
+  <data name="SettingsWindowDisplayMode" xml:space="preserve"><value>화면 표시 모드</value></data>
+  <data name="TipCustomThemeColor" xml:space="preserve"><value>색상 견본을 클릭해 색상 선택기를 엽니다. 선택한 색상으로 앱 전체의 색상표를 구성합니다.</value></data>
+  <data name="TipHideDeepCapsulesWhenCovered" xml:space="preserve"><value>다른 창이 가장자리 캡슐 영역을 가리면 숨기고, 영역이 다시 보이면 자동으로 복원합니다.</value></data>
+  <data name="TipHideDeepCapsulesWhenFullscreen" xml:space="preserve"><value>다른 앱이 전체 화면이 되면 가장자리 캡슐을 잠시 숨기고, 전체 화면을 종료하면 원래 배열로 복원합니다.</value></data>
+  <data name="TipNoteLineSpacing" xml:space="preserve"><value>노트 본문의 줄 간격 배율을 입력합니다. 기본값은 1이며 범위는 0.8~5입니다.</value></data>
+  <data name="TipPinnedNoteHotKey" xml:space="preserve"><value>입력란에서 키 조합을 눌러 바탕 화면 뒤에 고정된 노트를 앞으로 가져오는 단축키를 설정합니다. Esc, Backspace 또는 Delete로 지웁니다.</value></data>
+  <data name="TipPinnedTodoHotKey" xml:space="preserve"><value>입력란에서 키 조합을 눌러 바탕 화면 뒤에 고정된 할 일을 앞으로 가져오는 단축키를 설정합니다. Esc, Backspace 또는 Delete로 지웁니다.</value></data>
+  <data name="TipShowTodoDueRelativeTime" xml:space="preserve"><value>마감 날짜와 시각 대신 남은 시간 또는 지난 시간을 표시합니다.</value></data>
+  <data name="TipSystemFont" xml:space="preserve"><value>Windows에 설치된 글꼴을 선택하면 화면, 트레이, 캡슐, 할 일과 노트 본문에 적용합니다. 언어 기본값을 선택하면 수동 지정을 지우고 앱의 기본 글꼴 규칙으로 돌아갑니다.</value></data>
+  <data name="TipTodoDueYearDisplay" xml:space="preserve"><value>마감 날짜의 연도를 생략하거나 26년 또는 2026년 형식으로 표시할지 선택합니다.</value></data>
+  <data name="TipTodoLineSpacing" xml:space="preserve"><value>여러 줄로 된 할 일의 줄 간격 배율을 입력합니다. 기본값은 1이며 범위는 0.8~5입니다.</value></data>
+  <data name="TipTodoReminderBubbleDuration" xml:space="preserve"><value>알림 말풍선이 자동으로 닫히기까지의 초 단위 시간입니다. 마우스를 말풍선 위에 올려두면 시간이 일시 정지됩니다.</value></data>
+  <data name="TipTodoReminderInterval" xml:space="preserve"><value>미완료 할 일의 마감이 지정한 시간 이내로 다가오거나 기한을 지난 뒤 다시 알림을 표시하는 최소 간격입니다.</value></data>
+  <data name="TipTodoReminderIntervalUnit" xml:space="preserve"><value>알림 간격을 분 또는 시간 단위로 지정합니다.</value></data>
+  <data name="TipTodoReminderScope" xml:space="preserve"><value>가장 가까운 항목은 마감이 가장 임박한 할 일만, 모든 항목은 조건에 맞는 모든 할 일을 알립니다.</value></data>
+  <data name="TipUseTodoReminderInterval" xml:space="preserve"><value>켜면 지정한 간격으로 알림 말풍선을 반복 표시합니다. 끄면 마감 전에 한 번 알리는 기존 동작을 사용합니다.</value></data>
+  <data name="TipWindowDisplayMode" xml:space="preserve"><value>독립된 바탕 화면 메모와 모든 메모를 계층으로 보여주는 SiYuan 스타일 개요 사이에서 전환합니다.</value></data>
+  <data name="TodoDueDialogCancel" xml:space="preserve"><value>취소</value></data>
+  <data name="TodoDueDialogClear" xml:space="preserve"><value>지우기</value></data>
+  <data name="TodoDueDialogMessage" xml:space="preserve"><value>이 할 일의 현지 날짜와 시간을 선택하세요.</value></data>
+  <data name="TodoDueDialogOk" xml:space="preserve"><value>확인</value></data>
+  <data name="TodoDueDialogTitle" xml:space="preserve"><value>마감 시간 설정</value></data>
+  <data name="TodoDueInvalidInput" xml:space="preserve"><value>날짜와 시간을 인식할 수 없습니다.</value></data>
+  <data name="TodoDueRelativeDayUnit" xml:space="preserve"><value>{0}일</value></data>
+  <data name="TodoDueRelativeFuture" xml:space="preserve"><value>{0} 후</value></data>
+  <data name="TodoDueRelativeHourUnit" xml:space="preserve"><value>{0}시간</value></data>
+  <data name="TodoDueRelativeMinuteUnit" xml:space="preserve"><value>{0}분</value></data>
+  <data name="TodoDueRelativePast" xml:space="preserve"><value>{0} 지남</value></data>
+  <data name="TodoDueTomorrowLabel" xml:space="preserve"><value>내일 {0}</value></data>
+  <data name="TodoDueYearDisplayFull" xml:space="preserve"><value>2026년</value></data>
+  <data name="TodoDueYearDisplayNone" xml:space="preserve"><value>표시 안 함</value></data>
+  <data name="TodoDueYearDisplayShort" xml:space="preserve"><value>26년</value></data>
+  <data name="TodoReminderBubbleMessage" xml:space="preserve"><value>{0}
+{1}
+{2}</value></data>
+  <data name="TodoReminderBubbleOverdueSeconds" xml:space="preserve"><value>{0} 지남</value></data>
+  <data name="TodoReminderBubbleRemainingSeconds" xml:space="preserve"><value>{0} 남음</value></data>
+  <data name="TodoReminderBubbleTitle" xml:space="preserve"><value>할 일 마감이 다가옵니다</value></data>
+  <data name="TodoReminderCountdownDay" xml:space="preserve"><value>{0}일</value></data>
+  <data name="TodoReminderCountdownHour" xml:space="preserve"><value>{0}시간</value></data>
+  <data name="TodoReminderCountdownMinute" xml:space="preserve"><value>{0}분</value></data>
+  <data name="TodoReminderCountdownSecond" xml:space="preserve"><value>{0}초</value></data>
+  <data name="TodoReminderIntervalDialogMessage" xml:space="preserve"><value>이 할 일에만 적용할 알림 간격을 설정합니다. 반복 알림을 사용하는 경우 앱 전체 설정보다 우선합니다.</value></data>
+  <data name="TodoReminderIntervalDialogTitle" xml:space="preserve"><value>알림 간격</value></data>
+  <data name="TodoReminderIntervalDialogUseGlobal" xml:space="preserve"><value>전체 설정</value></data>
+  <data name="TodoReminderIntervalUnitHours" xml:space="preserve"><value>시간</value></data>
+  <data name="TodoReminderIntervalUnitMinutes" xml:space="preserve"><value>분</value></data>
+  <data name="TodoReminderScopeAll" xml:space="preserve"><value>모든 항목</value></data>
+  <data name="TodoReminderScopeNearest" xml:space="preserve"><value>가장 가까운 항목</value></data>
+  <data name="ToolTipTodoDue" xml:space="preserve"><value>마감 시간: {0}</value></data>
+  <data name="TrayOutlineView" xml:space="preserve"><value>개요 보기</value></data>
+  <data name="SyncInvalidEndpoint" xml:space="preserve"><value>서버에서 올바른 PaperTodo 데이터를 반환하지 않았습니다. 전체 서버 URL과 앱 경로를 확인하세요.</value></data>
+</root>

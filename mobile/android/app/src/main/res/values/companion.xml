@@ -1,0 +1,6 @@
+<resources>
+    <string name="widget_label">PaperTodo 待办</string><string name="widget_empty">点此打开 PaperTodo，添加或同步待办。</string>
+    <string name="widget_refresh">同步待办</string><string name="widget_complete">标记完成</string><string name="widget_undo">取消完成</string>
+    <string name="reminder_channel">待办与到期提醒</string><string name="reminder_overdue">待办已逾期</string><string name="reminder_upcoming">待办即将到期</string>
+    <color name="widget_surface">#FFFFFFFF</color><color name="widget_text">#FF222222</color><color name="widget_secondary">#FF5F6368</color>
+</resources>

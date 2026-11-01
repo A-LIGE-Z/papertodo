@@ -1,0 +1,806 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AppStartupFailureMessage" xml:space="preserve">
+    <value>起動に失敗しました: データファイルを読み込めません。ファイルが使用中、または破損している可能性があります。&#x0A;既存データの上書きを避けるため、アプリは起動を停止しました。&#x0A;&#x0A;エラー: {0}</value>
+  </data>
+  <data name="ResourceTextVersion" xml:space="preserve">
+    <value>2.0</value>
+  </data>
+  <data name="AppStartupFailureTitle" xml:space="preserve">
+    <value>PaperTodo - 起動失敗</value>
+  </data>
+  <data name="AppUnhandledExceptionMessage" xml:space="preserve">
+    <value>未処理のエラーが発生しました。現在のデータは data.crash_recovery.json に保存されています。&#x0A;&#x0A;アプリを再起動してください。問題が続く場合は、このファイルからの復元を試せます。&#x0A;&#x0A;エラー: {0}</value>
+  </data>
+  <data name="AppUnhandledExceptionTitle" xml:space="preserve">
+    <value>PaperTodo - 異常終了</value>
+  </data>
+  <data name="AppendAreaToolTip" xml:space="preserve">
+    <value>クリックして内容を追加、ドラッグして削除</value>
+  </data>
+  <data name="CapsuleNote" xml:space="preserve">
+    <value>メモ</value>
+  </data>
+  <data name="CapsuleTodo" xml:space="preserve">
+    <value>ToDo</value>
+  </data>
+  <data name="CapsuleTodoCount" xml:space="preserve">
+    <value>{0}件</value>
+  </data>
+  <data name="CommonCancel" xml:space="preserve">
+    <value>キャンセル</value>
+  </data>
+  <data name="CommonOk" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="DeletePaperBody" xml:space="preserve">
+    <value>削除すると完全に取り除かれ、トレイからは復元できません。</value>
+  </data>
+  <data name="DeletePaperQuestion" xml:space="preserve">
+    <value>この紙片を削除しますか？</value>
+  </data>
+  <data name="DeletePaperTitle" xml:space="preserve">
+    <value>紙片を削除</value>
+  </data>
+  <data name="DragSortToolTip" xml:space="preserve">
+    <value>ドラッグして並べ替え</value>
+  </data>
+  <data name="EmptyNotePaper" xml:space="preserve">
+    <value>空のメモ紙</value>
+  </data>
+  <data name="EmptyTodoPaper" xml:space="preserve">
+    <value>空のToDo紙</value>
+  </data>
+  <data name="MarkdownDefaultLinkLabel" xml:space="preserve">
+    <value>リンク</value>
+  </data>
+  <data name="ToolTipDragNoteToTodo" xml:space="preserve">
+    <value>ToDo項目の上へドラッグしてメモを関連付け</value>
+  </data>
+  <data name="ToolTipOpenLinkedNote" xml:space="preserve">
+    <value>関連メモを開く: {0}</value>
+  </data>
+  <data name="ToolTipRunLinkedScriptCapsule" xml:space="preserve">
+    <value>関連スクリプトを実行: {0}</value>
+  </data>
+  <data name="MarkdownRenderBasic" xml:space="preserve">
+    <value>基本</value>
+  </data>
+  <data name="MarkdownRenderEnhanced" xml:space="preserve">
+    <value>強化</value>
+  </data>
+  <data name="MarkdownRenderOff" xml:space="preserve">
+    <value>オフ</value>
+  </data>
+  <data name="FullscreenTopmostModeAvoid" xml:space="preserve">
+    <value>避ける</value>
+  </data>
+  <data name="FullscreenTopmostModeStayOnTop" xml:space="preserve">
+    <value>最前面のまま</value>
+  </data>
+  <data name="MarkdownPreviewFailure" xml:space="preserve">
+    <value>*プレビューに失敗しました。原文は保持されました。エラー: {0}*</value>
+  </data>
+  <data name="OpenMarkdownFailureMessage" xml:space="preserve">
+    <value>既定の {0} エディターを起動できませんでした:&#x0A;{1}</value>
+  </data>
+  <data name="OpenMarkdownFailureTitle" xml:space="preserve">
+    <value>外部で開けません</value>
+  </data>
+  <data name="ScriptCapsuleEmptyMessage" xml:space="preserve">
+    <value>このスクリプトカプセルには実行できる内容がありません。</value>
+  </data>
+  <data name="ScriptCapsuleEditMenu" xml:space="preserve">
+    <value>スクリプトカプセルを編集</value>
+  </data>
+  <data name="ScriptCapsuleExitFailureMessage" xml:space="preserve">
+    <value>スクリプトが終了コード {0} で失敗しました。&#x0A;{1}</value>
+  </data>
+  <data name="ScriptCapsuleFailureTitle" xml:space="preserve">
+    <value>スクリプト実行に失敗</value>
+  </data>
+  <data name="ScriptCapsuleNoOutput" xml:space="preserve">
+    <value>出力はありません。</value>
+  </data>
+  <data name="ScriptCapsuleStartFailureMessage" xml:space="preserve">
+    <value>PowerShell を起動できません。</value>
+  </data>
+  <data name="ScriptCapsulePowerShell7NotFound" xml:space="preserve">
+    <value>PowerShell 7（pwsh.exe）が見つかりません。</value>
+  </data>
+  <data name="MenuBold" xml:space="preserve">
+    <value>太字</value>
+  </data>
+  <data name="MenuClearDone" xml:space="preserve">
+    <value>完了済みを消去</value>
+  </data>
+  <data name="MenuCodeBlock" xml:space="preserve">
+    <value>コードブロック</value>
+  </data>
+  <data name="MenuCollapseToCapsule" xml:space="preserve">
+    <value>カプセルに折りたたむ</value>
+  </data>
+  <data name="MenuDelete" xml:space="preserve">
+    <value>削除</value>
+  </data>
+  <data name="MenuDeleteItem" xml:space="preserve">
+    <value>この項目を削除</value>
+  </data>
+  <data name="MenuFormat" xml:space="preserve">
+    <value>書式</value>
+  </data>
+  <data name="MenuHeading" xml:space="preserve">
+    <value>見出し</value>
+  </data>
+  <data name="MenuHide" xml:space="preserve">
+    <value>隠す</value>
+  </data>
+  <data name="MenuInsertLink" xml:space="preserve">
+    <value>リンクを挿入</value>
+  </data>
+  <data name="MenuOpenLinkedNote" xml:space="preserve">
+    <value>関連メモを開く: {0}</value>
+  </data>
+  <data name="MenuEditLinkedScriptCapsule" xml:space="preserve">
+    <value>関連スクリプトを編集: {0}</value>
+  </data>
+  <data name="MenuUnlinkNote" xml:space="preserve">
+    <value>メモの関連付けを解除</value>
+  </data>
+  <data name="MenuItalic" xml:space="preserve">
+    <value>斜体</value>
+  </data>
+  <data name="MenuList" xml:space="preserve">
+    <value>リスト</value>
+  </data>
+  <data name="MenuNew" xml:space="preserve">
+    <value>新規</value>
+  </data>
+  <data name="MenuNewNotePaper" xml:space="preserve">
+    <value>＋ メモ紙</value>
+  </data>
+  <data name="MenuNewTodoPaper" xml:space="preserve">
+    <value>＋ ToDo紙</value>
+  </data>
+  <data name="MenuQuote" xml:space="preserve">
+    <value>引用</value>
+  </data>
+  <data name="MenuRenameTitle" xml:space="preserve">
+    <value>タイトルを変更</value>
+  </data>
+  <data name="MenuRestoreWindow" xml:space="preserve">
+    <value>ウィンドウを復元</value>
+  </data>
+  <data name="MenuStrikethrough" xml:space="preserve">
+    <value>取り消し線</value>
+  </data>
+  <data name="MenuCopy" xml:space="preserve">
+    <value>コピー</value>
+  </data>
+  <data name="MenuPaste" xml:space="preserve">
+    <value>貼り付け</value>
+  </data>
+  <data name="MenuSelectAll" xml:space="preserve">
+    <value>すべて選択</value>
+  </data>
+  <data name="MenuText" xml:space="preserve">
+    <value>テキスト</value>
+  </data>
+  <data name="MenuThisPaper" xml:space="preserve">
+    <value>この紙片</value>
+  </data>
+  <data name="MenuTodo" xml:space="preserve">
+    <value>ToDo</value>
+  </data>
+  <data name="MenuTodoItem" xml:space="preserve">
+    <value>項目</value>
+  </data>
+  <data name="PaperKindNote" xml:space="preserve">
+    <value>メモ</value>
+  </data>
+  <data name="PaperKindTodo" xml:space="preserve">
+    <value>ToDo</value>
+  </data>
+  <data name="PaperLabelFormat" xml:space="preserve">
+    <value>{0} {1} · {2}</value>
+  </data>
+  <data name="PaperLimitMessage" xml:space="preserve">
+    <value>紙片の数が上限の 100 枚に達しました。&#x0A;不要な紙片を削除してから新規作成してください。</value>
+  </data>
+  <data name="PaperLimitTitle" xml:space="preserve">
+    <value>紙片数が上限です</value>
+  </data>
+  <data name="Pin" xml:space="preserve">
+    <value>最前面に固定</value>
+  </data>
+  <data name="SaveFailureIgnore" xml:space="preserve">
+    <value>今回は無視</value>
+  </data>
+  <data name="SaveFailureMessage" xml:space="preserve">
+    <value>データの保存に失敗しました:&#x0A;{0}&#x0A;ディスク容量または権限を確認してください。</value>
+  </data>
+  <data name="SaveFailureTitle" xml:space="preserve">
+    <value>保存失敗</value>
+  </data>
+  <data name="StateLoadFailed" xml:space="preserve">
+    <value>データの読み込みに失敗しました。ファイルが使用中、または破損している可能性があります。</value>
+  </data>
+  <data name="StartupFailureMessage" xml:space="preserve">
+    <value>自動起動の設定に失敗しました。権限が不足しているか、セキュリティソフトにブロックされている可能性があります。</value>
+  </data>
+  <data name="StartupFailureTitle" xml:space="preserve">
+    <value>自動起動の設定失敗</value>
+  </data>
+  <data name="ThemeDark" xml:space="preserve">
+    <value>ダーク</value>
+  </data>
+  <data name="SettingsColorScheme" xml:space="preserve">
+    <value>配色</value>
+  </data>
+  <data name="SettingsUiFont" xml:space="preserve">
+    <value>フォント</value>
+  </data>
+  <data name="UiFontDefault" xml:space="preserve">
+    <value>言語既定</value>
+  </data>
+  <data name="UiFontYaHei" xml:space="preserve">
+    <value>YaHei</value>
+  </data>
+  <data name="UiFontDengXian" xml:space="preserve">
+    <value>DengXian</value>
+  </data>
+  <data name="ColorSchemeSiYuan" xml:space="preserve">
+    <value>SiYuan</value>
+  </data>
+  <data name="ColorSchemeWarm" xml:space="preserve">
+    <value>紙</value>
+  </data>
+  <data name="ColorSchemeInk" xml:space="preserve">
+    <value>墨</value>
+  </data>
+  <data name="ColorSchemeForest" xml:space="preserve">
+    <value>森</value>
+  </data>
+  <data name="ColorSchemeRose" xml:space="preserve">
+    <value>霞</value>
+  </data>
+  <data name="ThemeLight" xml:space="preserve">
+    <value>ライト</value>
+  </data>
+  <data name="ThemeSystem" xml:space="preserve">
+    <value>システムに合わせる</value>
+  </data>
+  <data name="ToolTipCollapseToCapsule" xml:space="preserve">
+    <value>カプセルに折りたたむ</value>
+  </data>
+  <data name="ToolTipHideThisPaper" xml:space="preserve">
+    <value>この紙片を隠す</value>
+  </data>
+  <data name="ToolTipEditTitle" xml:space="preserve">
+    <value>クリックしてタイトルを編集</value>
+  </data>
+  <data name="ToolTipOpenMarkdownEditor" xml:space="preserve">
+    <value>既定の {0} エディターで開く</value>
+  </data>
+  <data name="ToolTipResetTextZoom" xml:space="preserve">
+    <value>クリックして 100% に戻す</value>
+  </data>
+  <data name="ToolTipNewNotePaper" xml:space="preserve">
+    <value>メモ紙を新規作成</value>
+  </data>
+  <data name="ToolTipNewTodoPaper" xml:space="preserve">
+    <value>ToDo紙を新規作成</value>
+  </data>
+  <data name="TrayCapsuleMode" xml:space="preserve">
+    <value>カプセルモード</value>
+  </data>
+  <data name="TrayDeepCapsuleMode" xml:space="preserve">
+    <value>カプセル端寄せモード</value>
+  </data>
+  <data name="SettingsDecreaseTitleLength" xml:space="preserve">
+    <value>タイトルの文字数上限を減らす</value>
+  </data>
+  <data name="SettingsIncreaseTitleLength" xml:space="preserve">
+    <value>タイトルの文字数上限を増やす</value>
+  </data>
+  <data name="SettingsMaxTitleLength" xml:space="preserve">
+    <value>タイトル文字数上限</value>
+  </data>
+  <data name="SettingsCapsuleCollapseAll" xml:space="preserve">
+    <value>メインカプセルを表示</value>
+  </data>
+  <data name="SettingsShowDeepCapsuleWhileExpanded" xml:space="preserve">
+    <value>展開中も端のカプセルを残す</value>
+  </data>
+  <data name="SettingsCollapseExpandedDeepCapsuleOnClick" xml:space="preserve">
+    <value>端のカプセルを再クリックして紙片を戻す</value>
+  </data>
+  <data name="CapsuleCollapseAllLabel" xml:space="preserve">
+    <value>折りたたむ</value>
+  </data>
+  <data name="CapsuleCollapseAllExpandedTip" xml:space="preserve">
+    <value>現在のカプセル列を折りたたむ</value>
+  </data>
+  <data name="CapsuleCollapseAllCollapsedTip" xml:space="preserve">
+    <value>現在のカプセル列を展開</value>
+  </data>
+  <data name="CapsuleCollapseAllCountFormat" xml:space="preserve">
+    <value>{0} 個</value>
+  </data>
+  <data name="TrayExit" xml:space="preserve">
+    <value>終了</value>
+  </data>
+  <data name="TrayHideAll" xml:space="preserve">
+    <value>すべての紙片を隠す</value>
+  </data>
+  <data name="TrayMarkdownRenderMode" xml:space="preserve">
+    <value>Markdown 表示</value>
+  </data>
+  <data name="SettingsFullscreenTopmostMode" xml:space="preserve">
+    <value>全画面ウィンドウ処理</value>
+  </data>
+  <data name="SettingsTodoVisualSize" xml:space="preserve">
+    <value>ToDo サイズ</value>
+  </data>
+  <data name="TodoVisualSizeSmall" xml:space="preserve">
+    <value>小</value>
+  </data>
+  <data name="TodoVisualSizeMedium" xml:space="preserve">
+    <value>中</value>
+  </data>
+  <data name="TodoVisualSizeLarge" xml:space="preserve">
+    <value>大</value>
+  </data>
+  <data name="TodoVisualSizeExtraLarge" xml:space="preserve">
+    <value>特大</value>
+  </data>
+  <data name="TrayInlineConfirmDelete" xml:space="preserve">
+    <value>⚠ 削除</value>
+  </data>
+  <data name="TrayInlineConfirmAction" xml:space="preserve">
+    <value>確認</value>
+  </data>
+  <data name="TrayNewNote" xml:space="preserve">
+    <value>＋ メモ紙を作成</value>
+  </data>
+  <data name="TrayNewTodo" xml:space="preserve">
+    <value>＋ ToDo紙を作成</value>
+  </data>
+  <data name="TrayPapers" xml:space="preserve">
+    <value>紙片</value>
+  </data>
+  <data name="TrayShowAll" xml:space="preserve">
+    <value>すべての紙片を表示</value>
+  </data>
+  <data name="TraySettings" xml:space="preserve">
+    <value>設定</value>
+  </data>
+  <data name="SettingsExternalMarkdownExtension" xml:space="preserve">
+    <value>外部で開くファイル形式</value>
+  </data>
+  <data name="SettingsQuickActions" xml:space="preserve">
+    <value>クイック操作</value>
+  </data>
+  <data name="SettingsDisplay" xml:space="preserve">
+    <value>表示</value>
+  </data>
+  <data name="SettingsExternalOpen" xml:space="preserve">
+    <value>外部で開く</value>
+  </data>
+  <data name="SettingsScriptCapsule" xml:space="preserve">
+    <value>スクリプトカプセル</value>
+  </data>
+  <data name="SettingsTopBarButtons" xml:space="preserve">
+    <value>上部バーのボタン</value>
+  </data>
+  <data name="SettingsBehavior" xml:space="preserve">
+    <value>動作</value>
+  </data>
+  <data name="SettingsCapsule" xml:space="preserve">
+    <value>カプセル</value>
+  </data>
+  <data name="SettingsTodoNote" xml:space="preserve">
+    <value>ToDo とノート</value>
+  </data>
+  <data name="SettingsRunLinkedScriptCapsulesOnClick" xml:space="preserve">
+    <value>関連スクリプトを直接実行</value>
+  </data>
+  <data name="SettingsGeneral" xml:space="preserve">
+    <value>一般</value>
+  </data>
+  <data name="TipThemeMode" xml:space="preserve">
+    <value>ライト、ダーク、または Windows のシステムテーマに合わせるかを選びます。</value>
+  </data>
+  <data name="TipColorScheme" xml:space="preserve">
+    <value>SiYuan の標準配色または他の紙の配色を選択します。ライト・ダークモードに対応します。内蔵配色を選ぶとカスタムカラーは解除されます。</value>
+  </data>
+  <data name="TipUiFont" xml:space="preserve">
+    <value>言語既定では、UI とノート本文にそれぞれ適したシステムフォントを使います。
+YaHei または DengXian を選ぶと、UI、トレイ、カプセル、ToDo、ノート本文の主文字をそのフォントに統一します。
+アプリフォルダーに papertodo.ttf または papertodo.otf がある場合は、そのカスタムフォントを優先します。</value>
+  </data>
+  <data name="TipMarkdownRender" xml:space="preserve">
+    <value>基本は軽いハイライトのみ、拡張は見出し・リスト・強調も整えて表示します。</value>
+  </data>
+  <data name="TipFullscreenTopmostMode" xml:space="preserve">
+    <value>動画やゲームなどの全画面ウィンドウを検出したとき、紙片と端のカプセルを一時的に避けられます。最前面のままにすると常に表示されます。</value>
+  </data>
+  <data name="TipTodoVisualSize" xml:space="preserve">
+    <value>ToDo 項目の文字、行高、間隔を調整します。</value>
+  </data>
+  <data name="TipEnableTodoNoteLinks" xml:space="preserve">
+    <value>ノートを ToDo 項目にドラッグして関連付けし、その項目から直接ノートを開けます。</value>
+  </data>
+  <data name="TipShowLinkedNoteName" xml:space="preserve">
+    <value>ToDo 項目の後ろに関連ノートのタイトルを表示します。</value>
+  </data>
+  <data name="TipAllowLongLinkedNoteTitles" xml:space="preserve">
+    <value>オフではコンパクト表示のままです。オンにすると関連ノートのタイトル幅を内容に合わせて広げ、1 行では全角約 5 文字、複数行では全角約 10 文字まで表示します。</value>
+  </data>
+  <data name="TipHideLinkedNotesFromCapsules" xml:space="preserve">
+    <value>ToDo 項目に関連付け済みのノートはカプセル一覧に表示せず、入口の重複を避けます。</value>
+  </data>
+  <data name="TipRunLinkedScriptCapsulesOnClick" xml:space="preserve">
+    <value>関連入口がスクリプトカプセルの場合、左クリックで実行し、右クリックで編集を開きます。誤実行を避けるため既定ではオフです。</value>
+  </data>
+  <data name="TipNewTodoButton" xml:space="preserve">
+    <value>紙片の上部バーに新規 ToDo ボタンを表示します。</value>
+  </data>
+  <data name="TipNewNoteButton" xml:space="preserve">
+    <value>紙片の上部バーに新規ノートボタンを表示します。</value>
+  </data>
+  <data name="TipExternalOpenButton" xml:space="preserve">
+    <value>上部バーに外部で開くボタンを表示し、現在のノートを一時ファイルに書き出して既定のアプリに渡します。</value>
+  </data>
+  <data name="TipExternalExtension" xml:space="preserve">
+    <value>外部アプリに渡すときのファイル形式を選びます。例：.md、.txt。</value>
+  </data>
+  <data name="TipCapsuleMode" xml:space="preserve">
+    <value>紙片を小さなカプセルに折りたたみ、デスクトップの占有を減らします。カプセル端寄せなどの機能には先にこれを有効化します。</value>
+  </data>
+  <data name="TipDeepCapsuleMode" xml:space="preserve">
+    <value>カプセルを画面端に固定して列に並べ、ホバー時にスライド表示します。</value>
+  </data>
+  <data name="TipShowDeepCapsuleWhileExpanded" xml:space="preserve">
+    <value>端のカプセルから紙片を開いた後も、端に対応する入口を残します。オフでは、開いている間その入口を一時的に隠します。</value>
+  </data>
+  <data name="TipCollapseExpandedDeepCapsuleOnClick" xml:space="preserve">
+    <value>端のカプセルから開いた紙片に対して、同じカプセルをもう一度クリックすると紙片を戻します。</value>
+  </data>
+  <data name="TipCapsuleCollapseAll" xml:space="preserve">
+    <value>カプセル列の上部にメインカプセルを表示し、現在の列を一括で折りたたみ／展開します。</value>
+  </data>
+  <data name="TipMaxTitleLength" xml:space="preserve">
+    <value>紙片タイトルとカプセルに表示する最大文字数です。</value>
+  </data>
+  <data name="TipStartup" xml:space="preserve">
+    <value>Windows の起動時に PaperTodo を自動的に起動します。</value>
+  </data>
+  <data name="SettingsEnableToolTips" xml:space="preserve">
+    <value>ホバー時のヒントを表示</value>
+  </data>
+  <data name="SettingsHidePapersFromWindowSwitcher" xml:space="preserve">
+    <value>ウィンドウ切り替えから紙片を隠す</value>
+  </data>
+  <data name="TipHidePapersFromWindowSwitcher" xml:space="preserve">
+    <value>オンにすると、展開中の紙片を Alt+Tab とタスクビューから隠します。トレイ、デスクトップ上の紙片、カプセルからは引き続き開けます。</value>
+  </data>
+  <data name="TipEnableToolTips" xml:space="preserve">
+    <value>ボタンや操作できる領域にポインターを置いたときに短い説明を表示します。設定の説明アイコンは常に利用できます。</value>
+  </data>
+  <data name="SettingsEnableAnimations" xml:space="preserve">
+    <value>アニメーションを有効化</value>
+  </data>
+  <data name="TipEnableAnimations" xml:space="preserve">
+    <value>よく使う操作に遷移アニメーションを付けます。オフにすると反応がより直接的になります。</value>
+  </data>
+  <data name="TipPersistentPowerShellProcess" xml:space="preserve">
+    <value>!pf / !powerf は常駐プロセスを再利用して起動を速くしますが、変数や状態がスクリプト間で残る場合があります。オフにするとそのプロセスを終了します。</value>
+  </data>
+  <data name="TipPreferPowerShell7" xml:space="preserve">
+    <value>PowerShell 7（pwsh.exe）を優先し、見つからない場合は Windows PowerShell に戻ります。スクリプト内で !pwsh / !ps5 も指定できます。</value>
+  </data>
+  <data name="TipHideScriptRunWindow" xml:space="preserve">
+    <value>スクリプト実行ウィンドウを隠します。通常の !p / !power は終了を待ってエラーを取得し、!pf / !powerf は常駐プロセスへ投入するだけです。</value>
+  </data>
+  <data name="SettingsEnableTodoNoteLinks" xml:space="preserve">
+    <value>ToDo とメモの関連付けを有効化</value>
+  </data>
+  <data name="SettingsPersistentPowerShellProcess" xml:space="preserve">
+    <value>PowerShell プロセスを常駐</value>
+  </data>
+  <data name="SettingsPreferPowerShell7" xml:space="preserve">
+    <value>PowerShell 7 を優先</value>
+  </data>
+  <data name="SettingsHideScriptRunWindow" xml:space="preserve">
+    <value>スクリプトウィンドウを隠す</value>
+  </data>
+  <data name="SettingsShowTopBarNewTodoButton" xml:space="preserve">
+    <value>新規 ToDo ボタンを表示</value>
+  </data>
+  <data name="SettingsShowTopBarNewNoteButton" xml:space="preserve">
+    <value>新規ノートボタンを表示</value>
+  </data>
+  <data name="SettingsShowTopBarExternalOpenButton" xml:space="preserve">
+    <value>外部で開くボタンを表示</value>
+  </data>
+  <data name="SettingsShowLinkedNoteName" xml:space="preserve">
+    <value>関連ノートのタイトルを表示</value>
+  </data>
+  <data name="SettingsAllowLongLinkedNoteTitles" xml:space="preserve">
+    <value>関連タイトルを長く表示</value>
+  </data>
+  <data name="SettingsHideLinkedNotesFromCapsules" xml:space="preserve">
+    <value>関連ノートをカプセルに表示しない</value>
+  </data>
+  <data name="SettingsResetNoteZoom" xml:space="preserve">
+    <value>ノートのズームを戻す</value>
+  </data>
+  <data name="SettingsRestoreAllCapsules" xml:space="preserve">
+    <value>すべてのカプセルを展開</value>
+  </data>
+  <data name="TrayStartup" xml:space="preserve">
+    <value>Windows 起動時に開始</value>
+  </data>
+  <data name="TrayThemeMode" xml:space="preserve">
+    <value>テーマ</value>
+  </data>
+  <data name="Unpin" xml:space="preserve">
+    <value>固定を解除</value>
+  </data>
+  <data name="SyncTitle" xml:space="preserve">
+    <value>データ同期</value>
+  </data>
+  <data name="SyncEnabled" xml:space="preserve">
+    <value>クラウド同期を有効化</value>
+  </data>
+  <data name="SyncProvider" xml:space="preserve">
+    <value>同期プロトコル</value>
+  </data>
+  <data name="SyncWebDavUrl" xml:space="preserve">
+    <value>サーバーURL</value>
+  </data>
+  <data name="SyncWebDavUsername" xml:space="preserve">
+    <value>ユーザー名</value>
+  </data>
+  <data name="SyncWebDavPassword" xml:space="preserve">
+    <value>パスワード</value>
+  </data>
+  <data name="SyncWebDavRemotePath" xml:space="preserve">
+    <value>リモートパス (既定: /papertodo/data.json)</value>
+  </data>
+  <data name="SyncS3Endpoint" xml:space="preserve">
+    <value>S3 エンドポイント</value>
+  </data>
+  <data name="SyncS3Bucket" xml:space="preserve">
+    <value>バケット名</value>
+  </data>
+  <data name="SyncS3AccessKey" xml:space="preserve">
+    <value>アクセスキー</value>
+  </data>
+  <data name="SyncS3SecretKey" xml:space="preserve">
+    <value>シークレットキー</value>
+  </data>
+  <data name="SyncS3Region" xml:space="preserve">
+    <value>リージョン</value>
+  </data>
+  <data name="SyncCustomServerUrl" xml:space="preserve">
+    <value>サーバーURL</value>
+  </data>
+  <data name="SyncCustomToken" xml:space="preserve">
+    <value>アクセストークン</value>
+  </data>
+  <data name="SyncTestButton" xml:space="preserve">
+    <value>接続テスト</value>
+  </data>
+  <data name="SyncNowButton" xml:space="preserve">
+    <value>今すぐ同期</value>
+  </data>
+  <data name="SyncStatus" xml:space="preserve">
+    <value>同期ステータス</value>
+  </data>
+  <data name="SyncLastTime" xml:space="preserve">
+    <value>最終同期</value>
+  </data>
+  <data name="SyncNever" xml:space="preserve">
+    <value>なし</value>
+  </data>
+  <data name="SyncUrlEmpty" xml:space="preserve">
+    <value>サーバーURLを入力してください</value>
+  </data>
+  <data name="SyncConnectSuccess" xml:space="preserve">
+    <value>接続に成功しました</value>
+  </data>
+  <data name="SyncConnectSuccessNewFile" xml:space="preserve">
+    <value>接続成功（初回同期時に作成されます）</value>
+  </data>
+  <data name="SyncAuthFailed" xml:space="preserve">
+    <value>認証に失敗しました。資格情報を確認してください。</value>
+  </data>
+  <data name="SyncS3ConfigIncomplete" xml:space="preserve">
+    <value>S3設定が不完全です</value>
+  </data>
+  <data name="SyncSuccess" xml:space="preserve">
+    <value>同期に成功しました</value>
+  </data>
+  <data name="SyncFailed" xml:space="preserve">
+    <value>同期失敗: {0}</value>
+  </data>
+  <data name="SyncInProgress" xml:space="preserve">
+    <value>同期中...</value>
+  </data>
+  <data name="SyncConflictRetry" xml:space="preserve"><value>クラウドのデータが変更されました。再度マージして同期してください。</value></data>
+  <data name="SyncCancelled" xml:space="preserve"><value>同期をキャンセルしました。</value></data>
+  <data name="OutlineWindowTitle" xml:space="preserve"><value>PaperTodo - アウトライン</value></data>
+  <data name="OutlineAllPapers" xml:space="preserve"><value>すべてのペーパー</value></data>
+  <data name="OutlineTreeView" xml:space="preserve"><value>アウトライン表示</value></data>
+  <data name="OutlinePaperList" xml:space="preserve"><value>すべてのペーパー</value></data>
+  <data name="OutlineSettings" xml:space="preserve"><value>設定</value></data>
+  <data name="OutlineBackToDesktop" xml:space="preserve"><value>デスクトップに戻る</value></data>
+  <data name="OutlinePaperDocuments" xml:space="preserve"><value>すべてのペーパー</value></data>
+  <data name="OutlineStructure" xml:space="preserve"><value>アウトラインと構造</value></data>
+  <data name="OutlineNewTodoPaper" xml:space="preserve"><value>ToDo ペーパーを作成</value></data>
+  <data name="OutlineNewNotePaper" xml:space="preserve"><value>ノートを作成</value></data>
+  <data name="OutlineToggleAll" xml:space="preserve"><value>すべて展開 / 折りたたみ</value></data>
+  <data name="OutlineSearch" xml:space="preserve"><value>項目とタイトルを検索…</value></data>
+  <data name="OutlineNoResults" xml:space="preserve"><value>該当する内容はありません</value></data>
+  <data name="OutlineTodoPapers" xml:space="preserve"><value>ToDo ペーパー</value></data>
+  <data name="OutlineNotes" xml:space="preserve"><value>ノート</value></data>
+  <data name="OutlineAddItem" xml:space="preserve"><value>ToDo を追加</value></data>
+  <data name="OutlineClearDone" xml:space="preserve"><value>完了項目を削除</value></data>
+  <data name="OutlineDeletePaper" xml:space="preserve"><value>このペーパーを削除</value></data>
+  <data name="OutlineDeleteTitle" xml:space="preserve"><value>削除の確認</value></data>
+  <data name="OutlineEmptyTodo" xml:space="preserve"><value>（空の ToDo）</value></data>
+  <data name="OutlineCopyTitle" xml:space="preserve"><value>タイトルをコピー</value></data>
+  <data name="OutlineSelectPaper" xml:space="preserve"><value>左側からペーパーを選択してください</value></data>
+  <data name="OutlineTodoPaper" xml:space="preserve"><value>ToDo ペーパー</value></data>
+  <data name="OutlineNotePaper" xml:space="preserve"><value>ノート</value></data>
+  <data name="OutlineClearDoneShort" xml:space="preserve"><value>完了項目を削除</value></data>
+  <data name="OutlineEditMode" xml:space="preserve"><value>編集</value></data>
+  <data name="OutlinePreviewMode" xml:space="preserve"><value>プレビュー</value></data>
+  <data name="OutlineDelete" xml:space="preserve"><value>削除</value></data>
+  <data name="OutlineAddPlaceholder" xml:space="preserve"><value>＋ ToDo を追加…</value></data>
+  <data name="OutlineDeleteItem" xml:space="preserve"><value>項目を削除</value></data>
+  <data name="OutlineInsertColumn" xml:space="preserve"><value>左側に列を挿入</value></data>
+  <data name="OutlineDeleteColumn" xml:space="preserve"><value>この列を削除</value></data>
+  <data name="OutlineAddColumn" xml:space="preserve"><value>列を追加</value></data>
+  <data name="OutlineRemoveColumn" xml:space="preserve"><value>列を減らす</value></data>
+  <data name="OutlineSetDue" xml:space="preserve"><value>期限を設定…</value></data>
+  <data name="OutlineEditDue" xml:space="preserve"><value>期限を変更…</value></data>
+  <data name="OutlineClearDue" xml:space="preserve"><value>期限を解除</value></data>
+  <data name="OutlineEditReminder" xml:space="preserve"><value>通知間隔を変更…</value></data>
+  <data name="OutlineSetReminder" xml:space="preserve"><value>通知間隔を設定…</value></data>
+  <data name="OutlineClearReminder" xml:space="preserve"><value>通知間隔を解除</value></data>
+  <data name="OutlineDeleteTodo" xml:space="preserve"><value>この ToDo を削除</value></data>
+  <data name="OutlineDueHint" xml:space="preserve"><value>期限を設定</value></data>
+  <data name="OutlineToday" xml:space="preserve"><value>今日 </value></data>
+  <data name="OutlineTomorrow" xml:space="preserve"><value>明日 </value></data>
+  <data name="OutlineCut" xml:space="preserve"><value>切り取り</value></data>
+  <data name="OutlineCopy" xml:space="preserve"><value>コピー</value></data>
+  <data name="OutlinePaste" xml:space="preserve"><value>貼り付け</value></data>
+  <data name="OutlineSelectAll" xml:space="preserve"><value>すべて選択</value></data>
+  <data name="OutlineBold" xml:space="preserve"><value>太字</value></data>
+  <data name="OutlineItalic" xml:space="preserve"><value>斜体</value></data>
+  <data name="OutlineStrikethrough" xml:space="preserve"><value>取り消し線</value></data>
+  <data name="OutlineHeading1" xml:space="preserve"><value>見出し 1</value></data>
+  <data name="OutlineHeading2" xml:space="preserve"><value>見出し 2</value></data>
+  <data name="OutlineQuote" xml:space="preserve"><value>引用</value></data>
+  <data name="OutlineList" xml:space="preserve"><value>箇条書き</value></data>
+  <data name="OutlineCodeBlock" xml:space="preserve"><value>コードブロックを挿入</value></data>
+  <data name="OutlineSwitchPreview" xml:space="preserve"><value>プレビューに切り替え</value></data>
+  <data name="OutlineInsertTime" xml:space="preserve"><value>現在時刻を挿入</value></data>
+  <data name="OutlineSwitchEdit" xml:space="preserve"><value>編集に切り替え</value></data>
+  <data name="OutlineCopyAll" xml:space="preserve"><value>すべての内容をコピー</value></data>
+  <data name="OutlineCopied" xml:space="preserve"><value>コピーしました</value></data>
+  <data name="OutlineDeleteConfirm" xml:space="preserve"><value>ペーパー「{0}」を削除しますか？</value></data>
+  <data name="OutlineNoteCount" xml:space="preserve"><value>{0} 件</value></data>
+  <data name="OutlineCharCount" xml:space="preserve"><value>{0} 文字</value></data>
+  <data name="OutlineTodoProgress" xml:space="preserve"><value>{0} 項目 · {1} 完了（{2}%）</value></data>
+  <data name="OutlineNoteMetrics" xml:space="preserve"><value>{0} 文字 · {1} 行</value></data>
+  <data name="OutlineCompletedGroup" xml:space="preserve"><value>完了（{0}）</value></data>
+  <data name="OutlineReminderEvery" xml:space="preserve"><value>（{0} {1} ごと）</value></data>
+  <data name="DesktopPinUnlockButton" xml:space="preserve"><value>固定を解除</value></data>
+  <data name="DisplayModeCards" xml:space="preserve"><value>デスクトップのペーパー</value></data>
+  <data name="DisplayModeOutline" xml:space="preserve"><value>思源風アウトライン</value></data>
+  <data name="MenuChangeTodoDue" xml:space="preserve"><value>期限を変更</value></data>
+  <data name="MenuChangeTodoReminderInterval" xml:space="preserve"><value>通知間隔を変更</value></data>
+  <data name="MenuClearTodoDue" xml:space="preserve"><value>期限を解除</value></data>
+  <data name="MenuClearTodoReminderInterval" xml:space="preserve"><value>全体の通知間隔を使用</value></data>
+  <data name="MenuDecreaseTodoColumns" xml:space="preserve"><value>この ToDo の列を減らす</value></data>
+  <data name="MenuDeleteTodoColumn" xml:space="preserve"><value>現在の列を削除</value></data>
+  <data name="MenuDesktopPin" xml:space="preserve"><value>デスクトップ固定</value></data>
+  <data name="MenuIncreaseTodoColumns" xml:space="preserve"><value>この ToDo の列を増やす</value></data>
+  <data name="MenuInsertTodoColumnBefore" xml:space="preserve"><value>現在の列の前に挿入</value></data>
+  <data name="MenuPinPaperToDesktop" xml:space="preserve"><value>デスクトップに固定</value></data>
+  <data name="MenuSetTodoDue" xml:space="preserve"><value>期限を設定</value></data>
+  <data name="MenuSetTodoReminderInterval" xml:space="preserve"><value>通知間隔を設定</value></data>
+  <data name="MenuUnlockPinnedPaper" xml:space="preserve"><value>デスクトップ固定を解除</value></data>
+  <data name="SettingsCustomThemeColor" xml:space="preserve"><value>アプリ全体のテーマ色</value></data>
+  <data name="SettingsCustomThemeColorClear" xml:space="preserve"><value>既定の色</value></data>
+  <data name="SettingsCustomThemeColorDefault" xml:space="preserve"><value>既定のパレットを使用</value></data>
+  <data name="SettingsCustomThemeColorPick" xml:space="preserve"><value>色を選択</value></data>
+  <data name="SettingsHideDeepCapsulesWhenCovered" xml:space="preserve"><value>他のウィンドウに隠れた端のカプセルを非表示</value></data>
+  <data name="SettingsHideDeepCapsulesWhenFullscreen" xml:space="preserve"><value>他のアプリの全画面表示中は端のカプセルを非表示</value></data>
+  <data name="SettingsHotKeyClear" xml:space="preserve"><value>クリア</value></data>
+  <data name="SettingsLineSpacingReset" xml:space="preserve"><value>既定</value></data>
+  <data name="SettingsNoteLineSpacing" xml:space="preserve"><value>ノートの行間</value></data>
+  <data name="SettingsPinnedNoteHotKey" xml:space="preserve"><value>固定ノートを前面に表示するショートカット</value></data>
+  <data name="SettingsPinnedTodoHotKey" xml:space="preserve"><value>固定 ToDo を前面に表示するショートカット</value></data>
+  <data name="SettingsShowTodoDueRelativeTime" xml:space="preserve"><value>期限までの相対時間を表示</value></data>
+  <data name="SettingsSystemFont" xml:space="preserve"><value>システムフォント</value></data>
+  <data name="SettingsTabCapsule" xml:space="preserve"><value>カプセル</value></data>
+  <data name="SettingsTabDisplay" xml:space="preserve"><value>表示</value></data>
+  <data name="SettingsTabGeneral" xml:space="preserve"><value>一般 / 詳細</value></data>
+  <data name="SettingsTabTodoNote" xml:space="preserve"><value>ToDo / ノート</value></data>
+  <data name="SettingsTodoDueYearDisplay" xml:space="preserve"><value>期限の年の表示</value></data>
+  <data name="SettingsTodoLineSpacing" xml:space="preserve"><value>ToDo の行間</value></data>
+  <data name="SettingsTodoReminderBubbleDuration" xml:space="preserve"><value>通知バブルの表示時間（秒）</value></data>
+  <data name="SettingsTodoReminderInterval" xml:space="preserve"><value>通知間隔</value></data>
+  <data name="SettingsTodoReminderIntervalUnit" xml:space="preserve"><value>間隔の単位</value></data>
+  <data name="SettingsTodoReminderScope" xml:space="preserve"><value>通知する項目</value></data>
+  <data name="SettingsUseTodoReminderInterval" xml:space="preserve"><value>間隔を空けて通知バブルを表示</value></data>
+  <data name="SettingsWindowDisplayMode" xml:space="preserve"><value>画面の表示モード</value></data>
+  <data name="TipCustomThemeColor" xml:space="preserve"><value>色見本をクリックしてカラーピッカーを開きます。選んだ色からアプリ全体のパレットを生成します。</value></data>
+  <data name="TipHideDeepCapsulesWhenCovered" xml:space="preserve"><value>他のウィンドウが端のカプセルの領域と重なると非表示にし、領域が空くと自動で戻します。</value></data>
+  <data name="TipHideDeepCapsulesWhenFullscreen" xml:space="preserve"><value>他のアプリが全画面表示になると端のカプセルを一時的に隠し、終了後に元の並びへ戻します。</value></data>
+  <data name="TipNoteLineSpacing" xml:space="preserve"><value>ノート本文の行間倍率を入力します。既定は 1、範囲は 0.8～5 です。</value></data>
+  <data name="TipPinnedNoteHotKey" xml:space="preserve"><value>入力欄でキーの組み合わせを押すと、デスクトップ最背面に固定したノートを前面に呼び出すキーを設定できます。Esc、Backspace、Delete でクリアします。</value></data>
+  <data name="TipPinnedTodoHotKey" xml:space="preserve"><value>入力欄でキーの組み合わせを押すと、デスクトップ最背面に固定した ToDo を前面に呼び出すキーを設定できます。Esc、Backspace、Delete でクリアします。</value></data>
+  <data name="TipShowTodoDueRelativeTime" xml:space="preserve"><value>期限の日時の代わりに、期限までの残り時間または超過時間を表示します。</value></data>
+  <data name="TipSystemFont" xml:space="preserve"><value>Windows にインストール済みのフォントを選ぶと、画面、トレイ、カプセル、ToDo とノート本文に適用します。「言語の既定」で手動指定を解除し、アプリ既定のフォント選択に戻します。</value></data>
+  <data name="TipTodoDueYearDisplay" xml:space="preserve"><value>期限の年を省略するか、26年または2026年の形式で表示するかを選びます。</value></data>
+  <data name="TipTodoLineSpacing" xml:space="preserve"><value>複数行の ToDo の行間倍率を入力します。既定は 1、範囲は 0.8～5 です。</value></data>
+  <data name="TipTodoReminderBubbleDuration" xml:space="preserve"><value>通知バブルを自動で閉じるまでの秒数です。バブルにマウスを重ねている間はカウントを止めます。</value></data>
+  <data name="TipTodoReminderInterval" xml:space="preserve"><value>未完了の ToDo が指定時間以内に迫った後、または期限を過ぎた後に、再び通知する最短間隔です。</value></data>
+  <data name="TipTodoReminderIntervalUnit" xml:space="preserve"><value>通知間隔の値を分または時間で指定します。</value></data>
+  <data name="TipTodoReminderScope" xml:space="preserve"><value>「直近のみ」は期限が最も近い項目だけ、「すべて」は条件に合う全項目を通知します。</value></data>
+  <data name="TipUseTodoReminderInterval" xml:space="preserve"><value>有効にすると指定間隔で通知バブルを繰り返し表示します。無効の場合は期限前の一度だけ通知します。</value></data>
+  <data name="TipWindowDisplayMode" xml:space="preserve"><value>独立したデスクトップのペーパー表示と、思源風の全ペーパーの階層アウトライン表示を切り替えます。</value></data>
+  <data name="TodoDueDialogCancel" xml:space="preserve"><value>キャンセル</value></data>
+  <data name="TodoDueDialogClear" xml:space="preserve"><value>クリア</value></data>
+  <data name="TodoDueDialogMessage" xml:space="preserve"><value>この ToDo のローカル日時を選んでください。</value></data>
+  <data name="TodoDueDialogOk" xml:space="preserve"><value>OK</value></data>
+  <data name="TodoDueDialogTitle" xml:space="preserve"><value>期限を設定</value></data>
+  <data name="TodoDueInvalidInput" xml:space="preserve"><value>日時を認識できません。</value></data>
+  <data name="TodoDueRelativeDayUnit" xml:space="preserve"><value>{0}日</value></data>
+  <data name="TodoDueRelativeFuture" xml:space="preserve"><value>{0}後</value></data>
+  <data name="TodoDueRelativeHourUnit" xml:space="preserve"><value>{0}時間</value></data>
+  <data name="TodoDueRelativeMinuteUnit" xml:space="preserve"><value>{0}分</value></data>
+  <data name="TodoDueRelativePast" xml:space="preserve"><value>{0}超過</value></data>
+  <data name="TodoDueTomorrowLabel" xml:space="preserve"><value>明日 {0}</value></data>
+  <data name="TodoDueYearDisplayFull" xml:space="preserve"><value>2026年</value></data>
+  <data name="TodoDueYearDisplayNone" xml:space="preserve"><value>表示しない</value></data>
+  <data name="TodoDueYearDisplayShort" xml:space="preserve"><value>26年</value></data>
+  <data name="TodoReminderBubbleMessage" xml:space="preserve"><value>{0}
+{1}
+{2}</value></data>
+  <data name="TodoReminderBubbleOverdueSeconds" xml:space="preserve"><value>{0}超過</value></data>
+  <data name="TodoReminderBubbleRemainingSeconds" xml:space="preserve"><value>残り {0}</value></data>
+  <data name="TodoReminderBubbleTitle" xml:space="preserve"><value>ToDo の期限が近づいています</value></data>
+  <data name="TodoReminderCountdownDay" xml:space="preserve"><value>{0}日</value></data>
+  <data name="TodoReminderCountdownHour" xml:space="preserve"><value>{0}時間</value></data>
+  <data name="TodoReminderCountdownMinute" xml:space="preserve"><value>{0}分</value></data>
+  <data name="TodoReminderCountdownSecond" xml:space="preserve"><value>{0}秒</value></data>
+  <data name="TodoReminderIntervalDialogMessage" xml:space="preserve"><value>この ToDo 専用の通知間隔を設定します。繰り返し通知が有効な場合、アプリ全体の設定より優先します。</value></data>
+  <data name="TodoReminderIntervalDialogTitle" xml:space="preserve"><value>通知間隔</value></data>
+  <data name="TodoReminderIntervalDialogUseGlobal" xml:space="preserve"><value>全体設定</value></data>
+  <data name="TodoReminderIntervalUnitHours" xml:space="preserve"><value>時間</value></data>
+  <data name="TodoReminderIntervalUnitMinutes" xml:space="preserve"><value>分</value></data>
+  <data name="TodoReminderScopeAll" xml:space="preserve"><value>すべて</value></data>
+  <data name="TodoReminderScopeNearest" xml:space="preserve"><value>直近のみ</value></data>
+  <data name="ToolTipTodoDue" xml:space="preserve"><value>期限：{0}</value></data>
+  <data name="TrayOutlineView" xml:space="preserve"><value>アウトライン表示</value></data>
+  <data name="SyncInvalidEndpoint" xml:space="preserve"><value>有効な PaperTodo データが返されませんでした。サーバーの完全な URL とアプリのパスを確認してください。</value></data>
+</root>

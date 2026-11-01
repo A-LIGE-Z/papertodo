@@ -1,0 +1,5 @@
+<resources>
+    <string name="widget_label">PaperTodo 할 일</string><string name="widget_empty">PaperTodo를 열어 할 일을 추가하거나 동기화하세요.</string>
+    <string name="widget_refresh">할 일 동기화</string><string name="widget_complete">완료로 표시</string><string name="widget_undo">미완료로 표시</string>
+    <string name="reminder_channel">할 일 알림</string><string name="reminder_overdue">기한이 지난 할 일</string><string name="reminder_upcoming">곧 마감되는 할 일</string>
+</resources>
