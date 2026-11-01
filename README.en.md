@@ -1,12 +1,14 @@
 <div align="center">
 
+<img src="assets/icons/paper-check-v1/papertodo-256.png" width="96" height="96" alt="PaperTodo icon">
+
 # PaperTodo · A Sheet of Paper
 
 **A few quiet, useful, unobtrusive pieces of paper on your desktop.**
 
 A lightweight paper-centered Windows app built with native WPF, with optional outline view, synchronization and an Android companion. No account is required.
 
-![version](https://img.shields.io/badge/version-v0.0.2-3b82f6) ![platform](https://img.shields.io/badge/platform-Windows%20x64-555) ![.NET](https://img.shields.io/badge/.NET-10-512bd4) ![UI](https://img.shields.io/badge/UI-WPF-0078d4)
+![version](https://img.shields.io/badge/version-v0.0.3-3b82f6) ![platform](https://img.shields.io/badge/platform-Windows%20x64-555) ![.NET](https://img.shields.io/badge/.NET-10-512bd4) ![UI](https://img.shields.io/badge/UI-WPF-0078d4)
 
 **Language: [中文](README.md) | English**
 
@@ -209,7 +211,7 @@ dotnet build -c Release
 
 Run `./scripts/build.ps1` to create the self-contained compressed package and checksums in `dist/PaperTodo-v<version>/`. Use `-Run` to save and exit the current instance, back up its launcher and data, update the launcher and start the new build. Cloud releases include this Windows portable executable and the production-signed Android APK.
 
-Windows and Android share product version **0.0.2**, maintained in `PaperTodo.csproj` and `mobile/pubspec.yaml`. Android's `+6` is a separate, increasing installation build number.
+Windows and Android share product version **0.0.3**, maintained in `PaperTodo.csproj` and `mobile/pubspec.yaml`. Android's `+7` is a separate, increasing installation build number.
 
 The root contains Windows sources and the local launcher. `mobile/`, `server/`, `tests/` and `scripts/` contain Android, the optional sync server, regression tests and build/launch scripts. Distributable packages live in `dist/`; `输出/`, `obj/`, `bin/` and `mobile/build/` can be regenerated. Keep user backups in `backups/` and `archive/backups/`; update backups live in `backups/updates/`.
 

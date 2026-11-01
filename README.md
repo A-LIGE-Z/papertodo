@@ -1,12 +1,14 @@
 <div align="center">
 
+<img src="assets/icons/paper-check-v1/papertodo-256.png" width="96" height="96" alt="PaperTodo 图标">
+
 # PaperTodo · 一张纸
 
 **让桌面上有几张安静、可用、不打扰人的纸。**
 
 一个以 Windows 桌面纸片为核心的轻量便签工具，使用 WPF 原生界面。可选大纲显示、跨端同步和 Android 伴侣端，无需注册账号。
 
-![version](https://img.shields.io/badge/version-v0.0.2-3b82f6) ![platform](https://img.shields.io/badge/platform-Windows%20x64-555) ![.NET](https://img.shields.io/badge/.NET-10-512bd4) ![UI](https://img.shields.io/badge/UI-WPF-0078d4)
+![version](https://img.shields.io/badge/version-v0.0.3-3b82f6) ![platform](https://img.shields.io/badge/platform-Windows%20x64-555) ![.NET](https://img.shields.io/badge/.NET-10-512bd4) ![UI](https://img.shields.io/badge/UI-WPF-0078d4)
 
 **语言：中文 | [English](README.en.md)**
 
@@ -215,7 +217,7 @@ dotnet build -c Release
 
 本地运行 `./scripts/build.ps1` 只生成自包含压缩单文件及校验清单，产物位于 `dist/PaperTodo-v<版本>/`。加 `-Run` 才会保存并退出当前实例、备份旧入口和数据、更新入口并启动。云端 Release 发布该 Windows 便携程序与正式 Android APK。
 
-Windows 与 Android 当前产品版本统一为 **0.0.2**，分别在 `PaperTodo.csproj` 和 `mobile/pubspec.yaml` 中维护。Android 的 `+6` 是独立递增的安装编号，不是产品版本。
+Windows 与 Android 当前产品版本统一为 **0.0.3**，分别在 `PaperTodo.csproj` 和 `mobile/pubspec.yaml` 中维护。Android 的 `+7` 是独立递增的安装编号，不是产品版本。
 
 项目根目录保留 Windows 源码与本地运行入口；`mobile/` 为 Android，`server/` 为可选同步服务，`tests/` 为回归测试，`scripts/` 为构建与启动脚本。可分发程序集中在 `dist/`；`输出/`、`obj/`、`bin/` 和 `mobile/build/` 是可重新生成的产物。`backups/` 与 `archive/backups/` 保存用户数据备份，不能作为构建缓存清理；启动升级备份位于 `backups/updates/`。
 

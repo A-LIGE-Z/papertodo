@@ -6,10 +6,10 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
-    <Version>0.0.2</Version>
-    <AssemblyVersion>0.0.2.0</AssemblyVersion>
-    <FileVersion>0.0.2.0</FileVersion>
-    <InformationalVersion>0.0.2</InformationalVersion>
+    <Version>0.0.3</Version>
+    <AssemblyVersion>0.0.3.0</AssemblyVersion>
+    <FileVersion>0.0.3.0</FileVersion>
+    <InformationalVersion>0.0.3</InformationalVersion>
     <ApplicationIcon>assets\icons\PaperTodo.ico</ApplicationIcon>
     <OutputPath>$(MSBuildProjectDirectory)\输出\PaperTodo-v$(Version)\</OutputPath>
     <SatelliteResourceLanguages>en;ja;ko</SatelliteResourceLanguages>

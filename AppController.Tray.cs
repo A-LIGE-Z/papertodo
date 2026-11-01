@@ -110,17 +110,23 @@ public sealed partial class AppController
         var visual = new DrawingVisual();
         using (var dc = visual.RenderOpen())
         {
-            var paper = FrozenBrush(Color.FromRgb(255, 248, 230));
-            var border = new Pen(FrozenBrush(Color.FromRgb(126, 96, 58)), 2);
-            var check = new Pen(FrozenBrush(Color.FromRgb(80, 96, 60)), 3)
+            var paper = FrozenBrush(Colors.White);
+            var blue = FrozenBrush(Color.FromRgb(44, 111, 233));
+            var back = FrozenBrush(Color.FromRgb(175, 207, 252));
+            var check = new Pen(FrozenBrush(Color.FromRgb(40, 102, 217)), 2.4)
             {
                 StartLineCap = PenLineCap.Round,
                 EndLineCap = PenLineCap.Round
             };
 
-            dc.DrawRoundedRectangle(paper, border, new Rect(5, 4, 22, 24), 4, 4);
-            dc.DrawLine(check, new Point(10, 18), new Point(15, 23));
-            dc.DrawLine(check, new Point(15, 23), new Point(23, 12));
+            dc.DrawRoundedRectangle(blue, null, new Rect(1, 1, 30, 30), 7, 7);
+            dc.PushTransform(new RotateTransform(-11, 14.75, 17.25));
+            dc.DrawRoundedRectangle(back, null, new Rect(7.5, 9, 14.5, 16.5), 1.5, 1.5);
+            dc.Pop();
+            dc.DrawGeometry(paper, null, Geometry.Parse("M10.5,7 H18 L23.5,12.5 V23.5 Q23.5,25 22,25 H10.5 Q9,25 9,23.5 V8.5 Q9,7 10.5,7 Z"));
+            dc.DrawGeometry(back, null, Geometry.Parse("M18,7 L23.5,12.5 H19.5 Q18,12.5 18,11 Z"));
+            dc.DrawLine(check, new Point(12, 16.5), new Point(15, 19.5));
+            dc.DrawLine(check, new Point(15, 19.5), new Point(20.5, 13.5));
         }
 
         var bitmap = new RenderTargetBitmap(size, size, 96, 96, PixelFormats.Pbgra32);

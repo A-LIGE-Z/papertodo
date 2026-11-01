@@ -11,6 +11,7 @@ data.backup.json
 data.crash_recovery.json
 data.*.json
 *.png
+!assets/icons/paper-check-v1/*.png
 !mobile/android/app/src/main/res/**/*.png
 *.jks
 *.keystore

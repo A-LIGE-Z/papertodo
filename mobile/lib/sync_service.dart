@@ -65,7 +65,7 @@ class WebDavSyncProvider with RevisionedStorage implements SyncStorageProvider {
     _cleanRemotePath = path;
 
     _headers = {
-      'User-Agent': 'PaperTodo-Android/0.0.2',
+      'User-Agent': 'PaperTodo-Android/0.0.3',
     };
     if (username.isNotEmpty) {
       final auth = base64Encode(utf8.encode('$username:$password'));
@@ -287,7 +287,7 @@ class CustomHttpSyncProvider with RevisionedStorage implements SyncStorageProvid
   }
 
   Map<String, String> get _headers => {
-        'User-Agent': 'PaperTodo-Android/0.0.2',
+        'User-Agent': 'PaperTodo-Android/0.0.3',
         if (token.isNotEmpty) 'Authorization': 'Bearer $token',
       };
 

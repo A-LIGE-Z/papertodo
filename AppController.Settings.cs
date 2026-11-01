@@ -1379,7 +1379,7 @@ public sealed partial class AppController
         var versionInfo = typeof(AppController).Assembly.GetName().Version;
         var versionStr = versionInfo != null
             ? (versionInfo.Build > 0 ? $"v{versionInfo.Major}.{versionInfo.Minor}.{versionInfo.Build}" : $"v{versionInfo.Major}.{versionInfo.Minor}")
-            : "v0.0.2";
+            : "v0.0.3";
         var versionBadge = new Border
         {
             Background = Brushes.Transparent,

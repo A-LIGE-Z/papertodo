@@ -77,7 +77,7 @@ public sealed class WebDavSyncProvider : ISyncStorageProvider
             var authBytes = Encoding.UTF8.GetBytes($"{username}:{password ?? ""}");
             _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(authBytes));
         }
-        _client.DefaultRequestHeaders.Add("User-Agent", "PaperTodo-Sync/0.0.2");
+        _client.DefaultRequestHeaders.Add("User-Agent", "PaperTodo-Sync/0.0.3");
     }
 
     private Uri GetTargetUri(string relativePath)
@@ -231,7 +231,7 @@ public sealed class S3SyncProvider : ISyncStorageProvider
         {
             Timeout = TimeSpan.FromSeconds(20)
         };
-        _client.DefaultRequestHeaders.Add("User-Agent", "PaperTodo-Sync/0.0.2");
+        _client.DefaultRequestHeaders.Add("User-Agent", "PaperTodo-Sync/0.0.3");
     }
 
     private Uri GetObjectUri()
@@ -385,7 +385,7 @@ public sealed class CustomHttpSyncProvider : ISyncStorageProvider
         {
             _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _token);
         }
-        _client.DefaultRequestHeaders.Add("User-Agent", "PaperTodo-Sync/0.0.2");
+        _client.DefaultRequestHeaders.Add("User-Agent", "PaperTodo-Sync/0.0.3");
     }
 
     private Uri GetApiUri(string path)

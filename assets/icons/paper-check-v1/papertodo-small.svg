@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" fill="none">
+  <title>PaperTodo — small size icon</title>
+  <rect x="2" y="2" width="60" height="60" rx="14" fill="#2C6FE9"/>
+  <rect x="15" y="18" width="29" height="33" rx="3" transform="rotate(-11 29.5 34.5)" fill="#AFCFFC"/>
+  <path d="M21 14H36L47 25V47C47 49 46 50 44 50H21C19 50 18 49 18 47V17C18 15 19 14 21 14Z" fill="#FFFFFF"/>
+  <path d="M36 14L47 25H39C37 25 36 24 36 22V14Z" fill="#BED7FC"/>
+  <path d="M24 33L30 39L41 27" stroke="#2866D9" stroke-width="4.8" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
