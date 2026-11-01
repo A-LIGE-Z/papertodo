@@ -74,17 +74,13 @@ jobs:
       - uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '10.0.x'
-      - name: Build both Windows x64 single files
+      - name: Build portable Windows x64 single file
         run: |
           New-Item -ItemType Directory -Path release -Force | Out-Null
           $selfOutput = Join-Path $env:RUNNER_TEMP 'papertodo-self'
-          $frameworkOutput = Join-Path $env:RUNNER_TEMP 'papertodo-framework'
           dotnet publish PaperTodo.csproj -c Release -r win-x64 --self-contained true -o $selfOutput /p:PublishSingleFile=true /p:PublishReadyToRun=false /p:IncludeNativeLibrariesForSelfExtract=true /p:EnableCompressionInSingleFile=true /p:PublishTrimmed=false /p:DebugType=none /p:DebugSymbols=false
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           Copy-Item -LiteralPath (Join-Path $selfOutput 'PaperTodo.exe') -Destination "release/PaperTodo-v$env:RELEASE_VERSION-win-x64-self-contained-small.exe"
-          dotnet publish PaperTodo.csproj -c Release -r win-x64 --self-contained false -o $frameworkOutput /p:PublishSingleFile=true /p:PublishReadyToRun=false /p:EnableCompressionInSingleFile=false /p:PublishTrimmed=false /p:DebugType=none /p:DebugSymbols=false
-          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-          Copy-Item -LiteralPath (Join-Path $frameworkOutput 'PaperTodo.exe') -Destination "release/PaperTodo-v$env:RELEASE_VERSION-win-x64-no-runtime.exe"
       - uses: sigstore/cosign-installer@v3
       - name: Sign Windows executable provenance
         run: |
@@ -95,7 +91,14 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: release-windows
-          path: release/*
+          path: release/*-self-contained-small.exe
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        with:
+          name: windows-signatures
+          path: |
+            release/*.sig
+            release/*.crt
           if-no-files-found: error
 
   android:
@@ -145,37 +148,14 @@ jobs:
           path: release/*.apk
           if-no-files-found: error
 
-  server:
-    needs: [quality, metadata]
-    runs-on: ubuntu-latest
-    env:
-      CGO_ENABLED: '0'
-      RELEASE_VERSION: ${{ needs.metadata.outputs.version }}
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-go@v5
-        with:
-          go-version: '1.27.x'
-          cache: false
-      - name: Build standalone service executables
-        working-directory: server
-        run: |
-          mkdir -p ../release
-          GOOS=linux GOARCH=amd64 go build -trimpath -ldflags='-s -w' -o "../release/papertodo-server-v$RELEASE_VERSION-linux-x64" .
-          GOOS=windows GOARCH=amd64 go build -trimpath -ldflags='-s -w' -o "../release/papertodo-server-v$RELEASE_VERSION-win-x64.exe" .
-      - uses: actions/upload-artifact@v4
-        with:
-          name: release-server
-          path: release/*
-          if-no-files-found: error
-
   publish:
-    needs: [metadata, windows, android, server]
+    needs: [metadata, windows, android]
     runs-on: ubuntu-latest
     permissions:
       contents: write
     env:
       RELEASE_TAG: ${{ needs.metadata.outputs.tag }}
+      RELEASE_VERSION: ${{ needs.metadata.outputs.version }}
       IS_PRERELEASE: ${{ needs.metadata.outputs.prerelease }}
       GH_TOKEN: ${{ github.token }}
     steps:
@@ -190,26 +170,44 @@ jobs:
           python - <<'PY'
           import hashlib, json, os, pathlib, re
           root = pathlib.Path('release')
+          version = os.environ['RELEASE_VERSION']
+          expected = {f'PaperTodo-v{version}-win-x64-self-contained-small.exe', f'PaperTodo-android-v{version}.apk'}
+          if {path.name for path in root.iterdir() if path.is_file()} != expected:
+              raise SystemExit('Release payload must contain only the portable Windows executable and Android APK')
+          evidence = pathlib.Path('release-evidence')
+          evidence.mkdir(exist_ok=True)
           artifacts = []
           for path in sorted(root.iterdir()):
               if path.is_file(): artifacts.append({'file': path.name, 'bytes': path.stat().st_size, 'sha256': hashlib.sha256(path.read_bytes()).hexdigest()})
-          (root / 'SHA256SUMS.txt').write_text(''.join(f"{entry['sha256']}  {entry['file']}\n" for entry in artifacts))
-          (root / 'build-manifest.json').write_text(json.dumps({'tag': os.environ['RELEASE_TAG'], 'gitCommit': os.environ['GITHUB_SHA'], 'artifacts': artifacts}, indent=2))
+          (evidence / 'SHA256SUMS.txt').write_text(''.join(f"{entry['sha256']}  {entry['file']}\n" for entry in artifacts))
+          (evidence / 'build-manifest.json').write_text(json.dumps({'tag': os.environ['RELEASE_TAG'], 'gitCommit': os.environ['GITHUB_SHA'], 'artifacts': artifacts}, indent=2))
           changelog = pathlib.Path('CHANGELOG.md').read_text(encoding='utf-8-sig')
           tag = os.environ['RELEASE_TAG']
           match = re.search(r'^### ' + re.escape(tag) + r'(?:[ \t][^\n]*)?\r?\n(.*?)(?=^### |\Z)', changelog, re.M | re.S)
           if not match and os.environ['IS_PRERELEASE'] == 'true': match = re.search(r'^### Unreleased\s*\n(.*?)(?=^### |\Z)', changelog, re.M | re.S)
           if not match: raise SystemExit('Move accepted release notes into the version section before publishing a stable release')
-          (root / 'RELEASE_NOTES.md').write_text(match.group(1).strip() + '\n\n**下载说明**\n\n- Windows：`self-contained-small.exe` 内含运行库，可直接运行；`no-runtime.exe` 需要安装 .NET 10 Desktop Runtime。\n- Android：APK 使用已配置的正式证书签名。\n- 独立同步服务：提供 Windows / Linux x64 版本，Linux 下载后需执行 `chmod +x`。\n- 校验：下载 `SHA256SUMS.txt` 与 `build-manifest.json` 核对文件哈希和源码提交。\n', encoding='utf-8')
+          (root / 'RELEASE_NOTES.md').write_text(match.group(1).strip() + '\n\n**下载说明**\n\n- Windows：下载 `self-contained-small.exe` 后直接运行，无需安装程序或另装 .NET 运行库。\n- Android：下载 APK 并安装，使用正式证书签名。\n', encoding='utf-8')
           PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: build-evidence
+          path: release-evidence/*
+          if-no-files-found: error
       - name: Publish only after every component and quality check has passed
         run: |
-          mapfile -t assets < <(find release -maxdepth 1 -type f ! -name RELEASE_NOTES.md -print | sort)
+          windows="PaperTodo-v${RELEASE_VERSION}-win-x64-self-contained-small.exe"
+          android="PaperTodo-android-v${RELEASE_VERSION}.apk"
+          assets=("release/$windows" "release/$android")
           latest=false
           if [ "$IS_PRERELEASE" = false ]; then latest=true; fi
           if gh release view "$RELEASE_TAG" >/dev/null 2>&1; then
             gh release upload "$RELEASE_TAG" "${assets[@]}" --clobber
             gh release edit "$RELEASE_TAG" --title "PaperTodo $RELEASE_TAG" --notes-file release/RELEASE_NOTES.md --prerelease="$IS_PRERELEASE" --latest="$latest"
+            while IFS= read -r name; do
+              if [ "$name" != "$windows" ] && [ "$name" != "$android" ]; then
+                gh release delete-asset "$RELEASE_TAG" "$name" --yes
+              fi
+            done < <(gh release view "$RELEASE_TAG" --json assets --jq '.assets[].name')
           else
             flags=()
             if [ "$IS_PRERELEASE" = true ]; then flags+=(--prerelease); fi

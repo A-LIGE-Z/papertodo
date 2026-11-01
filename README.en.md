@@ -190,12 +190,12 @@ PaperTodo/
 
 ## Download And Verification
 
-GitHub Actions builds two Windows x64 single-file executables and publishes them as Release assets:
+Each Release provides just two downloads:
 
-- **`...-self-contained-small.exe`** - Compressed single file including the .NET Desktop Runtime.
-- **`...-no-runtime.exe`** - Requires the .NET 10 Desktop Runtime.
+- **Windows `...-self-contained-small.exe`** - A portable executable including the .NET Desktop Runtime. Download and run it without installation or a separate runtime.
+- **Android `PaperTodo-android-v<version>.apk`** - A production-signed APK to download and install.
 
-Delivery includes a production-signed Android APK, optional standalone server binaries, `SHA256SUMS.txt` and `build-manifest.json`. Windows executables also include Sigstore signatures (`.sig` / `.crt`). Publishing waits for all component quality checks and builds; stable releases require explicit acceptance confirmation.
+Publishing waits for both clients' quality checks and builds; stable releases require explicit acceptance confirmation. Signatures, checksums and source identity remain in GitHub Actions build evidence instead of additional Release attachments.
 
 Release notes are automatically extracted from the matching version section in [`CHANGELOG.md`](CHANGELOG.md).
 
@@ -207,7 +207,7 @@ Release notes are automatically extracted from the matching version section in [
 dotnet build -c Release
 ```
 
-Run `./scripts/build.ps1` to create the self-contained compressed package and checksums in `dist/PaperTodo-v<version>/`. Use `-Run` to save and exit the current instance, back up its launcher and data, update the launcher and start the new build. Cloud releases include both Windows packages.
+Run `./scripts/build.ps1` to create the self-contained compressed package and checksums in `dist/PaperTodo-v<version>/`. Use `-Run` to save and exit the current instance, back up its launcher and data, update the launcher and start the new build. Cloud releases include this Windows portable executable and the production-signed Android APK.
 
 Windows and Android share product version **0.0.2**, maintained in `PaperTodo.csproj` and `mobile/pubspec.yaml`. Android's `+6` is a separate, increasing installation build number.
 

@@ -196,12 +196,12 @@ PaperTodo/
 
 ## 下载与校验
 
-GitHub Actions 构建两个 Windows x64 单文件 exe，直接作为 Release 资产发布：
+Release 只提供两个下载文件：
 
-- **`...-self-contained-small.exe`** — 自包含 .NET Desktop Runtime 的压缩单文件。
-- **`...-no-runtime.exe`** — 不含运行库，需要安装 .NET 10 Desktop Runtime。
+- **Windows `...-self-contained-small.exe`** — 内含 .NET Desktop Runtime，下载后直接运行，无需安装或另装运行库。
+- **Android `PaperTodo-android-v<版本>.apk`** — 使用正式证书签名，下载后安装。
 
-正式交付同时包含正式签名的 Android APK、可选独立服务端及 `SHA256SUMS.txt`、`build-manifest.json`。Windows EXE 附 Sigstore 签名（`.sig` / `.crt`）。各组件检查全部通过后统一发布；稳定版本需要手工验收后显式确认发布。
+两个客户端检查全部通过后统一发布；稳定版本需要手工验收后显式确认发布。签名、校验清单和源码提交记录保留在 GitHub Actions 构建证据中，不作为额外的 Release 附件。
 
 Release 发行说明从 [`CHANGELOG.md`](CHANGELOG.md) 自动提取对应 tag 的版本小节。
 
@@ -213,7 +213,7 @@ Release 发行说明从 [`CHANGELOG.md`](CHANGELOG.md) 自动提取对应 tag �
 dotnet build -c Release
 ```
 
-本地运行 `./scripts/build.ps1` 只生成自包含压缩单文件及校验清单，产物位于 `dist/PaperTodo-v<版本>/`。加 `-Run` 才会保存并退出当前实例、备份旧入口和数据、更新入口并启动。云端 Release 同时发布两个 Windows 包。
+本地运行 `./scripts/build.ps1` 只生成自包含压缩单文件及校验清单，产物位于 `dist/PaperTodo-v<版本>/`。加 `-Run` 才会保存并退出当前实例、备份旧入口和数据、更新入口并启动。云端 Release 发布该 Windows 便携程序与正式 Android APK。
 
 Windows 与 Android 当前产品版本统一为 **0.0.2**，分别在 `PaperTodo.csproj` 和 `mobile/pubspec.yaml` 中维护。Android 的 `+6` 是独立递增的安装编号，不是产品版本。
 

@@ -97,11 +97,11 @@ Windows 与 Android 的产品版本保持一致，分别显式维护在 `PaperTo
 dotnet build PaperTodo.csproj -c Release
 ```
 
-云端 Release 发布两个 Windows x64 单文件：自包含 .NET Runtime 的压缩单文件，以及不带运行库的 no-runtime 单文件。本地打包只生成自包含压缩单文件 `self-contained-small.exe`。WPF 版本不要开启 `PublishTrimmed` 或 Native AOT。
+Release 只附两个文件：无需安装或另装运行库的 Windows x64 自包含压缩单文件 `self-contained-small.exe`，以及正式签名 Android APK。不附 no-runtime、服务端、独立签名或校验清单；签名、哈希和源码身份保留为 Actions 构建证据。本地 Windows 打包也只生成自包含压缩单文件。WPF 版本不要开启 `PublishTrimmed` 或 Native AOT。
 
 稳定正式版不要靠 tag push 自动发布；完成真实多屏 / 混合 DPI 等发布前手测后，用 GitHub Actions `workflow_dispatch` 并显式确认稳定版发布。`rc` / `alpha` / `beta` / `preview` 标签可以继续由 tag push 发布为预发布。
 
-所有组件通过质量检查、完成构建后才统一发布，附源提交与校验清单。Android 正式包必须使用配置的正式证书，不允许静默回退到调试签名；独立 `.dev` 测试包、显式无签名验证包和旧证书迁移包都不能作为正式包发布。更换证书前必须保留可验证的数据备份，不能自动卸载用户现有应用。
+两个客户端通过质量检查、完成构建后才统一发布，源码与校验清单留在构建证据中。Android 正式包必须使用配置的正式证书，不允许静默回退到调试签名；独立 `.dev` 测试包、显式无签名验证包和旧证书迁移包都不能作为正式包发布。更换证书前必须保留可验证的数据备份，不能自动卸载用户现有应用。
 
 GitHub Release 签名优先读取 `PAPERTODO_*` secrets，同时兼容迁移仓库已有的 `ANDROID_KEYSTORE_BASE64/ANDROID_KEY_ALIAS/ANDROID_STORE_PASSWORD/ANDROID_KEY_PASSWORD`。这些兼容名称仍必须指向正式证书，不能改用调试签名绕过缺失或无效的配置。
 
