@@ -102,10 +102,10 @@ jobs:
     needs: [quality, metadata]
     runs-on: ubuntu-latest
     env:
-      PAPERTODO_KEYSTORE_BASE64: ${{ secrets.PAPERTODO_KEYSTORE_BASE64 }}
-      PAPERTODO_KEY_ALIAS: ${{ secrets.PAPERTODO_KEY_ALIAS }}
-      PAPERTODO_KEYSTORE_PASSWORD: ${{ secrets.PAPERTODO_KEYSTORE_PASSWORD }}
-      PAPERTODO_KEY_PASSWORD: ${{ secrets.PAPERTODO_KEY_PASSWORD }}
+      PAPERTODO_KEYSTORE_BASE64: ${{ secrets.PAPERTODO_KEYSTORE_BASE64 || secrets.ANDROID_KEYSTORE_BASE64 }}
+      PAPERTODO_KEY_ALIAS: ${{ secrets.PAPERTODO_KEY_ALIAS || secrets.ANDROID_KEY_ALIAS }}
+      PAPERTODO_KEYSTORE_PASSWORD: ${{ secrets.PAPERTODO_KEYSTORE_PASSWORD || secrets.ANDROID_STORE_PASSWORD }}
+      PAPERTODO_KEY_PASSWORD: ${{ secrets.PAPERTODO_KEY_PASSWORD || secrets.ANDROID_KEY_PASSWORD }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
@@ -200,16 +200,18 @@ jobs:
           match = re.search(r'^### ' + re.escape(tag) + r'(?:[ \t][^\n]*)?\r?\n(.*?)(?=^### |\Z)', changelog, re.M | re.S)
           if not match and os.environ['IS_PRERELEASE'] == 'true': match = re.search(r'^### Unreleased\s*\n(.*?)(?=^### |\Z)', changelog, re.M | re.S)
           if not match: raise SystemExit('Move accepted release notes into the version section before publishing a stable release')
-          (root / 'RELEASE_NOTES.md').write_text(match.group(1).strip() + '\n\nWindows: self-contained-small includes the runtime; no-runtime requires .NET 10 Desktop Runtime. Android APK uses the configured production certificate. Standalone service is available for Windows/Linux x64; Linux downloads need chmod +x. See SHA256SUMS.txt and build-manifest.json for verification.\n')
+          (root / 'RELEASE_NOTES.md').write_text(match.group(1).strip() + '\n\n**下载说明**\n\n- Windows：`self-contained-small.exe` 内含运行库，可直接运行；`no-runtime.exe` 需要安装 .NET 10 Desktop Runtime。\n- Android：APK 使用已配置的正式证书签名。\n- 独立同步服务：提供 Windows / Linux x64 版本，Linux 下载后需执行 `chmod +x`。\n- 校验：下载 `SHA256SUMS.txt` 与 `build-manifest.json` 核对文件哈希和源码提交。\n', encoding='utf-8')
           PY
       - name: Publish only after every component and quality check has passed
         run: |
           mapfile -t assets < <(find release -maxdepth 1 -type f ! -name RELEASE_NOTES.md -print | sort)
+          latest=false
+          if [ "$IS_PRERELEASE" = false ]; then latest=true; fi
           if gh release view "$RELEASE_TAG" >/dev/null 2>&1; then
             gh release upload "$RELEASE_TAG" "${assets[@]}" --clobber
-            gh release edit "$RELEASE_TAG" --title "PaperTodo $RELEASE_TAG" --notes-file release/RELEASE_NOTES.md --prerelease="$IS_PRERELEASE"
+            gh release edit "$RELEASE_TAG" --title "PaperTodo $RELEASE_TAG" --notes-file release/RELEASE_NOTES.md --prerelease="$IS_PRERELEASE" --latest="$latest"
           else
             flags=()
             if [ "$IS_PRERELEASE" = true ]; then flags+=(--prerelease); fi
-            gh release create "$RELEASE_TAG" "${assets[@]}" --target "$GITHUB_SHA" --title "PaperTodo $RELEASE_TAG" --notes-file release/RELEASE_NOTES.md "${flags[@]}"
+            gh release create "$RELEASE_TAG" "${assets[@]}" --target "$GITHUB_SHA" --title "PaperTodo $RELEASE_TAG" --notes-file release/RELEASE_NOTES.md --latest="$latest" "${flags[@]}"
           fi

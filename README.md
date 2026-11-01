@@ -6,7 +6,7 @@
 
 一个以 Windows 桌面纸片为核心的轻量便签工具，使用 WPF 原生界面。可选大纲显示、跨端同步和 Android 伴侣端，无需注册账号。
 
-![version](https://img.shields.io/badge/version-v0.0.2--dev-3b82f6) ![platform](https://img.shields.io/badge/platform-Windows%20x64-555) ![.NET](https://img.shields.io/badge/.NET-10-512bd4) ![UI](https://img.shields.io/badge/UI-WPF-0078d4)
+![version](https://img.shields.io/badge/version-v0.0.2-3b82f6) ![platform](https://img.shields.io/badge/platform-Windows%20x64-555) ![.NET](https://img.shields.io/badge/.NET-10-512bd4) ![UI](https://img.shields.io/badge/UI-WPF-0078d4)
 
 **语言：中文 | [English](README.en.md)**
 

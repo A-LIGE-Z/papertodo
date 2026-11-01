@@ -39,7 +39,7 @@ flutter build apk --debug --no-pub
 flutter build apk --release --no-pub
 ```
 
-缺失正式签名时构建会失败，绝不自动回退到调试证书。CI 的显式 `-PpapertodoUnsignedValidation=true` 仅验证 Release 编译，产物不能交付安装。GitHub 发布还需要 `PAPERTODO_KEYSTORE_BASE64` 等同名 repository secrets；任何 keystore、密码、`key.properties` 不得提交。
+缺失正式签名时构建会失败，绝不自动回退到调试证书。CI 的显式 `-PpapertodoUnsignedValidation=true` 仅验证 Release 编译，产物不能交付安装。GitHub 发布读取 `PAPERTODO_KEYSTORE_BASE64` 等同名 repository secrets，也兼容迁移仓库已有的 `ANDROID_KEYSTORE_BASE64`、`ANDROID_KEY_ALIAS`、`ANDROID_STORE_PASSWORD`、`ANDROID_KEY_PASSWORD`；任何 keystore、密码、`key.properties` 不得提交。
 
 需要在真机测试 AOT 后台入口时，可显式使用 `-PpapertodoReleaseValidation=true`。它采用 `.dev` 独立包名、调试证书和 `-validation` 版本后缀，仅用于验证，不能发布为正式包。
 

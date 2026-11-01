@@ -103,6 +103,8 @@ dotnet build PaperTodo.csproj -c Release
 
 所有组件通过质量检查、完成构建后才统一发布，附源提交与校验清单。Android 正式包必须使用配置的正式证书，不允许静默回退到调试签名；独立 `.dev` 测试包、显式无签名验证包和旧证书迁移包都不能作为正式包发布。更换证书前必须保留可验证的数据备份，不能自动卸载用户现有应用。
 
+GitHub Release 签名优先读取 `PAPERTODO_*` secrets，同时兼容迁移仓库已有的 `ANDROID_KEYSTORE_BASE64/ANDROID_KEY_ALIAS/ANDROID_STORE_PASSWORD/ANDROID_KEY_PASSWORD`。这些兼容名称仍必须指向正式证书，不能改用调试签名绕过缺失或无效的配置。
+
 推送或移动稳定版 tag 只会把 tag/commit 送到 GitHub；Actions 是后置检查，失败不会撤回这次 push。不要把稳定版 tag push 当作发布步骤，也不要为了正式发布制造必然失败的稳定版 tag push run；正式版发布只认成功的 `workflow_dispatch` run。
 
 ## 更新本文

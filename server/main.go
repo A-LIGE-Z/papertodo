@@ -106,7 +106,7 @@ func handlePing(w http.ResponseWriter, r *http.Request) {
 	os.Remove(probe.Name())
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
-	w.Write([]byte(`{"status":"ok","app":"PaperTodo.SyncServer","version":"0.0.1"}`))
+	w.Write([]byte(`{"status":"ok","app":"PaperTodo.SyncServer","version":"0.0.2"}`))
 }
 
 func getDataFilePath() string {

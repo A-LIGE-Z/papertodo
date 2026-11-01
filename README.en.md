@@ -6,7 +6,7 @@
 
 A lightweight paper-centered Windows app built with native WPF, with optional outline view, synchronization and an Android companion. No account is required.
 
-![version](https://img.shields.io/badge/version-v0.0.2--dev-3b82f6) ![platform](https://img.shields.io/badge/platform-Windows%20x64-555) ![.NET](https://img.shields.io/badge/.NET-10-512bd4) ![UI](https://img.shields.io/badge/UI-WPF-0078d4)
+![version](https://img.shields.io/badge/version-v0.0.2-3b82f6) ![platform](https://img.shields.io/badge/platform-Windows%20x64-555) ![.NET](https://img.shields.io/badge/.NET-10-512bd4) ![UI](https://img.shields.io/badge/UI-WPF-0078d4)
 
 **Language: [中文](README.md) | English**
 
